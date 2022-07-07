@@ -49,16 +49,7 @@ Sub spLoadLibrary()
 	Call RepositoriesCollection.Add(LibRepo & "RP_Upload_File_List.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Function.tsr")
 	
-'	REM --- Transaction Library
-'	LoadFunctionLibrary (LibPathDigisales & "Digisales46_Pembelian.qfl")
-'	Call RepositoriesCollection.Add(LibRepo & "RP_Merchant_Pembelian.tsr")
-'	
-'	REM --- Laporan Transaksi
-'	LoadFunctionLibrary (LibPathDigisales & "Digisales46_LaporanTransaksi.qfl")
-'	Call RepositoriesCollection.Add(LibRepo & "RP_LaporanTransaksi.tsr")
-'	
-'	REM --- Verifications Library
-'	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Verifikasi.qfl")
+
 End Sub
 
 Sub spGetDatatable()
