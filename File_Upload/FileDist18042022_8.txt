@@ -1,0 +1,6 @@
+Region_Code|Branch_Code|File_Name|Password_File
+010||Wilayah_05_202206_01.zip|123456
+|05|Wilayah_05_202206_02.zip|123456
+010|05||123456
+||Wilayah_05_202206_01.zip|123456
+|||123456
