@@ -1,6 +1,5 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
 Dim dtNavbarMenu, dtSidebar_SubMenu, dtSidebar_Submenu_Submenu, dt_UserLogin
-Dim  noRek, noJurnal, trxDate 
 
 REM -------------- Call Function
 Call spLoadLibrary()
@@ -55,19 +54,5 @@ Sub spGetDatatable()
 '	
 '	REM ---------- Menu
 	dtNavbarMenu				= DataTable.Value("NAVBAR_MENU" ,dtLocalSheet)
-'	dtSidebar_toSubmenu			= DataTable.Value("SIDEBAR_SUBMENU" ,dtLocalSheet)
-'	dtSidebar_Submenu_Submenu	= DataTable.Value("SIDEBAR_SUBMENU_SUBMENU", dtLocalSheet)
-'	dtMenu_Merchant_Pembelian	= DataTable.Value("MENU_MERCHANT_PEMBELIAN" ,dtLocalSheet)
-'
-'	REM ---- Transaksi
-'	jenisPembelian				= DataTable.Value("JENIS_PEMBELIAN_PLN" ,dtLocalSheet)
-'	idPelanggan					= DataTable.Value("ID_PELANGGAN" ,dtLocalSheet)
-'	NoReff						= DataTable.Value("NO_REFF" ,dtLocalSheet)
-'	Nominal						= DataTable.Value("NOMINAL" ,dtLocalSheet)
-'	PINTransaksi				= DataTable.Value("PIN_TRX" ,dtLocalSheet)
-'	
-'	REM ------  Verifications
-'	noJurnal 					= DataTable.Value("OUT_NO_JURNAL", dtLocalSheet)
-'	trxDate  					= DataTable.Value("OUT_TRX_DATE", dtLocalSheet)
-'	noRek 						= DataTable.Value("NO_REKENING", dtlocalsheet)
+
 End Sub
