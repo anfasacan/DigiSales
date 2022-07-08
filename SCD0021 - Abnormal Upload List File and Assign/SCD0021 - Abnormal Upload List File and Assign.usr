@@ -36,6 +36,7 @@ Version=15.0.1
 
 [TulipAddins]
 ActiveX=
+AgGrid=
 AI=
 Database=
 File Content=
@@ -44,6 +45,8 @@ Java=
 Windows Applications=
 TEA=
 Terminal Emulators=
+UIGrid=
+Visual Basic=
 Web=
 XML=
 
