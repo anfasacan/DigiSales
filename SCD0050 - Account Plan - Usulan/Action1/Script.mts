@@ -9,12 +9,13 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Periode Data : " & dt_Periode))
 
-REM ------- Digisales
+REM ------- Digisales mobile
 Call DA_LoginMobile()
 Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 Call GoToSubNavbar()
 Call FilterAccountPlan()
 Call DA_LogoutMobile("0")
+
 Call spReportSave()
 	
 Sub spLoadLibrary()

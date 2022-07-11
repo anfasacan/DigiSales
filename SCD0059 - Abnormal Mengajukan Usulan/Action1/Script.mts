@@ -9,7 +9,7 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "CIF : " & dt_CIF ))
 
-REM ------- Digisales
+REM ------- Digisales Mobile
 Call DA_LoginMobile()
 Call SearchProfilingLeads()
 Call AddToFlagging()
@@ -27,7 +27,7 @@ Sub spLoadLibrary()
 	tempDigisalesPath2 	= InStrRev(tempDigisalesPath, "\")
 	PathDigisales 		= Left(tempDigisalesPath, tempDigisalesPath2)
 	
-	LibPathDigisales		= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
+	LibPathDigisales	= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
 
@@ -40,6 +40,7 @@ Sub spLoadLibrary()
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Home.qfl")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Home.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Profile.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Navbar.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
 End Sub
@@ -55,6 +56,6 @@ Sub spGetDatatable()
 	dt_ExpectedResult				= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
 	
 	REM ---------- Navbar Menu
-	dtNavbarMenu				= DataTable.Value("NAVBAR_MENU" ,dtLocalSheet)
+	dtNavbarMenu					= DataTable.Value("NAVBAR_MENU" ,dtLocalSheet)
 
 End Sub

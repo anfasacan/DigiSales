@@ -9,12 +9,13 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
 
-REM ------- Digisales
+REM ------- Digisales Mobile
 Call DA_LoginMobile()
 Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 Call GoToSubNavbar()
 Call FilterDataPipeline()
 Call DA_LogoutMobile("0")
+
 Call spReportSave()
 	
 Sub spLoadLibrary()
@@ -27,7 +28,7 @@ Sub spLoadLibrary()
 	tempDigisalesPath2 	= InStrRev(tempDigisalesPath, "\")
 	PathDigisales 		= Left(tempDigisalesPath, tempDigisalesPath2)
 	
-	LibPathDigisales		= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
+	LibPathDigisales	= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
 
@@ -54,10 +55,7 @@ Sub spGetDatatable()
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-'	
+
 	REM ---------- Navbar Menu
 	dtNavbarMenu				= DataTable.Value("NAVBAR_MENU" ,dtLocalSheet)
-'	dtSidebar_toSubmenu			= DataTable.Value("SIDEBAR_SUBMENU" ,dtLocalSheet)
-'	dtSidebar_Submenu_Submenu	= DataTable.Value("SIDEBAR_SUBMENU_SUBMENU", dtLocalSheet)
-'	dtMenu_Merchant_Pembelian	= DataTable.Value("MENU_MERCHANT_PEMBELIAN" ,dtLocalSheet)	
 End Sub

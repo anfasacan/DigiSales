@@ -1,5 +1,5 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult
-Dim  dt_Hostname, dt_Username_DB
+Dim dt_Hostname, dt_Username_DB
 
 REM -------------- Call Function
 Call spLoadLibrary()
@@ -9,10 +9,9 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Hostname : " & dt_Hostname, "User DB : " & dt_Username_DB))
 
-'REM ------- Digisales
+REM ------- Heidi Database
 Call CreateSessionHeidi()
 call ExecuteSQL()
-
 
 Call spReportSave()
 	
@@ -26,7 +25,7 @@ Sub spLoadLibrary()
 	tempDigisalesPath2 	= InStrRev(tempDigisalesPath, "\")
 	PathDigisales 		= Left(tempDigisalesPath, tempDigisalesPath2)
 	
-	LibPathDigisales		= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
+	LibPathDigisales	= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
 
@@ -43,14 +42,12 @@ End Sub
 
 Sub spGetDatatable()
 	REM --------- Data
-	dt_Hostname			= DataTable.Value("HOSTNAME",dtLocalSheet)
-	dt_Username_DB	= DataTable.Value("USER_DB",dtLocalSheet)
+	dt_Hostname					= DataTable.Value("HOSTNAME",dtLocalSheet)
+	dt_Username_DB				= DataTable.Value("USER_DB",dtLocalSheet)
 	REM --------- Reporting
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-	
-	REM ---------- Menu
 
 End Sub

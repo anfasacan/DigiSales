@@ -15,6 +15,7 @@ Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 Call GoToSubNavbar()
 Call FilterDataStore()
 Call DA_LogoutMobile("0")
+
 Call spReportSave()
 	
 Sub spLoadLibrary()
@@ -27,7 +28,7 @@ Sub spLoadLibrary()
 	tempDigisalesPath2 	= InStrRev(tempDigisalesPath, "\")
 	PathDigisales 		= Left(tempDigisalesPath, tempDigisalesPath2)
 	
-	LibPathDigisales		= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
+	LibPathDigisales	= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
 
@@ -47,7 +48,7 @@ End Sub
 
 Sub spGetDatatable()
 	REM --------- Data
-	dt_UserLogin					= DataTable.Value("USER",dtLocalSheet)
+	dt_UserLogin				= DataTable.Value("USER",dtLocalSheet)
 	
 	REM --------- Reporting
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)

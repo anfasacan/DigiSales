@@ -9,12 +9,13 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
 
-REM ------- Digisales
+REM ------- Digisales Mobile
 Call DA_LoginMobile()
 Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 Call GoToSubNavbar()
 call Get_ProdukDetail()
 Call DA_LogoutMobile("0")
+
 Call spReportSave()
 	
 Sub spLoadLibrary()
@@ -48,14 +49,14 @@ End Sub
 
 Sub spGetDatatable()
 	REM --------- Data
-	dt_UserLogin					= DataTable.Value("USER",dtLocalSheet)
+	dt_UserLogin				= DataTable.Value("USER",dtLocalSheet)
 	
 	REM --------- Reporting
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-'	
+	
 	REM ---------- Navbar Menu
 	dtNavbarMenu				= DataTable.Value("NAVBAR_MENU" ,dtLocalSheet)
 End Sub
