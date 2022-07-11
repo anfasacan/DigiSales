@@ -9,7 +9,7 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
 
-REM ------- Digisales
+REM ------- Digisales Mobile
 Call DA_LoginMobile()
 Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 Call GoToSubNavbar()
@@ -47,7 +47,7 @@ End Sub
 
 Sub spGetDatatable()
 	REM --------- Data
-	dt_UserLogin					= DataTable.Value("USER",dtLocalSheet)
+	dt_UserLogin				= DataTable.Value("USER",dtLocalSheet)
 	
 	REM --------- Reporting
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
@@ -57,7 +57,5 @@ Sub spGetDatatable()
 '	
 	REM ---------- Navbar Menu
 	dtNavbarMenu				= DataTable.Value("NAVBAR_MENU" ,dtLocalSheet)
-'	dtSidebar_toSubmenu			= DataTable.Value("SIDEBAR_SUBMENU" ,dtLocalSheet)
-'	dtSidebar_Submenu_Submenu	= DataTable.Value("SIDEBAR_SUBMENU_SUBMENU", dtLocalSheet)
-'	dtMenu_Merchant_Pembelian	= DataTable.Value("MENU_MERCHANT_PEMBELIAN" ,dtLocalSheet)
+
 End Sub

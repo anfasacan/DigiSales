@@ -9,7 +9,7 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
 
-REM ------- Digisales
+REM ------- Digisales Mobile
 Call DA_LoginMobile()
 Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 Call GoToSubNavbar()
@@ -54,18 +54,8 @@ Sub spGetDatatable()
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-'	
+	
 	REM ---------- Navbar Menu
 	dtNavbarMenu				= DataTable.Value("NAVBAR_MENU" ,dtLocalSheet)
-'	dtSidebar_toSubmenu			= DataTable.Value("SIDEBAR_SUBMENU" ,dtLocalSheet)
-'	dtSidebar_Submenu_Submenu	= DataTable.Value("SIDEBAR_SUBMENU_SUBMENU", dtLocalSheet)
-'	dtMenu_Merchant_Pembelian	= DataTable.Value("MENU_MERCHANT_PEMBELIAN" ,dtLocalSheet)
-'
-'	REM ---- Transaksi
-'	jenisPembelian				= DataTable.Value("JENIS_PEMBELIAN_PLN" ,dtLocalSheet)
-'	idPelanggan					= DataTable.Value("ID_PELANGGAN" ,dtLocalSheet)
-'	NoReff						= DataTable.Value("NO_REFF" ,dtLocalSheet)
-'	Nominal						= DataTable.Value("NOMINAL" ,dtLocalSheet)
-'	PINTransaksi				= DataTable.Value("PIN_TRX" ,dtLocalSheet)
-'	
+
 End Sub

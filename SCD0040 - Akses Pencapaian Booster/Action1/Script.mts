@@ -1,6 +1,5 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
-Dim dtSidebarMenu, dtSidebar_SubMenu, dtSidebar_Submenu_Submenu, dtMenu_Merchant_Pembelian, jenisPembelian, idPelanggan, Nominal, NoReff, PINTransaksi, dt_UserLogin, dt_Periode
-Dim  noRek, noJurnal, trxDate 
+Dim dtSidebarMenu, dtSidebar_SubMenu, dtSidebar_Submenu_Submenu, dt_UserLogin, dt_Periode
 
 REM -------------- Call Function
 Call spLoadLibrary()
@@ -16,8 +15,10 @@ call FR_GoTo_SidebarMenu(dtSidebarMenu)
 Call Search_PencapaianBooster()
 Call DA_Logout("0")
 
+REM ------- Heidi Database
 Call CreateSessionHeidi_NoSS()
 call ExecuteSQL()
+
 Call spReportSave()
 	
 Sub spLoadLibrary()
@@ -48,17 +49,7 @@ Sub spLoadLibrary()
 	Call RepositoriesCollection.Add(LibRepo & "RP_Akses_Pencapaian_Booster.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Home_Digisales_Web.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Heidi.tsr")
-'	
-'	REM --- Transaction Library
-'	LoadFunctionLibrary (LibPathDigisales & "Digisales46_Pembelian.qfl")
-'	Call RepositoriesCollection.Add(LibRepo & "RP_Merchant_Pembelian.tsr")
-'	
-'	REM --- Laporan Transaksi
-'	LoadFunctionLibrary (LibPathDigisales & "Digisales46_LaporanTransaksi.qfl")
-'	Call RepositoriesCollection.Add(LibRepo & "RP_LaporanTransaksi.tsr")
-'	
-'	REM --- Verifications Library
-'	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Verifikasi.qfl")
+
 End Sub
 
 Sub spGetDatatable()
@@ -71,22 +62,8 @@ Sub spGetDatatable()
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-'	
+	
 '	REM ---------- Menu
 	dtSidebarMenu				= DataTable.Value("SIDEBAR_MENU" ,dtLocalSheet)
-'	dtSidebar_toSubmenu			= DataTable.Value("SIDEBAR_SUBMENU" ,dtLocalSheet)
-'	dtSidebar_Submenu_Submenu	= DataTable.Value("SIDEBAR_SUBMENU_SUBMENU", dtLocalSheet)
-'	dtMenu_Merchant_Pembelian	= DataTable.Value("MENU_MERCHANT_PEMBELIAN" ,dtLocalSheet)
-'
-'	REM ---- Transaksi
-'	jenisPembelian				= DataTable.Value("JENIS_PEMBELIAN_PLN" ,dtLocalSheet)
-'	idPelanggan					= DataTable.Value("ID_PELANGGAN" ,dtLocalSheet)
-'	NoReff						= DataTable.Value("NO_REFF" ,dtLocalSheet)
-'	Nominal						= DataTable.Value("NOMINAL" ,dtLocalSheet)
-'	PINTransaksi				= DataTable.Value("PIN_TRX" ,dtLocalSheet)
-'	
-'	REM ------  Verifications
-'	noJurnal 					= DataTable.Value("OUT_NO_JURNAL", dtLocalSheet)
-'	trxDate  					= DataTable.Value("OUT_TRX_DATE", dtLocalSheet)
-'	noRek 						= DataTable.Value("NO_REKENING", dtlocalsheet)
+
 End Sub

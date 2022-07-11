@@ -9,15 +9,15 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Report Periode : " & dt_Periode))
 
-'REM ------- Digisales
+REM ------- Digisales
 Call DA_Login()
 call FR_GoTo_SidebarMenu(dtSidebarMenu)
 Call Search_PencapaianBooster()
-
 Call DA_Logout("0")
+
+REM ------- Heidi Database
 Call CreateSessionHeidi_NoSS()
 call ExecuteSQL()
-
 
 Call spReportSave()
 	

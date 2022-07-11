@@ -15,9 +15,9 @@ call FR_GoTo_SidebarMenu(dtSidebarMenu)
 Call Search_PencapaianBooster()
 Call DA_Logout("0")
 
+REM ------- Heidi Database
 Call CreateSessionHeidi_NoSS()
 call ExecuteSQL()
-
 
 Call spReportSave()
 	
@@ -31,7 +31,7 @@ Sub spLoadLibrary()
 	tempDigisalesPath2 	= InStrRev(tempDigisalesPath, "\")
 	PathDigisales 		= Left(tempDigisalesPath, tempDigisalesPath2)
 	
-	LibPathDigisales		= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
+	LibPathDigisales	= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
 
@@ -61,7 +61,7 @@ Sub spGetDatatable()
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-'	
+
 '	REM ---------- Menu
 	dtSidebarMenu				= DataTable.Value("SIDEBAR_MENU" ,dtLocalSheet)
 End Sub
