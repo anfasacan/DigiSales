@@ -57,7 +57,4 @@ Sub spGetDatatable()
 '	
 	REM ---------- Navbar Menu
 	dtNavbarMenu				= DataTable.Value("NAVBAR_MENU" ,dtLocalSheet)
-'	dtSidebar_toSubmenu			= DataTable.Value("SIDEBAR_SUBMENU" ,dtLocalSheet)
-'	dtSidebar_Submenu_Submenu	= DataTable.Value("SIDEBAR_SUBMENU_SUBMENU", dtLocalSheet)
-'	dtMenu_Merchant_Pembelian	= DataTable.Value("MENU_MERCHANT_PEMBELIAN" ,dtLocalSheet)	
 End Sub
