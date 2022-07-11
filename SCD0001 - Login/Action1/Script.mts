@@ -1,6 +1,5 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
-Dim dtSidebarMenu, dtSidebar_SubMenu, dtSidebar_Submenu_Submenu, dtMenu_Merchant_Pembelian, jenisPembelian, idPelanggan, Nominal, NoReff, PINTransaksi, dt_UserLogin
-Dim  noRek, noJurnal, trxDate 
+Dim dt_UserLogin
 
 REM -------------- Call Function
 Call spLoadLibrary()
@@ -26,7 +25,7 @@ Sub spLoadLibrary()
 	tempDigisalesPath2 	= InStrRev(tempDigisalesPath, "\")
 	PathDigisales 		= Left(tempDigisalesPath, tempDigisalesPath2)
 	
-	LibPathDigisales		= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
+	LibPathDigisales	= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
 
@@ -43,29 +42,11 @@ End Sub
 
 Sub spGetDatatable()
 	REM --------- Data
-	dt_UserLogin					= DataTable.Value("USER",dtLocalSheet)
+	dt_UserLogin				= DataTable.Value("USER",dtLocalSheet)
 	
 	REM --------- Reporting
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-'	
-'	REM ---------- Menu
-'	dtSidebarMenu				= DataTable.Value("SIDEBAR_MENU" ,dtLocalSheet)
-'	dtSidebar_toSubmenu			= DataTable.Value("SIDEBAR_SUBMENU" ,dtLocalSheet)
-'	dtSidebar_Submenu_Submenu	= DataTable.Value("SIDEBAR_SUBMENU_SUBMENU", dtLocalSheet)
-'	dtMenu_Merchant_Pembelian	= DataTable.Value("MENU_MERCHANT_PEMBELIAN" ,dtLocalSheet)
-'
-'	REM ---- Transaksi
-'	jenisPembelian				= DataTable.Value("JENIS_PEMBELIAN_PLN" ,dtLocalSheet)
-'	idPelanggan					= DataTable.Value("ID_PELANGGAN" ,dtLocalSheet)
-'	NoReff						= DataTable.Value("NO_REFF" ,dtLocalSheet)
-'	Nominal						= DataTable.Value("NOMINAL" ,dtLocalSheet)
-'	PINTransaksi				= DataTable.Value("PIN_TRX" ,dtLocalSheet)
-'	
-'	REM ------  Verifications
-'	noJurnal 					= DataTable.Value("OUT_NO_JURNAL", dtLocalSheet)
-'	trxDate  					= DataTable.Value("OUT_TRX_DATE", dtLocalSheet)
-'	noRek 						= DataTable.Value("NO_REKENING", dtlocalsheet)
 End Sub

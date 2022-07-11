@@ -1,6 +1,6 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
-Dim dtSidebarMenu, dtSidebar_SubMenu, dtSidebar_Submenu_Submenu, dt_Hostname, dt_Database1, dt_Database2
-Dim  noRek, noJurnal, trxDate, Openprogram
+Dim dtSidebarMenu, dtSidebar_SubMenu, dtSidebar_Submenu_Submenu
+Dim dt_Hostname, dt_Database1, dt_Database2
 
 REM -------------- Call Function
 Call spLoadLibrary()
@@ -8,7 +8,7 @@ Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0033_Validasi Database Table
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
-Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Hostname : " & dt_Hostname, "Query 1 : " & dt_Database1, "Query 2 : " & dt_Database2))
+Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Hostname : " & dt_Hostname, "Database 1 : " & dt_Database1, "Database 2 : " & dt_Database2))
 
 REM ------- Heidi
 Call CreateSessionHeidi()
@@ -25,7 +25,7 @@ Sub spLoadLibrary()
 	tempDigisalesPath2 	= InStrRev(tempDigisalesPath, "\")
 	PathDigisales 		= Left(tempDigisalesPath, tempDigisalesPath2)
 	
-	LibPathDigisales		= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
+	LibPathDigisales	= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
 
@@ -50,19 +50,5 @@ Sub spGetDatatable()
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
-	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-'	
-'	REM ---------- Menu
-'	dtSidebarMenu				= DataTable.Value("SIDEBAR_MENU" ,dtLocalSheet)
-'	dtSidebar_toSubmenu			= DataTable.Value("SIDEBAR_SUBMENU" ,dtLocalSheet)
-'	dtSidebar_Submenu_Submenu	= DataTable.Value("SIDEBAR_SUBMENU_SUBMENU", dtLocalSheet)
-'	dtMenu_Merchant_Pembelian	= DataTable.Value("MENU_MERCHANT_PEMBELIAN" ,dtLocalSheet)
-'
-'	REM ---- Transaksi
-'	jenisPembelian				= DataTable.Value("JENIS_PEMBELIAN_PLN" ,dtLocalSheet)
-'	idPelanggan					= DataTable.Value("ID_PELANGGAN" ,dtLocalSheet)
-'	NoReff						= DataTable.Value("NO_REFF" ,dtLocalSheet)
-'	Nominal						= DataTable.Value("NOMINAL" ,dtLocalSheet)
-'	PINTransaksi				= DataTable.Value("PIN_TRX" ,dtLocalSheet)
-'	
+	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)	
 End Sub

@@ -1,5 +1,4 @@
-﻿
-Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult
+﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult
 Dim dtSidebarMenu, dtSidebar_SubMenu, dtSidebar_Submenu_Submenu, dt_UserLogin
 Dim dt_File1, dt_Periode, DownloadPath
 
@@ -35,7 +34,6 @@ Sub spLoadLibrary()
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
 	DownloadPath		= "C:\Users\" & objSysInfo.UserName & "\Downloads"
-'	MsgBox DownloadPath
 
 	REM ------- Report Library
 	LoadFunctionLibrary (LibReport & "BNI_GlobalFunction.qfl")
