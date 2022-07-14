@@ -14,15 +14,28 @@ REM ------- Digisales
 'Call DA_Login()
 'Call DA_Logout("0")
 '
-strr = DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-strr = Replace(strr,chr(34),"")
-strr = Replace(strr," ","")
-strr = Replace(strr,":","")
-strr = Replace(strr,",","")
-strr = Replace(strr,"jwT_Token","")
-
-msgbox strr
-Call spReportSave()
+'strr = DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
+'strr = Replace(strr,chr(34),"")
+'strr = Replace(strr," ","")
+'strr = Replace(strr,":","")
+'strr = Replace(strr,",","")
+'strr = Replace(strr,"jwT_Token","")
+'
+'msgbox strr
+'Call spReportSave()
+	
+	bulan = month(now)
+	tahun = year(now)
+	bulan = bulan + 1
+	If bulan > 12 Then
+		bulan = 1
+		tahun = year(now) + 1
+	End If
+	
+	if len(bulan) = 1 then
+		bulan = "0" & bulan
+	end if
+	msgbox bulan
 	
 Sub spLoadLibrary()
 	Dim LibPathDigisales, LibReport, LibRepo, objSysInfo
