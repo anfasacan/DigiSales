@@ -11,6 +11,9 @@ Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
 
 REM ------- Digisales Mobile
+Call CreateSessionHeidi_NoSS()
+call ExecuteSQL()
+
 Call DA_LoginMobile()
 Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 Call GoToSubNavbar_Store()
@@ -48,7 +51,9 @@ Sub spLoadLibrary()
 	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Menu.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Store.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Pipeline.qfl")
+	LoadFunctionLibrary (LibPathDigisales & "Digisales_Heidi.qfl")
 	
+	Call RepositoriesCollection.Add(LibRepo & "RP_Heidi.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Store.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Pipeline.tsr")

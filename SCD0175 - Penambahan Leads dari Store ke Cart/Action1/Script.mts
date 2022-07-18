@@ -4,26 +4,30 @@ Dim dtNavbarMenu, dt_UserLogin
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0177_Validasi BNIMF.xlsx", "SCD0177")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0175_Penambahan Leads dari Store ke Cart.xlsx", "SCD0175")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
 
 REM ------- Digisales Mobile
-Call CreateSessionHeidi_NoSS()
-call ExecuteSQL()
 
 Call DA_LoginMobile()
 Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 Call GoToSubNavbar_Store()
-Call TambahLeadsProspek()
 Call FilterDataStore()
-Call AddProspekToChart()
+
+If ucase(DataTable.Value("SUB_NAVBAR",dtLocalSheet)) = "DEDICATED"  Then
+	Call AddDedicatedToChart()
+ElseIf ucase(DataTable.Value("SUB_NAVBAR",dtLocalSheet)) = "FREE" Then
+	Call AddFreeToChart()
+ElseIf ucase(DataTable.Value("SUB_NAVBAR",dtLocalSheet)) = "KELOLAAN" Then
+	Call AddKelolaanToChart()
+ElseIf  ucase(DataTable.Value("SUB_NAVBAR",dtLocalSheet)) = "PROSPEK" Then
+	Call AddProspekToChart()
+End If
+
 Call FilterDataPipeline()
-Call HasilCallTertarik()
-Call FilterDataPipeline()
-Call CheckBNIMFDropdown()
 
 Call DA_LogoutMobile("0")
 
