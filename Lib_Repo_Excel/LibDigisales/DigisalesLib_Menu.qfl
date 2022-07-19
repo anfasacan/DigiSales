@@ -194,6 +194,9 @@ End Function
 
 Function OpenFile(Path , FileName, AppName)
 	Set objkey = CreateObject("WScript.Shell")
+	Dim TC_ID
+	TC_ID = DataTable.Value("TC_ID",dtlocalsheet)
+	
 	AppName	= Ucase(AppName)
 	PathName = Path & "\" & FileName
 	Select Case AppName
@@ -201,23 +204,26 @@ Function OpenFile(Path , FileName, AppName)
 			Call spOpenBrowser("CHROME", PathName)
 			wait 2
 			Call CaptureImageUFTV2(Browser("SS_OpenFile"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)	
+			wait 2
 		Case "EXCEL"
 			SystemUtil.Run PathName
 			wait 2
 			Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 			wait 2			
-			If DataTable.Value("TC_ID",dtlocalsheet) = "DGS-193" Then
-			If Window("SS_Excel").Exist Then
-				Window("SS_Excel").Click
-			End If
-				objkey.SendKeys "^{END}"
-				wait 1
-				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+			If TC_ID = "DGS-193" or TC_ID = "DGS-194" or TC_ID = "DGS-195" Then
+				If Window("SS_Excel").Exist Then
+					Window("SS_Excel").Click
+				End If
+					objkey.SendKeys "^{END}"
+					wait 1
+					Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+					wait 2
 			End If
 		Case "WINRAR"
 			SystemUtil.Run "explorer.exe", PathName, , ,3
 			wait 2
 			Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)	
+			wait 2
 	End Select
 End Function
 
