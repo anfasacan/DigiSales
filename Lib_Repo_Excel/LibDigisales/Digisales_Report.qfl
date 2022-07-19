@@ -1,11 +1,11 @@
 ﻿REM.....Fungsi Filter/Generate Product Holding Pada Digisales Web dengan User Sales di Menu Report->Product Holding
 Sub GenerateProductHolding
 	Set objkey = CreateObject("WScript.Shell")
-	Dim dt_NPP, dt_Periode, dt_Bulan
+	Dim dt_NPP, dt_Periode, dt_Bulan, dt_CIF
 		dt_NPP		= DataTable.Value("TEXT1", dtlocalsheet)
 		dt_Periode 	= DataTable.Value("TEXT2", dtlocalsheet)
 		dt_Bulan 	= DataTable.Value("TEXT3", dtlocalsheet)
-		
+		dt_CIF	 	= DataTable.Value("TEXT4", dtlocalsheet)
 	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("Field NPP").Click
 	wait 1
 		objkey.SendKeys(dt_NPP)
@@ -19,6 +19,8 @@ Sub GenerateProductHolding
 		objkey.SendKeys(dt_Bulan)
 	wait 1
 		objkey.SendKeys"{ENTER}"
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebEdit("Field CIF").Set dt_CIF
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Isi field pencarian sesuai kebutuhan, Lalu Klik Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
