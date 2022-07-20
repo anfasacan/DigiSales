@@ -375,7 +375,9 @@ Function DA_LogoutMobile(ByVal isError)
 		wait 1
 		Browser("DigiSales").Page("DigiSales Mobile | Profile").WebButton("Logout").Click
 		If Browser("DigiSales").Page("DigiSales Mobile | Login").WebButton("Btn Login Mobile").Exist(10) Then
+			wait 1
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), "Berhasil Logout", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
 			Call CloseBrowser()
 			Call spReportSave()
 '		
@@ -407,7 +409,6 @@ REM ---------------------------- NAVBAR MENU DIGISALES MOBILE-------------------
 Sub FR_GoTo_NavbarMenu(dtNavbarMenu)
 	
 	dtNavbarMenu	= Ucase(dtNavbarMenu)
-	
 	
 	Select Case dtNavbarMenu
 		Case "HOME"
