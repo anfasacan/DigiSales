@@ -211,7 +211,6 @@ Function OpenFile(Path , FileName, AppName)
 			Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 			wait 2
 		For dgs = 193 To 218 Step 1
-		msgbox "DGS-" & dgs
 			If TC_ID = "DGS-" & dgs Then
 				If Window("SS_Excel").Exist Then
 					Window("SS_Excel").Click
@@ -256,13 +255,13 @@ Function DA_LoginDetailMobile()
 		Browser("DigiSales").Page("DigiSales Mobile | Login").WebButton("Btn Login Mobile").Click	
 	End If
 	
-	If Browser("DigiSales").Page("DigiSales Mobile | Login").WebElement("NPP is required").Exist(10) Then
-		wait 2
-		Reporter.ReportEvent micFail, "Core Mati", "Gagal Masuk Ke Halaman Home Digisales Mobile"
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), " Gagal Masuk ke Halaman Home Digisales Mobile", " " , compatibilityMode.Desktop, ReportStatus.Failed)	
+	If Browser("DigiSales").Page("DigiSales Mobile | Login").WebElement("Hanya sales yang memiliki role").Exist(1) Then
+		wait 1
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), "Gagal Login Karena Role Tidak Sesuai", " ", compatibilityMode.Desktop, ReportStatus.Passed)
 		Call CloseBrowser()
 		Call spReportSave()
-		Call ExitActionIteration()
+		Call ExitActionIteration() 
+		
 	ElseIf Browser("DigiSales").Page("DigiSales Mobile | Login").WebElement("Password is required").Exist(10) Then
 		wait 2
 		Reporter.ReportEvent micFail, "Core Mati", "Gagal Masuk Ke Halaman Home Digisales Mobile"
@@ -270,6 +269,15 @@ Function DA_LoginDetailMobile()
 		Call CloseBrowser()
 		Call spReportSave()
 		Call ExitActionIteration()
+		
+	ElseIf  Browser("DigiSales").Page("DigiSales Mobile | Login").WebElement("NPP is required").Exist(10) Then
+		wait 2
+		Reporter.ReportEvent micFail, "Core Mati", "Gagal Masuk Ke Halaman Home Digisales Mobile"
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), " Gagal Masuk ke Halaman Home Digisales Mobile", " " , compatibilityMode.Desktop, ReportStatus.Failed)	
+		Call CloseBrowser()
+		Call spReportSave()
+		Call ExitActionIteration()
+	
 	Else
 		If Browser("DigiSales").Page("DigiSales Mobile | Profile").WebElement("Alert Whatsapp").Exist(5) Then
 			wait 2
