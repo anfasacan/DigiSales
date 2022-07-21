@@ -76,7 +76,8 @@ Sub ExportExcel
 	wait 2	
 	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("Export to xlsx").Click
 	wait 3
-	If Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("Modal Data not Found").Exist(3) Then
+	
+	If Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("No data available in table").Exist(3) Then
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Gagal Download Excel, Karena Data Tidak Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
@@ -86,7 +87,7 @@ Sub ExportExcel
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Berhasil Export ke Excel, Klik OK", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
-	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebButton("Btn OK Berhasil Export").Click
+		Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebButton("Btn OK Berhasil Export").Click
 	wait 2
 	
 	'Cek data Excel berhasil diexport

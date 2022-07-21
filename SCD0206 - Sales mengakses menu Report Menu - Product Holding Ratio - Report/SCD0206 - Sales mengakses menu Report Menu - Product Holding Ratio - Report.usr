@@ -36,6 +36,7 @@ Version=2021
 
 [TulipAddins]
 ActiveX=
+AgGrid=
 AI=
 Database=
 File Content=
@@ -44,6 +45,8 @@ Java=
 Windows Applications=
 TEA=
 Terminal Emulators=
+UIGrid=
+Visual Basic=
 Web=
 XML=
 

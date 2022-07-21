@@ -207,6 +207,18 @@ Function OpenFile(Path , FileName, AppName)
 			wait 2
 		Case "EXCEL"
 			SystemUtil.Run PathName
+			wait 5
+			
+			If Dialog("Dialog_Trust_Microsoft Excel").Exist(5) Then
+				objkey.SendKeys "{LEFT}"
+				objkey.SendKeys "{ENTER}"
+				If Window("SS_Excel").Exist(5) Then
+					Window("SS_Excel").Maximize
+				End If
+			End If
+			
+			
+			
 			wait 2
 			Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 			wait 2
@@ -214,14 +226,21 @@ Function OpenFile(Path , FileName, AppName)
 				If Window("SS_Excel").Exist Then
 					Window("SS_Excel").Click
 				End If
-				objkey.SendKeys "{RIGHT 33}"
+				objkey.SendKeys "{DOWN 7}"
+				objkey.SendKeys "{RIGHT 24}"
 				wait 2
 				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 				wait 2
+				If Window("SS_Excel").Exist Then
+					Window("SS_Excel").Click
+				End If
 				objkey.SendKeys "{RIGHT 13}"
 				wait 2
 				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 				wait 2
+				If Window("SS_Excel").Exist Then
+					Window("SS_Excel").Click
+				End If
 				objkey.SendKeys "^{END}"
 				wait 2
 				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
