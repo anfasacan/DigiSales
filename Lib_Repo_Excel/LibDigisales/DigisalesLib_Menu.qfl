@@ -210,18 +210,36 @@ Function OpenFile(Path , FileName, AppName)
 			wait 2
 			Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 			wait 2
-		For dgs = 193 To 218 Step 1
-			If TC_ID = "DGS-" & dgs Then
+			If TC_ID = "DGS-221" Then
 				If Window("SS_Excel").Exist Then
 					Window("SS_Excel").Click
 				End If
-					objkey.SendKeys "^{END}"
-					wait 1
-					Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
-					wait 2
-				Exit for 
+				objkey.SendKeys "{RIGHT 33}"
+				wait 2
+				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+				wait 2
+				objkey.SendKeys "{RIGHT 13}"
+				wait 2
+				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+				wait 2
+				objkey.SendKeys "^{END}"
+				wait 2
+				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+				wait 2
+			else
+				For dgs = 193 To 218 Step 1
+					If TC_ID = "DGS-" & dgs Then
+						If Window("SS_Excel").Exist Then
+							Window("SS_Excel").Click
+						End If
+							objkey.SendKeys "^{END}"
+							wait 1
+							Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+							wait 2
+						Exit for 
+					End If
+				Next
 			End If
-	Next
 		Case "WINRAR"
 			SystemUtil.Run "explorer.exe", PathName, , ,3
 			wait 2

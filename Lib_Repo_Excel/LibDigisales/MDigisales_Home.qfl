@@ -173,7 +173,7 @@ Function GoToSubSubNavbar()
 				Case "PRODUCT HOLDING RATIO"
 					Browser("DigiSales").Page("Menu Dashboard").WebElement("Product Holding Ratio").Click
 					wait 2
-						Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Masuk Ke Sub Product Holding Ratio", explainProductHolding , compatibilityMode.Desktop, ReportStatus.Passed)
+						Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Masuk Ke Menu Product Holding Ratio", explainProductHolding , compatibilityMode.Desktop, ReportStatus.Passed)
 					wait 2
 			End Select
 
@@ -438,6 +438,7 @@ Sub AddToFlagging
 	
 End Sub
 
+REM -------- Fungsi Generate Product Holding Mobile
 Sub GenerateProductHolding
 	Set objkey = CreateObject("WScript.Shell")
 	Dim dt_Bulan, dt_Tahun, dt_JenisNasabah, dt_CIF
@@ -451,19 +452,62 @@ Sub GenerateProductHolding
 	wait 1
 		objkey.SendKeys(dt_Bulan)
 	wait 1
+		objkey.SendKeys "{ENTER}"
+	wait 1
 	Browser("DigiSales").Page("Menu Dashboard").WebButton("Field ​Tahun Data").Click
 	wait 1
-		objkey.SendKeys(dt_Bulan)
+		objkey.SendKeys(dt_Tahun)
+	wait 1
+		objkey.SendKeys "{ENTER}"
 	wait 1
 	Browser("DigiSales").Page("Menu Dashboard").WebEdit("Field Jenis Nasabah").Set dt_JenisNasabah
 	wait 1
 	Browser("DigiSales").Page("Menu Dashboard").WebEdit("Field CIF").Set dt_CIF
 	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Mengisi Field Yang Dibutuhkan", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Mengisi Field Yang Dibutuhkan, Lalu Klik Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
 	Browser("DigiSales").Page("Menu Dashboard").WebButton("Btn Generate").Click
 	wait 2
+End Sub
 
+REM -------- Tampil List data Product Holding Mobile
+Sub ListProductHolding
+	Dim dt_Bulan, dt_Tahun, dt_JenisNasabah, dt_CIF
+		dt_Bulan 		= DataTable.Value("TEXT2",dtlocalsheet)
+		dt_Tahun 		= DataTable.Value("TEXT3",dtlocalsheet)
+		dt_JenisNasabah = DataTable.Value("TEXT4",dtlocalsheet)
+		dt_CIF 			= DataTable.Value("TEXT5",dtlocalsheet)
+		
+	Set objkey = CreateObject("WScript.Shell")
+		objkey.SendKeys "{PGDN}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Berikut List Data Product Holding Periode "& dt_Bulan &" "& dt_Tahun , " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2	
+End Sub
 
-
+REM.....Fungsi Export Excel Pada Digisales Mobile
+Sub ExportExcel
+	Set objkey = CreateObject("WScript.Shell")
+	Dim dt_File1
+		dt_File1 = DataTable.Value("FILE1", dtLocalsheet)
+	
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Klik Button Export Excel", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu Dashboard").WebButton("Btn Export Excel").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Berhasil Export Excel", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSales").Page("Menu Dashboard").WebButton("Btn Ok Berhasil Export").Click
+	wait 1
+	
+	'Cek data Excel berhasil diexport
+	objkey.SendKeys "^j"
+	wait 2
+	objkey.SendKeys "^f"
+	wait 2
+	objkey.SendKeys (dt_File1)
+	wait 3
+		Call CaptureImageUFTV2(Window("SS_Full_Screen"), "Data Berhasil Didownload", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 3	
 End Sub

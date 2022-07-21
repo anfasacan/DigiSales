@@ -1,23 +1,26 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
-Dim dt_UserLogin, dt_Bulan, dt_Tahun
-'Dim dtNavbarMenu
+Dim dt_UserLogin, dt_Bulan, dt_Tahun, dt_File1
+Dim DownloadPath
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0205 - Validasi Field report PHR pada searching portal.xlsx", "SCD0205")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0206 - Sales mengakses menu Report Menu - Product Holding Ratio - Report.xlsx", "SCD0206")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
-Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Data Periode : " & dt_Bulan &" "& dt_Tahun))
+Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Data Periode : " & dt_Bulan &" "& dt_Tahun, "Nama File : " & dt_File1))
 
 REM ------- Digisales Mobile
 Call DA_LoginMobile()
-'Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 Call GoToSubNavbar()
 Call GoToSubSubNavbar()
 Call GenerateProductHolding()
 Call ListProductHolding()
+Call ExportExcel()
 Call DA_LogoutMobile("0")
+
+REM ------- Open File EXCEL
+Call OpenFile(DownloadPath , dt_File1, "EXCEL")
 
 Call spReportSave()
 	
@@ -34,6 +37,7 @@ Sub spLoadLibrary()
 	LibPathDigisales	= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
+	DownloadPath		= "C:\Users\" & objSysInfo.UserName & "\Downloads"
 	REM ------- Report Library
 	LoadFunctionLibrary (LibReport & "BNI_GlobalFunction.qfl")
 	LoadFunctionLibrary (LibReport & "Run Report BNI.vbs")
@@ -46,6 +50,7 @@ Sub spLoadLibrary()
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Profile.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Navbar.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Function.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
 
 End Sub
@@ -55,6 +60,7 @@ Sub spGetDatatable()
 	dt_UserLogin				= DataTable.Value("USER",dtLocalSheet)
 	dt_Bulan					= DataTable.Value("TEXT2",dtLocalSheet)
 	dt_Tahun					= DataTable.Value("TEXT3",dtLocalSheet)
+	dt_File1					= DataTable.Value("FILE1",dtLocalSheet)
 
 	REM --------- Reporting
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
@@ -62,6 +68,4 @@ Sub spGetDatatable()
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
 	
-'	REM ---------- Menu
-'	dtNavbarMenu				= DataTable.Value("NAVBAR_MENU" ,dtLocalSheet)
 End Sub
