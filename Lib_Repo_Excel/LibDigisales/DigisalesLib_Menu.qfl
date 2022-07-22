@@ -212,16 +212,25 @@ Function OpenFile(Path , FileName, AppName)
 			If Dialog("Dialog_Trust_Microsoft Excel").Exist(5) Then
 				objkey.SendKeys "{LEFT}"
 				objkey.SendKeys "{ENTER}"
-				If Window("SS_Excel").Exist(5) Then
-					Window("SS_Excel").Maximize
-				End If
 			End If
 			
-			
+			'Besarin File Excel
+				If Window("SS_Excel").Exist(5) Then
+					Window("SS_Excel").Click
+					If not Window("SS_Excel").GetROProperty("maximized") Then
+'						msgbox "Blm Gede"
+'						Window("SS_Excel").Click
+'      					objkey.SendKeys ("^{F10}")
+'      					Window("SS_Excel").Click
+'      					msgbox "udh gede"
+						Window("SS_Excel").Maximize
+      				End If
+				End If
 			
 			wait 2
 			Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 			wait 2
+			
 			If TC_ID = "DGS-221" Then
 				If Window("SS_Excel").Exist Then
 					Window("SS_Excel").Click
@@ -245,7 +254,8 @@ Function OpenFile(Path , FileName, AppName)
 				wait 2
 				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 				wait 2
-			else
+			End If
+			
 				For dgs = 193 To 218 Step 1
 					If TC_ID = "DGS-" & dgs Then
 						If Window("SS_Excel").Exist Then
@@ -258,7 +268,7 @@ Function OpenFile(Path , FileName, AppName)
 						Exit for 
 					End If
 				Next
-			End If
+			
 		Case "WINRAR"
 			SystemUtil.Run "explorer.exe", PathName, , ,3
 			wait 2
