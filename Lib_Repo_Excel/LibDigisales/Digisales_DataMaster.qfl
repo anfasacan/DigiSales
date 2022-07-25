@@ -1,0 +1,275 @@
+﻿Sub Check_Parameter_KPI
+	Set objkey = CreateObject("WScript.Shell")
+	objkey.SendKeys "{PGDN}"
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Berikut Data Yang Ada Pada Tabel Parameter KPI", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+End Sub
+
+
+Sub Add_Parameter_KPI
+	dt_parameter = DataTable.Value("TEXT1",dtLocalSheet)
+	
+    Browser("DigiSalesWebPortal").Page("Parameter KPI").WebEdit("Field Nama Parameter KPI").Set dt_parameter
+    wait 2
+    Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Isi Field Parameter", " ", compatibilityMode.Desktop, ReportStatus.Done)
+    wait 2
+    Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn Add Parameter KPI"), "Klik Button Add", " ", compatibilityMode.Desktop, ReportStatus.Done)
+    wait 2
+    Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn Add Parameter KPI").Click
+    wait 2
+    Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Klik Button Yes, Add it", " ", compatibilityMode.Desktop, ReportStatus.Done)
+    wait 2
+    Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn Konfirmasi Add Parameter KPI").Click
+    if Browser("DigiSalesWebPortal").Page("Parameter KPI").WebElement("Error Logo").Exist(5) then
+    	wait 2
+    	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Parameter Gagal Ditambahkan", " ", compatibilityMode.Desktop, ReportStatus.Failed)
+    	wait 2
+    	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn OK Gagal Add Parameter").Click
+    
+    else
+    	wait 2
+    	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Parameter Berhasil Ditambah, lalu Klik Ok", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+    	wait 2
+    	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn OK Berhasil Tambah Parameter KPI").Click
+    End If
+	
+End Sub
+
+Sub Edit_Parameter_KPI
+	dt_Edited_Text = DataTable.Value("TEXT2",dtLocalSheet)
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Row1 Btn Edit"), "Tekan Button Edit", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Row1 Btn Edit").Click
+	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebEdit("Field Edit Nama Parameter KPI").Set dt_Edited_Text
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Isi Field Parameter KPI untuk Diganti", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn Save changes Edit"), "Tekan Save Changes", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn Save changes Edit").Click
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Berhasil Edit Data, dan Tekan Ok", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn OK Berhasil Edit").Click
+End Sub
+
+Sub Add_Parameter_KPI_batch
+	dt_parameter_batch = split(DataTable.Value("TEXT1",dtLocalSheet),",")
+	for each dt_parameter in dt_parameter_batch
+    Browser("DigiSalesWebPortal").Page("Parameter KPI").WebEdit("Field Nama Parameter KPI").Set dt_parameter
+    wait 2
+    Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Isi Field Parameter", " ", compatibilityMode.Desktop, ReportStatus.Done)
+    wait 2
+    Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn Add Parameter KPI"), "Klik Button Add", " ", compatibilityMode.Desktop, ReportStatus.Done)
+    wait 2
+    Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn Add Parameter KPI").Click
+    wait 2
+    Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Klik Button Yes, Add it", " ", compatibilityMode.Desktop, ReportStatus.Done)
+    wait 2
+    Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn Konfirmasi Add Parameter KPI").Click
+    if Browser("DigiSalesWebPortal").Page("Parameter KPI").WebElement("Error Logo").Exist(5) then
+    	wait 2
+    	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Parameter Gagal Ditambahkan", " ", compatibilityMode.Desktop, ReportStatus.Failed)
+    	wait 2
+    	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn OK Gagal Add Parameter").Click
+    	Exit for
+    else
+    	wait 2
+    	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Parameter Berhasil Ditambah, lalu Klik Ok", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+    	wait 2
+    	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn OK Berhasil Tambah Parameter KPI").Click
+    End If
+	next
+End Sub
+
+Sub Parameter_KPI_Active_to_Inactive()
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Row1 Btn Inactive"), "Tekan Button Inactive, untuk Membuat Parameter Inactive", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Row1 Btn Inactive").Click
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Berhasil Men-Inactivekan Parameter", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn OK Active or Inactive").Click
+End Sub
+
+Sub Parameter_KPI_Inactive_to_Active()
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Row1 Btn Active"), "Tekan Button Active, untuk Membuat Parameter Active", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Row1 Btn Active").Click
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Parameter KPI"), "Berhasil Men-Inactivekan Parameter", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Parameter KPI").WebButton("Btn OK Active or Inactive").Click
+End Sub
+
+Sub Check_Mapping()
+	Set objkey = CreateObject("WScript.Shell")
+	objkey.SendKeys "{PGDN}"
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Berikut Data Yang Ada Pada Tabel Mapping", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+End Sub
+
+Sub Add_Data_Mapping()
+	Dim dt_TipeSales, dt_KPI, dt_Kategori
+	
+	dt_TipeSales = DataTable.Value("TEXT1",dtLocalSheet)
+	dt_KPI = DataTable.Value("TEXT2",dtLocalSheet)
+	dt_Kategori = DataTable.Value("TEXT3",dtLocalSheet)
+	
+	Set objkey = CreateObject("WScript.Shell")
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn Tambah Data Mapping"), "Tekan Button Tambah Data", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn Tambah Data Mapping").Click
+	wait 3
+	Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Add Field Tipe Sales").Click
+	objkey.SendKeys (dt_TipeSales)
+	objkey.SendKeys "{ENTER}"
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Add Field KPI").Click
+	objkey.SendKeys (dt_KPI)
+	objkey.SendKeys "{ENTER}"
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Add Field Kategori").Click
+	objkey.SendKeys (dt_Kategori)
+	objkey.SendKeys "{ENTER}"
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Masuk Ke Create Form, dan Isi Semua Field Yang Diperlukan", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn Save changes Add Mapping"), "Tekan Button Save Change Untuk Menyimpan Data", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn Save changes Add Mapping").Click
+	wait 2
+	If Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Success Icon").Exist(5) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Berhasil Tambah Data Mapping", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn OK Success").Click
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Search Field Mapping").Click
+		objkey.SendKeys (dt_TipeSales)
+		objkey.SendKeys "{ENTER}"
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn search Mapping").Click
+		wait 2
+		objkey.SendKeys "{PGDN}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Berikut Data Yang Baru Dibuat", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	End If
+	
+	
+
+End  Sub
+
+Sub search_Mapping
+	Set objkey = CreateObject("WScript.Shell")
+	dt_Search = DataTable.Value("TEXT5",dtLocalSheet)
+	
+	Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Search Field Mapping").Click
+		objkey.SendKeys (dt_Search)
+		objkey.SendKeys "{ENTER}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Isi Field Search Data", " ", compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn search Mapping").Click
+		wait 2
+		objkey.SendKeys "{PGDN}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Berikut Data Yang Dicari", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+End Sub
+
+Sub Edit_Mapping
+	Dim dt_TipeSales, dt_KPI, dt_Kategori
+	
+	dt_TipeSales = DataTable.Value("TEXT1",dtLocalSheet)
+	dt_KPI = DataTable.Value("TEXT2",dtLocalSheet)
+	dt_Kategori = DataTable.Value("TEXT3",dtLocalSheet)
+	
+	Set objkey = CreateObject("WScript.Shell")
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Row1 Btn edit"), "Tekan Button Edit", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Row1 Btn edit").Click
+	
+	wait 3
+	Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Edit Field Tipe Sales").Click
+	objkey.SendKeys (dt_TipeSales)
+	objkey.SendKeys "{ENTER}"
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Edit Field KPI").Click
+	objkey.SendKeys (dt_KPI)
+	objkey.SendKeys "{ENTER}"
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Edit Field Kategori").Click
+	objkey.SendKeys (dt_Kategori)
+	objkey.SendKeys "{ENTER}"
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Masuk Ke Edit Form, dan Ubah Field Yang Diperlukan", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn Save changes Edit Mapping"), "Tekan Button Save Change Untuk Menyimpan Data", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn Save changes Add Mapping").Click
+	wait 2
+	If Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Success Icon").Exist(5) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Berhasil Edit Data Mapping", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn OK Success").Click
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Search Field Mapping").Click
+		objkey.SendKeys (dt_TipeSales)
+		objkey.SendKeys "{ENTER}"
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn search Mapping").Click
+		wait 2
+		objkey.SendKeys "{PGDN}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Berikut Data Yang Baru DiEdit", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	End If
+End Sub
+
+Sub View_Mapping
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Row1 Btn View Detail Mapping"), "Tekan Button View", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Row1 Btn View Detail Mapping").Click
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Berikut Detail Data Mapping", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn Close View Detail Mapping").Click
+End Sub
+
+Sub Delete_Mapping
+	Set objkey = CreateObject("WScript.Shell")
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Row1 Btn delete"), "Tekan Button Delete", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Row1 Btn delete").Click
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Tekan Yes, Delete It Untuk Mengkonfirmasi Delete Data", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn Konfirmasi Delete Yes, Delete It").Click
+	If Browser("DigiSalesWebPortal").Page("Mapping").WebElement("Success Icon").Exist(3) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Berhasil Delete Data", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Mapping").WebButton("Btn OK Success").Click	
+		
+		objkey.SendKeys "{PGDN}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Data Sudah Tidak Tampil", " ", compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		
+	End If
+	
+	
+
+End Sub
