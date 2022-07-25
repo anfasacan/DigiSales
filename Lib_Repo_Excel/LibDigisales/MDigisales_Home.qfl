@@ -460,8 +460,14 @@ Sub GenerateProductHolding
 	wait 1
 		objkey.SendKeys "{ENTER}"
 	wait 1
-	Browser("DigiSales").Page("Menu Dashboard").WebEdit("Field Jenis Nasabah").Set dt_JenisNasabah
-	wait 1
+	
+	If dt_JenisNasabah <> "" Then
+		Browser("DigiSales").Page("Menu Dashboard").WebEdit("Field Jenis Nasabah").Set dt_JenisNasabah
+		wait 1
+		objkey.SendKeys "{ENTER}"
+		wait 1	
+	End If
+	
 	Browser("DigiSales").Page("Menu Dashboard").WebEdit("Field CIF").Set dt_CIF
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Mengisi Field Yang Dibutuhkan, Lalu Klik Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
@@ -481,7 +487,11 @@ Sub ListProductHolding
 	Set objkey = CreateObject("WScript.Shell")
 		objkey.SendKeys "{PGDN}"
 	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Berikut List Data Product Holding Periode "& dt_Bulan &" "& dt_Tahun , " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	If Browser("DigiSales").Page("Menu Dashboard").WebElement("No data available").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Data Product Holding Kosong Pada Periode "& dt_Bulan &" "& dt_Tahun , " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	Else
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Berikut List Data Product Holding Periode "& dt_Bulan &" "& dt_Tahun , " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+	End If	
 	wait 2	
 End Sub
 
@@ -496,18 +506,24 @@ Sub ExportExcel
 	wait 2
 	Browser("DigiSales").Page("Menu Dashboard").WebButton("Btn Export Excel").Click
 	wait 2
+	If Browser("DigiSales").Page("Menu Dashboard").WebElement("No data available").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Data Kosong dan Tidak Ada File Excel Yang Tergenerate", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSales").Page("Menu Dashboard").WebButton("Btn Ok Export Data Tidak Ada").Click
+	Else
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Dashboard"), "Berhasil Export Excel", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
-	Browser("DigiSales").Page("Menu Dashboard").WebButton("Btn Ok Berhasil Export").Click
-	wait 1
+		wait 2
+		Browser("DigiSales").Page("Menu Dashboard").WebButton("Btn Ok Berhasil Export").Click
+		wait 1
 	
-	'Cek data Excel berhasil diexport
-	objkey.SendKeys "^j"
-	wait 2
-	objkey.SendKeys "^f"
-	wait 2
-	objkey.SendKeys (dt_File1)
-	wait 3
-		Call CaptureImageUFTV2(Window("SS_Full_Screen"), "Data Berhasil Didownload", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 3	
+		'Cek data Excel berhasil diexport
+		objkey.SendKeys "^j"
+		wait 2
+		objkey.SendKeys "^f"
+		wait 2
+		objkey.SendKeys (dt_File1)
+		wait 3
+			Call CaptureImageUFTV2(Window("SS_Full_Screen"), "Data Berhasil Didownload", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 3
+	End If	
 End Sub
