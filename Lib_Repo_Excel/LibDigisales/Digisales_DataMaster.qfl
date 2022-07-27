@@ -269,7 +269,143 @@ Sub Delete_Mapping
 		wait 2
 		
 	End If
+End Sub
+
+Sub Add_Setting_Bobot
+	Dim dt_TipeSales, dt_TanggalEfektif
+	dt_TipeSales 		=	DataTable.Value("TEXT1",dtLocalSheet)
+	dt_TanggalEfektif	=	DataTable.Value("TEXT2",dtLocalSheet)
+	dt_Bobot			=	split(DataTable.Value("TEXT3",dtLocalSheet),",")
+	Set objkey = CreateObject("WScript.Shell")
+	
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn Tambah Data Setting Bobot"), "Klik Button Tambah Data", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn Tambah Data Setting Bobot").Click
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebElement("Add Field Tipe Sales").Click
+	objkey.SendKeys (dt_TipeSales)
+	objkey.SendKeys "{ENTER}"
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebEdit("Add Field Tanggal Efektif").Set dt_TanggalEfektif
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Isi Field Yang Diperlukan, dan Cari Datanya", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn Add Search").Click
+	wait 5
+	
+	objkey.SendKeys "{TAB 6}"
+	objkey.SendKeys (dt_Bobot(0))
+	
+	For Iterator = 1 To ubound(dt_Bobot) Step 1
+		objkey.SendKeys "{TAB 2}"
+		objkey.SendKeys (dt_Bobot(Iterator))
+	Next
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Berikut Datanya, dan Isi Field Yang Diperlukan", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn Add Save changes"), "Tekan Button Save Changes", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn Add Save changes").Click
+	
+	If Browser("DigiSalesWebPortal").Page("Setting Bobot").WebElement("Success Icon").Exist(2) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Berhasil Tambah Data", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn OK Success").Click	
+	End If
 	
 	
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebElement("Search Field").Click
+	objkey.SendKeys(dt_TipeSales)
+	objkey.SendKeys "{ENTER}"
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Cari Data Yang Tadi Di Tambahkan", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn search").Click
+	wait 1
+	objkey.SendKeys "{PGDN}"
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Berikut Data Yang Berhasil Ditambahkan", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2	
+End Sub
+
+Sub Edit_Setting_Bobot
+	Dim dt_TanggalEfektif
+	
+	dt_TanggalEfektif	=	DataTable.Value("TEXT2",dtLocalSheet)
+	dt_Bobot			=	split(DataTable.Value("TEXT3",dtLocalSheet),",")
+	Set objkey = CreateObject("WScript.Shell")
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot").WebElement("Row1 Edit Button"), "Tekan Button Edit, Untuk Mengubah Data", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebElement("Row1 Edit Button").Click
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Berikut Isi Data Sebelum Di Ubah", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebEdit("Edit Field Tanggal Efektif").Set dt_TanggalEfektif
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebElement("Edit Tipe Sales").Click
+	wait 1
+
+	objkey.SendKeys "{TAB 7}"
+	objkey.SendKeys (dt_Bobot(0))
+	
+	For Iterator = 1 To ubound(dt_Bobot) Step 1
+		objkey.SendKeys "{TAB 2}"
+		objkey.SendKeys (dt_Bobot(Iterator))
+	Next
+	
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Berikut Isi Data Sesudah Di Ubah", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn Edit Save changes"), "Tekan Button Save Changes, Untuk Menyimpan Perubahan", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn Edit Save changes").Click
+	
+	If Browser("DigiSalesWebPortal").Page("Setting Bobot").WebElement("Success Icon").Exist(2) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Berhasil Edit Data", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn OK Success").Click	
+		
+		objkey.SendKeys "{PGDN}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Berikut Data Yang Telah Diubah", " ", compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	End If
+	
+End Sub
+
+Sub Search_Setting_Bobot
+	Dim dt_Search
+	Set objkey = CreateObject("WScript.Shell")
+	dt_Search = DataTable.Value("TEXT5",dtLocalSheet)
+	
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebElement("Search Field").Click
+	objkey.SendKeys(dt_Search)
+	objkey.SendKeys "{ENTER}"
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Isi Field Pencarian", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn search").Click
+	wait 1
+	objkey.SendKeys "{PGDN}"
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Berikut Data Sesuai Dengan Pencarian", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2	
+End Sub
+
+Sub View_Setting_Bobot
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot").WebElement("Row1 View Button"), "Tekan Button View, Untuk Melihat Detail Data", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebElement("Row1 View Button").Click
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Berikut Detail Data", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn Close View Setting Bobot"), "Tekan Button Close Untuk Menutup Detail Data", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebButton("Btn Close View Setting Bobot").Click
 
 End Sub

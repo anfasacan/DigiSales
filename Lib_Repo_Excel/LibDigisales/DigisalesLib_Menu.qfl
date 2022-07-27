@@ -992,6 +992,19 @@ Sub FR_GoTo_SidebarMenu(dtSidebarMenu)
 			Call DA_Logout("1")
 		End If
 		
+		Case "SETTING BOBOT"
+		If Browser("DigiSalesWebPortal").Page("Sidebar").WebElement("Sub Menu Data Master").Exist(10) Then
+			Browser("DigiSalesWebPortal").Page("Sidebar").WebElement("Sub Menu Data Master").Click
+			If  Browser("DigiSalesWebPortal").Page("Sidebar").WebElement("Setting Bobot").Exist(5) Then
+				Browser("DigiSalesWebPortal").Page("Sidebar").WebElement("Setting Bobot").Click
+			End If
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Sidebar"), "Pilih Data Master Lalu Pilih Menu Setting Bobot", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		Else 
+			Reporter.ReportEvent micFail,  "Menu Tidak Ada", "Transaksi Gagal"
+			Call DA_Logout("1")
+		End If
+		
 		Case Else 
 			Reporter.ReportEvent micFail,  "Pilihan Tidak ada", "Transaksi Gagal"
 			Call DA_Logout("1")
