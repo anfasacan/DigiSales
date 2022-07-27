@@ -43,19 +43,6 @@ Function GoToSubNavbar()
 	End Select
 End Function
 
-REM ------- Masuk Menu Produk Digisales
-Sub LihatSemuaMenuProdukDigisales
-	Set objKey = CreateObject("WScript.Shell")
-				objKey.SendKeys "{PGDN 2}"
-
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Produk Digisales"), "Klik Menu Lihat Semua", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-				Browser("DigiSales").Page("Menu Produk Digisales").WebElement("Menu Lihat Semua").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Produk Digisales"), "Masuk Ke Menu Lihat Semua", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-End Sub
 REM ------- Go to Sub Navbar / Sub Menu Pada Navbar Home Tanpa Capture di Report
 Function GoToSubNavbar_NoSS()
 	Dim SubNavbar
@@ -178,7 +165,27 @@ Function GoToSubSubNavbar()
 			End Select
 
 		Case "MY PERFORMANCE"
-			msgbox "FiturBelumTersedia"
+			Select Case SubSubNavbar
+				Case "PROGRESS CHART"
+					MsgBox "FiturBelumTersedia"
+				Case "REPORT REALISASI"
+					MsgBox "FiturBelumTersedia"
+				Case "PERFORMANCE REPORT BY SALES"
+					MsgBox "FiturBelumTersedia"
+				Case "REPORT NASABAH KELOLAAN"
+					MsgBox "FiturBelumTersedia"
+				Case "REPORT STAGING ACTIVITY"
+					MsgBox "FiturBelumTersedia"
+				Case "PERFORMANCE CALCULATOR"
+					Browser("DigiSales").Page("Menu My Performance").WebElement("Performance Calculator").Click
+					wait 2
+						Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Masuk Ke Menu Performance Calculator", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+					wait 2
+				Case "REPORT DETAIL LEADS"
+					MsgBox "FiturBelumTersedia"
+				Case "REPORT SUMMARY LEADS"
+					MsgBox "FiturBelumTersedia"
+			End Select
 		Case "ACCOUNT PLAN"
 			msgbox "FiturBelumTersedia"
 		Case "FLAGGING"
@@ -209,6 +216,21 @@ Function GoToSubSubNavbar()
 			End Select
 	End Select
 End Function
+
+REM ------- Masuk Menu Produk Digisales
+Sub LihatSemuaMenuProdukDigisales
+	Set objKey = CreateObject("WScript.Shell")
+			objKey.SendKeys "{PGDN 2}"
+
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Produk Digisales"), "Klik Menu Lihat Semua", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+			Browser("DigiSales").Page("Menu Produk Digisales").WebElement("Menu Lihat Semua").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Produk Digisales"), "Masuk Ke Menu Lihat Semua", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+End Sub
+
 
 REM-----Filter Data Account Plan Digisales Mobile -> Navbar Home-> Account Plan
 Sub FilterAccountPlan
@@ -526,4 +548,101 @@ Sub ExportExcel
 			Call CaptureImageUFTV2(Window("SS_Full_Screen"), "Data Berhasil Didownload", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 3
 	End If	
+End Sub
+
+REM----------Sub Menu My Performace
+
+REM----------Fungsi Generate pada Performance Calculator
+Sub GeneratePerformanceCalculator
+	Set objkey = CreateObject("WScript.Shell")
+	Dim dt_Bulan, dt_Tahun
+		dt_Bulan = DataTable.Value("TEXT1", dtlocalsheet)
+		dt_Tahun = DataTable.Value("TEXT2", dtlocalsheet)
+		
+	Browser("DigiSales").Page("Menu My Performance").WebEdit("Field Bulan Performance Calculator").Set dt_Bulan
+	wait 1
+		objkey.SendKeys "{ENTER}"
+	wait 1
+	Browser("DigiSales").Page("Menu My Performance").WebEdit("Field Tahun Performance Calculator").Set dt_Tahun
+	wait 1
+		objkey.SendKeys "{ENTER}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Isi Field Bulan dan Tahun, Lalu Klik Button Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu My Performance").WebButton("Btn Generate Performance Calculator").Click
+	wait 2
+End Sub
+
+REM----------Tampil List Data Performance Calculator
+Sub ListDataPerformanceCalculator
+	Set objkey = CreateObject("WScript.Shell")
+	Dim dt_Bulan, dt_Tahun
+		dt_Bulan = DataTable.Value("TEXT1", dtlocalsheet)
+		dt_Tahun = DataTable.Value("TEXT2", dtlocalsheet)
+		
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berikut List Data Performance Calculator Periode " & dt_Bulan & " " & dt_Tahun, " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+		objkey.SendKeys "{PGDN}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berikut List Data Performance Calculator Periode " & dt_Bulan & " " & dt_Tahun, " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+		objkey.SendKeys "{PGDN}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berikut List Data Performance Calculator Periode " & dt_Bulan & " " & dt_Tahun, " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+End Sub
+
+REM----------Fungsi Calculate pada Performance Calculator
+Sub CalculatePerformanceCalculator
+	Set objkey = CreateObject("WScript.Shell")
+	Dim explain
+		explain = "Data Performance Calculator Final Terdapat Pada Test Case Selanjutnya Yaitu DGS-241"
+	Dim dt_TCID, dt_Bulan, dt_Tahun, dt_NilaiSimulasi
+		dt_TCID				= DataTable.Value("TC_ID", dtLocalSheet)
+		dt_Bulan			= DataTable.Value("TEXT1", dtlocalsheet)
+		dt_Tahun 			= DataTable.Value("TEXT2", dtlocalsheet)
+		dt_NilaiSimulasi	= DataTable.Value("TEXT3", dtlocalsheet)
+		
+	Dim tmpJmlData, jmlData, hasilJmlData
+		tmpJmlData 	 = Browser("DigiSales").Page("Menu My Performance").WebElement("Jumlah Data").GetROProperty("innertext")
+		jmlData		 = Right(tmpJmlData, 2)
+		hasilJmlData = CInt(jmlData) - 1
+		
+		objkey.SendKeys "{PGUP 2}"
+		wait 1
+		Browser("DigiSales").Page("Menu My Performance").WebEdit("Field Nilai Simulasi Performance Calculator").Set dt_NilaiSimulasi
+		
+		For i = 1 To hasilJmlData Step 1
+			objkey.SendKeys "{TAB}"
+			wait 1
+			objkey.SendKeys(dt_NilaiSimulasi)
+			wait 1
+		Next
+		
+		wait 1
+		objkey.SendKeys "{PGUP 2}"
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Mengisi Semua Field Nilai Simulasi Menjadi Angka 10", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+			objkey.SendKeys "{PGDN}"
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Mengisi Semua Field Nilai Simulasi Menjadi Angka 10", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+			objkey.SendKeys "{PGDN}"
+		wait 2
+		
+		If dt_TCID = "DGS-240" Then
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Mengisi Semua Field Nilai Simulasi Menjadi Angka 10", explain, compatibilityMode.Desktop, ReportStatus.Done)
+			wait 2
+		Else
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Mengisi Semua Field Nilai Simulasi Menjadi Angka 10, Lalu Klik Button Calculate", " ", compatibilityMode.Desktop, ReportStatus.Done)
+			wait 2
+				Browser("DigiSales").Page("Menu My Performance").WebButton("Btn Calculate Performance Calculator").Click
+			wait 1
+				objkey.SendKeys "{PGDN}"
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berhasil Menampilkan Data Performance Calculator Final", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		End If
+			
 End Sub
