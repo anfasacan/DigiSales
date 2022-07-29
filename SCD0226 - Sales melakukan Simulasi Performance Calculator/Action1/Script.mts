@@ -1,21 +1,22 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
-Dim dtSidebarMenu, dt_UserLogin, dt_NPP, dt_Periode, dt_Bulan
+Dim dt_UserLogin, dt_Bulan, dt_Tahun
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0195 - Pimpinan Wilayah Mengakses Menu Report - Menu Product Holding Ratio - Report.xlsx", "SCD0195")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0226 - Sales melakukan Simulasi Performance Calculator.xlsx", "SCD0226")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
-Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Periode : " & dt_Bulan &" "& dt_Periode))
+Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Data Periode : " & dt_Bulan & " " & dt_Tahun))
 
-REM ------- Digisales
-Call DA_Login()
-call FR_GoTo_SidebarMenu(dtSidebarMenu)
-Call GenerateProductHolding()
-Call ListProductHolding()
-Call ExportExcel()
-Call DA_Logout("0")
+REM ------- Digisales Mobile
+Call DA_LoginMobile()
+Call GoToSubNavbar()
+Call GoToSubSubNavbar()
+Call GeneratePerformanceCalculator()
+Call ListDataPerformanceCalculator()
+Call CalculatePerformanceCalculator()
+Call DA_LogoutMobile("0")
 
 Call spReportSave()
 	
@@ -32,36 +33,31 @@ Sub spLoadLibrary()
 	LibPathDigisales	= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
-
 	REM ------- Report Library
 	LoadFunctionLibrary (LibReport & "BNI_GlobalFunction.qfl")
 	LoadFunctionLibrary (LibReport & "Run Report BNI.vbs")
 	
-	Rem ---- Digisales lib
+	rem ---- Digisales lib
 	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Menu.qfl")
-	LoadFunctionLibrary (LibPathDigisales & "Digisales_report.qfl")
+	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Home.qfl")
 	
-	REM ------ Digisales Repo
-	Call RepositoriesCollection.Add(LibRepo & "RP_Home_Digisales_Web.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Home.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Profile.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Navbar.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
-	Call RepositoriesCollection.Add(LibRepo & "RP_Sidebar.tsr")
-	Call RepositoriesCollection.Add(LibRepo & "RP_Report.tsr")
-	Call RepositoriesCollection.Add(LibRepo & "RP_Function.tsr")
 
 End Sub
 
 Sub spGetDatatable()
 	REM --------- Data
 	dt_UserLogin				= DataTable.Value("USER",dtLocalSheet)
-	dt_NPP						= DataTable.Value("TEXT1",dtLocalSheet)
-	dt_Periode					= DataTable.Value("TEXT2",dtLocalSheet)
-	dt_Bulan					= DataTable.Value("TEXT3",dtLocalSheet)
+	dt_Bulan					= DataTable.Value("TEXT1",dtLocalSheet)
+	dt_Tahun					= DataTable.Value("TEXT2",dtLocalSheet)
+
 	REM --------- Reporting
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-	
-'	REM ---------- Menu
-	dtSidebarMenu				= DataTable.Value("SIDEBAR_MENU" ,dtLocalSheet)
 End Sub
