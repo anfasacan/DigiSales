@@ -1,35 +1,39 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
-Dim dtNavbarMenu, dt_UserLogin
+Dim dtNavbarMenu, dt_UserLogin, iteration
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0172_Melakukan Proses Pemantauan pada Menu Pipeline.xlsx", "SCD0176")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0172_Melakukan Proses Pemantauan pada Menu Pipeline.xlsx", "SCD0172")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
 
-REM ------- Digisales Mobile
-Call DA_LoginMobile()
-Call FR_GoTo_NavbarMenu(dtNavbarMenu)
-Call GoToSubNavbar_Store()
-Call TambahLeadsProspek()
-Call FilterDataStore()
-Call AddProspekToChart()
-Call FilterDataPipeline()
-Call HasilCallTertarik()
-Call FilterDataPipeline()
-Call CheckBNIMFDropdown()
-Call MasukLanjutFollowUp()
-Call LanjutFollowUp()
-Call FilterDataStore()
-Call PembandingMonitoringDanClosing()
-call CheckDataTidakClosing()
-Call DA_LogoutMobile("0")
+iteration = Environment.Value("ActionIteration")
 
-'Call Login_Filezilla()
-'Call Create_SiteManager
-'
+If iteration = 1 Then
+	REM ------- Digisales Mobile
+	Call DA_LoginMobile()
+	Call FR_GoTo_NavbarMenu(dtNavbarMenu)
+	Call GoToSubNavbar_Store()
+	Call TambahLeadsProspek()
+	Call FilterDataStore()
+	Call AddProspekToChart()
+	Call FilterDataPipeline()
+	Call HasilCallTertarik()
+	Call FilterDataPipeline()
+	Call CheckBNIMFDropdown()
+	Call MasukLanjutFollowUp()
+	Call LanjutFollowUp()
+	Call FilterDataStore()
+	Call PembandingMonitoringDanClosing()
+	call CheckDataTidakClosing()
+	Call DA_LogoutMobile("0")
+ElseIf iteration = 2 Then
+	REM -------- Filezilla
+	Call Login_Filezilla()
+	Call DownloadFile()
+End If
 
 Call spReportSave()
 	
@@ -54,6 +58,7 @@ Sub spLoadLibrary()
 	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Menu.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Store.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Pipeline.qfl")
+	LoadFunctionLibrary (LibPathDigisales & "Digisales_Filezilla.qfl")
 	
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Store.tsr")
@@ -61,6 +66,7 @@ Sub spLoadLibrary()
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Profile.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Navbar.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Filezilla.tsr")
 End Sub
 
 Sub spGetDatatable()

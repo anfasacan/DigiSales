@@ -11,7 +11,7 @@ Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Periode : " & dt_Bulan &" "& dt_Periode))
 
 REM ------- Open Heidi
-'Call CreateSessionHeidi_NoSS()
+Call Login_Filezilla()
 'call ExecuteSQL()
 
 REM ------- Digisales

@@ -4,6 +4,12 @@ Sub Login_Filezilla
 	wait 5
 	Call spOpenProgram()
 	wait 5
+	
+	If Dialog("Check for Updates").Exist(2) Then
+		Dialog("Check for Updates").WinButton("Close").Click
+	End If
+	
+	wait 1
 	'Maximize window filezilla
 	If Window("FileZilla").Exist(5) Then
 		Window("FileZilla").Maximize
@@ -27,7 +33,7 @@ Sub Login_Filezilla
 		Window("FileZilla").WinButton("Btn Quickconnect").Click
 	wait 1
 		Call CaptureImageUFTV2(Window("Filezilla"), "Informasi Session Detail Sebelum Masuk ke Server", " ", compatibilityMode.Desktop, ReportStatus.Done)
-	wait 1
+	wait 2
 		Dialog("certificate").WinButton("Btn Konfirmasi").Click
 	wait 1
 End Sub
@@ -170,7 +176,64 @@ Sub UploadStorage
 	wait 2	
 End Sub
 
+REM ----- Download File dari Server Digisales
 Sub DownloadFile
+	Set objkey = CreateObject("WScript.Shell")
+	
+	Dim remoteSite, fileName
+	remoteSite	= DataTable.Value("TEXT1", dtLocalsheet)
+	fileName	= DataTable.Value("TEXT2", dtLocalsheet)
+	
+	'Masuk ke storage /BNIMultifinance/in/archive pada server digisales
+	Window("FileZilla").WinEdit("Remote site").Set remoteSite
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 2
+		Call CaptureImageUFTV2(Window("Filezilla"), "Masuk ke storage server /BNIMultifinance/in/archive", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	
+	'Klik List Remote File
+	If Window("FileZilla").WinListView("Remote File").Exist(5) Then
+		Window("FileZilla").WinListView("Remote File").Click
+	End If
+	
+	'Mencari file yang akan didownload
+	wait 1
+	objKey.SendKeys("^f")
+	objkey.SendKeys(fileName)
+	wait 1
+	
+	'Klik List Remote File
+	If Window("FileZilla").WinListView("Remote File").Exist(5) Then
+		Window("FileZilla").WinListView("Remote File").Click
+	End If
+	
+	'Download File dari Server digisales
+	wait 1
+		objKey.SendKeys "{UP}"
+		objKey.SendKeys "{DOWN}"
+		objKey.SendKeys "+{F10}"
+	wait 2
+		Call CaptureImageUFTV2(Window("Filezilla"), "Klik Download untuk mengunduh file BNIMF", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+		objKey.SendKeys "{DOWN}"
+		objKey.SendKeys "{ENTER}"
+	wait 1
+	
+	If Dialog("Target file already exists").Exist(2) Then
+		Dialog("Target file already exists").WinButton("Btn OK").Click
+	End If
+	
+	wait 1
+	
+	'Cek Notifikasi berhasil download
+	If Window("Window").WinObject("Notif").Exist(1) Then
+		Window("Window").WinObject("Notif").Click
+	End If
+	
+	wait 1
+		Call CaptureImageUFTV2(Window("Filezilla"), "File Berhasil Di Download dari Server", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
 	
 End Sub
 
