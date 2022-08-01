@@ -19,7 +19,7 @@ Call ExportExcel()
 Call DA_Logout("0")
 
 REM ------- Open File EXCEL
-Call OpenFile(DownloadPath , dt_File1, "EXCEL")
+Call OpenLastDownloadFile(dt_File1, "EXCEL")
 
 Call spReportSave()
 	
@@ -65,7 +65,7 @@ Sub spGetDatatable()
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-'	
+
 '	REM ---------- Menu
 	dtSidebarMenu				= DataTable.Value("SIDEBAR_MENU" ,dtLocalSheet)
 End Sub

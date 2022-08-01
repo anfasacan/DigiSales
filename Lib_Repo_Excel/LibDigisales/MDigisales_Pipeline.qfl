@@ -256,7 +256,7 @@ Sub MasukLanjutFollowUp
 		wait 2
 		Browser("DigiSales").Page("Menu Follow Up").WebButton("Btn Detail").Click	
 		wait 2
-			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Follow Up"), "Klik Button Menu Pada Pojok Kiri", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Follow Up"), "Klik Button Menu Pada Pojok Kanan Bawah", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 2
 		Browser("DigiSales").Page("Menu Follow Up").WebElement("Btn Menu").Click
 		wait 2
@@ -305,7 +305,9 @@ Sub LanjutFollowUp
 	wait 2
 	Browser("DigiSales").Page("Menu Follow Up").WebButton("Btn YA Lanjutkan Proses").Click
 	End If
+	wait 2
 	Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Masuk Kehalaman Monitoring", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
 End Sub
 
 Sub PembandingMonitoringDanClosing
