@@ -285,6 +285,8 @@ Sub LanjutFollowUp
 	Browser("DigiSales").Page("Menu Follow Up").WebElement("Field Nama Produk").Click
 	objkey.SendKeys (dt_NamaProduk)
 	objkey.SendKeys "{ENTER}"
+	objkey.SendKeys "{ESC}"
+	Browser("DigiSales").Page("Menu Follow Up").WebEdit("Field Alasan").Click
 	Browser("DigiSales").Page("Menu Follow Up").WebEdit("Field Alasan").Set dt_Alasan
 	
 	wait 2

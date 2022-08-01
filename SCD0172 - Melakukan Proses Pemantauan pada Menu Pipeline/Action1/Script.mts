@@ -25,7 +25,6 @@ Call LanjutFollowUp()
 Call FilterDataStore()
 Call PembandingMonitoringDanClosing()
 call CheckDataTidakClosing()
-
 Call DA_LogoutMobile("0")
 
 'Call Login_Filezilla()
