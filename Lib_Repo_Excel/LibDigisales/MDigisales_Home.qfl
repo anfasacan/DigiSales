@@ -74,8 +74,11 @@ Function GoToSubSubNavbar_Using_TEXT()
 	dtNavbarMenu	= ucase(DataTable.Value("NAVBAR_MENU" ,dtLocalSheet))
 	
 	If DataTable.Value("TEXT2",dtLocalSheet) <> "" Then
-		SubSubNavbar(0)	= ucase(DataTable.Value("TEXT1" ,dtLocalSheet))
 		SubSubNavbar(1)	= ucase(DataTable.Value("TEXT2" ,dtLocalSheet))
+	End If
+	
+	If DataTable.Value("TEXT3",dtLocalSheet) <> "" Then
+		SubSubNavbar(2)	= ucase(DataTable.Value("TEXT3" ,dtLocalSheet))
 	End If
 	
 For each NavbarArr in SubSubNavbar

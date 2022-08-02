@@ -192,6 +192,70 @@ Function DA_LoginDetail()
 	wait 2
 End Function
 
+Function DA_LoginDetailMobile()
+	Dim dtLoginUsername, dtLoginPassword
+	
+	dtLoginUsername		= DataTable.Value("USERID", dtLocalsheet)
+	dtLoginPassword		= DataTable.Value("PASSWORD", dtLocalsheet)
+	iMaxLimit = 100
+	
+	REM -------------------- LOGIN Digisales -------------------------------------
+	If dtLoginUsername <> "" Then
+		Browser("DigiSales").Page("DigiSales Mobile | Login").WebEdit("Username").Set dtLoginUsername	
+	End If
+	
+	If dtLoginPassword <> "" Then
+		Browser("DigiSales").Page("DigiSales Mobile | Login").WebEdit("Password").Set dtLoginPassword
+	End If
+
+	wait 1
+	Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), "Input Data Login", "UserID: " & dtLoginUsername , compatibilityMode.Desktop, ReportStatus.Done)
+
+	wait 1
+	
+	If Browser("DigiSales").Page("DigiSales Mobile | Login").WebButton("Btn Login Mobile").GetROProperty("disabled") <> 1 Then
+		Browser("DigiSales").Page("DigiSales Mobile | Login").WebButton("Btn Login Mobile").Click	
+	End If
+	
+	If Browser("DigiSales").Page("DigiSales Mobile | Login").WebElement("Hanya sales yang memiliki role").Exist(1) Then
+		wait 1
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), "Gagal Login Karena Role Tidak Sesuai", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		Call CloseBrowser()
+		Call spReportSave()
+		Call ExitActionIteration() 
+		
+	ElseIf Browser("DigiSales").Page("DigiSales Mobile | Login").WebElement("Password is required").Exist(10) Then
+		wait 2
+		Reporter.ReportEvent micFail, "Core Mati", "Gagal Masuk Ke Halaman Home Digisales Mobile"
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), " Gagal Masuk ke Halaman Home Digisales Mobile", " " , compatibilityMode.Desktop, ReportStatus.Failed)	
+		Call CloseBrowser()
+		Call spReportSave()
+		Call ExitActionIteration()
+		
+	ElseIf  Browser("DigiSales").Page("DigiSales Mobile | Login").WebElement("NPP is required").Exist(10) Then
+		wait 2
+		Reporter.ReportEvent micFail, "Core Mati", "Gagal Masuk Ke Halaman Home Digisales Mobile"
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), " Gagal Masuk ke Halaman Home Digisales Mobile", " " , compatibilityMode.Desktop, ReportStatus.Failed)	
+		Call CloseBrowser()
+		Call spReportSave()
+		Call ExitActionIteration()
+	
+	Else
+		If Browser("DigiSales").Page("DigiSales Mobile | Profile").WebElement("Alert Whatsapp").Exist(5) Then
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Profile"), "Berhasil Login dan Muncul Force Update Whatsapp", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+				Browser("DigiSales").Page("DigiSales Mobile | Profile").WebButton("Btn Alert Oke").Click
+			wait 1
+				Browser("DigiSales").Page("Navbar").WebElement("Home").Click
+		else
+		wait 1
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), "Berhasil Login", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		End If
+	End If
+	
+End Function
+
 REM -------- Open Lasted Download File
 Sub OpenLastDownloadFile(FileName, AppName)
 	Dim InitialFileName
@@ -372,70 +436,6 @@ Function OpenFile(Path , FileName, AppName)
 	End Select
 End Function
 
-Function DA_LoginDetailMobile()
-	Dim dtLoginUsername, dtLoginPassword
-	
-	dtLoginUsername		= DataTable.Value("USERID", dtLocalsheet)
-	dtLoginPassword		= DataTable.Value("PASSWORD", dtLocalsheet)
-	iMaxLimit = 100
-	
-	REM -------------------- LOGIN Digisales -------------------------------------
-	If dtLoginUsername <> "" Then
-		Browser("DigiSales").Page("DigiSales Mobile | Login").WebEdit("Username").Set dtLoginUsername	
-	End If
-	
-	If dtLoginPassword <> "" Then
-		Browser("DigiSales").Page("DigiSales Mobile | Login").WebEdit("Password").Set dtLoginPassword
-	End If
-
-	wait 1
-	Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), "Input Data Login", "UserID: " & dtLoginUsername , compatibilityMode.Desktop, ReportStatus.Done)
-
-	wait 1
-	
-	If Browser("DigiSales").Page("DigiSales Mobile | Login").WebButton("Btn Login Mobile").GetROProperty("disabled") <> 1 Then
-		Browser("DigiSales").Page("DigiSales Mobile | Login").WebButton("Btn Login Mobile").Click	
-	End If
-	
-	If Browser("DigiSales").Page("DigiSales Mobile | Login").WebElement("Hanya sales yang memiliki role").Exist(1) Then
-		wait 1
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), "Gagal Login Karena Role Tidak Sesuai", " ", compatibilityMode.Desktop, ReportStatus.Passed)
-		Call CloseBrowser()
-		Call spReportSave()
-		Call ExitActionIteration() 
-		
-	ElseIf Browser("DigiSales").Page("DigiSales Mobile | Login").WebElement("Password is required").Exist(10) Then
-		wait 2
-		Reporter.ReportEvent micFail, "Core Mati", "Gagal Masuk Ke Halaman Home Digisales Mobile"
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), " Gagal Masuk ke Halaman Home Digisales Mobile", " " , compatibilityMode.Desktop, ReportStatus.Failed)	
-		Call CloseBrowser()
-		Call spReportSave()
-		Call ExitActionIteration()
-		
-	ElseIf  Browser("DigiSales").Page("DigiSales Mobile | Login").WebElement("NPP is required").Exist(10) Then
-		wait 2
-		Reporter.ReportEvent micFail, "Core Mati", "Gagal Masuk Ke Halaman Home Digisales Mobile"
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), " Gagal Masuk ke Halaman Home Digisales Mobile", " " , compatibilityMode.Desktop, ReportStatus.Failed)	
-		Call CloseBrowser()
-		Call spReportSave()
-		Call ExitActionIteration()
-	
-	Else
-		If Browser("DigiSales").Page("DigiSales Mobile | Profile").WebElement("Alert Whatsapp").Exist(5) Then
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Profile"), "Berhasil Login dan Muncul Force Update Whatsapp", " ", compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-				Browser("DigiSales").Page("DigiSales Mobile | Profile").WebButton("Btn Alert Oke").Click
-			wait 1
-				Browser("DigiSales").Page("Navbar").WebElement("Home").Click
-		else
-		wait 1
-			Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), "Berhasil Login", " ", compatibilityMode.Desktop, ReportStatus.Passed)
-		End If
-	End If
-	
-End Function
-
 REM ------------------- LOGIN FOR OPEN WEB BROWSER SUPER Digisales
 Function DA_OpenBrowserSuperDigisales()
 	Dim Openbrowser, url
@@ -605,7 +605,6 @@ REM ---------------------------- SIDEBAR MENU DIGISALES-------------------------
 Sub FR_GoTo_SidebarMenu(dtSidebarMenu)
 	
 	dtSidebarMenu	= Ucase(dtSidebarMenu)
-	
 	
 	Select Case dtSidebarMenu
 		Case "HALAMAN UTAMA"
@@ -1102,9 +1101,19 @@ Sub FR_GoTo_SidebarMenu(dtSidebarMenu)
 			Call DA_Logout("1")
 		End If
 		
+		Case "UPLOAD DATA LEADS"
+		If Browser("DigiSalesWebPortal").Page("Sidebar").Link("Upload Data Leads").Exist(10) Then
+			Browser("DigiSalesWebPortal").Page("Sidebar").Link("Upload Data Leads").Click
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Sidebar"), "Pilih Menu Upload Data Leads", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		Else 
+			Reporter.ReportEvent micFail,  "Menu Tidak Ada", "Transaksi Gagal"
+			Call DA_Logout("1")
+		End If
+		
 		Case Else 
 			Reporter.ReportEvent micFail,  "Pilihan Tidak ada", "Transaksi Gagal"
 			Call DA_Logout("1")
-		
+			
 	End Select
 End Sub
