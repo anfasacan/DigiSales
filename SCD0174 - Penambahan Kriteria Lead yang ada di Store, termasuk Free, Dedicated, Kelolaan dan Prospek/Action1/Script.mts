@@ -3,7 +3,7 @@ Dim dtNavbarMenu, dt_UserLogin
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0043_Filter Lead Free.xlsx", "SCD0043")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0174 - Penambahan Kriteria Lead yang ada di Store, termasuk Free, Dedicated, Kelolaan dan Prospek.xlsx", "SCD0174")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
@@ -12,8 +12,7 @@ Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedRes
 REM ------- Digisales Mobile
 Call DA_LoginMobile()
 Call FR_GoTo_NavbarMenu(dtNavbarMenu)
-Call GoToSubNavbar()
-Call FilterDataStore()
+Call GoToSubNavbar_Using_TEXT()
 Call DA_LogoutMobile("0")
 
 Call spReportSave()
@@ -39,6 +38,7 @@ Sub spLoadLibrary()
 	rem ---- Digisales lib
 	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Menu.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Store.qfl")
+	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Home.qfl")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Store.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Profile.tsr")
