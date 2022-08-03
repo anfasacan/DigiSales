@@ -61,6 +61,74 @@ Function GoToSubNavbar()
 	End Select
 End Function
 
+REM ------- Go to Sub Navbar Using Text
+Function GoToSubNavbar_Using_TEXT()
+	Dim NavbarArr, counter
+	Dim SubNavbar(5)
+	
+	counter 	= 0
+	
+	SubNavbar(0)	= ucase(DataTable.Value("TEXT3" ,dtLocalSheet))
+	
+	dtNavbarMenu	= ucase(DataTable.Value("NAVBAR_MENU" ,dtLocalSheet))
+	
+	If DataTable.Value("TEXT4",dtLocalSheet) <> "" Then
+		SubNavbar(1)	= ucase(DataTable.Value("TEXT4" ,dtLocalSheet))
+	End If
+'	
+'	If DataTable.Value("TEXT3",dtLocalSheet) <> "" Then
+'		SubNavbar(2)	= ucase(DataTable.Value("TEXT3" ,dtLocalSheet))
+'	End If
+	
+For each NavbarArr in SubNavbar
+	counter = counter + 1
+	
+		Call FR_GoTo_NavbarMenu(dtNavbarMenu)
+		
+		If NavbarArr = "" Then
+			Exit For
+		End If
+		
+		If counter <> 1 Then
+			Call FR_GoTo_NavbarMenu(dtNavbarMenu)
+		End If
+	
+		Select Case dtNavbarMenu
+		Case "STORE"
+			Select Case NavbarArr
+				Case "DEDICATED"
+						Browser("DigiSales").Page("NavStore").WebElement("Dedicated").Click
+					wait 2
+						Call CaptureImageUFTV2(Browser("DigiSales").Page("NavStore"), "Masuk Ke Sub Menu Dedicated", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+					wait 2
+				Case "FREE"
+						Browser("DigiSales").Page("NavStore").WebElement("Free").Click
+					wait 2
+						Call CaptureImageUFTV2(Browser("DigiSales").Page("NavStore"), "Masuk Ke Sub Menu Free", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+					wait 2
+				Case "KELOLAAN"
+						Browser("DigiSales").Page("NavStore").WebElement("Kelolaan").Click
+					wait 2
+						Call CaptureImageUFTV2(Browser("DigiSales").Page("NavStore"), "Masuk Ke Sub Menu Kelolaan", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+					wait 2
+					
+				Case "PROSPEK"
+						Browser("DigiSales").Page("NavStore").WebElement("Prospek").Click
+					wait 2
+						Call CaptureImageUFTV2(Browser("DigiSales").Page("NavStore"), "Masuk Ke Sub Menu Prospek", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+					wait 2
+			End Select
+			
+			Case "Pipeline"
+				Select Case NavbarArr
+					Case "CHART"	
+					msgbox "Masuk Menu Cart"
+				end select 
+				
+		End Select
+Next
+
+End Function
 
 REM ========= Fungsi Filter Data Store
 Sub FilterDataStore
@@ -94,6 +162,7 @@ Sub FilterDataStore
 	wait 2
 End Sub
 
+REM ----- Fungsi Tambah Leads Prospek
 Sub TambahLeadsProspek
 	Dim dtNama, dtHP, dtNamaProgram, dtPropinsi, dtKota, dtKodePos, dtAlamat
 	Set objKey = CreateObject("WScript.Shell")
@@ -163,6 +232,7 @@ Sub TambahLeadsProspek
 
 End Sub
 
+REM ------ Fungsi Tambah Prospek to Cart
 Sub AddProspekToChart
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Prospek").WebButton("Btn Add To Chart"), "Pilih Button Add Chart", " " , compatibilityMode.Desktop, ReportStatus.Passed)
@@ -185,6 +255,7 @@ Sub AddProspekToChart
 	wait 2
 End Sub
 
+REM ----- Fungsi Tambah Dedicated to Cart
 Sub AddDedicatedToChart
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated").WebButton("Btn Add To Chart"), "Pilih Button Add Chart", " " , compatibilityMode.Desktop, ReportStatus.Passed)
@@ -207,6 +278,7 @@ Sub AddDedicatedToChart
 	wait 2
 End Sub
 
+REM ------ Fungsi Tambah Kelolaan to Cart
 Sub AddKelolaanToChart
 	Set objkey = CreateObject ("WScript.Shell")
 	wait 2
@@ -238,6 +310,7 @@ Sub AddKelolaanToChart
 	wait 2
 End Sub
 
+REM ------ Fungsi Tambah Free to Cart
 Sub AddFreeToChart
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Free").WebButton("Btn Add To Chart"), "Pilih Button Add Chart", " " , compatibilityMode.Desktop, ReportStatus.Passed)

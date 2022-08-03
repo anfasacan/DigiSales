@@ -1,5 +1,6 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
-Dim dtNavbarMenu, dt_UserLogin
+Dim dtSidebarMenu, dtNavbarMenu, dt_UserLogin
+Dim UploadPath, dt_File1, iteration
 
 REM -------------- Call Function
 Call spLoadLibrary()
@@ -9,13 +10,28 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
 
-REM ------- Digisales Mobile
-Call DA_LoginMobile()
-Call FR_GoTo_NavbarMenu(dtNavbarMenu)
-Call GoToSubNavbar_Using_TEXT()
-Call DA_LogoutMobile("0")
+iteration = Environment.Value("ActionIteration")
 
-Call spReportSave()
+If iteration = 1 Then
+	REM ------- Digisales
+	Call DA_Login()
+	Call FR_GoTo_SidebarMenu(dtSidebarMenu)
+	Call UploadDataLeads()
+	Call DA_Logout("0")
+	
+	REM ------ Open File Excel
+	Call OpenFile(UploadPath , dt_File1, "EXCEL")
+	
+ElseIf iteration = 2 Then
+	REM ------- Digisales Mobile
+	Call DA_LoginMobile()
+	Call FR_GoTo_NavbarMenu(dtNavbarMenu)
+	Call GoToSubNavbar_Using_TEXT()
+	Call DA_LogoutMobile("0")
+
+End If
+
+'Call spReportSave()
 	
 Sub spLoadLibrary()
 	Dim LibPathDigisales, LibReport, LibRepo, objSysInfo
@@ -27,6 +43,7 @@ Sub spLoadLibrary()
 	tempDigisalesPath2 	= InStrRev(tempDigisalesPath, "\")
 	PathDigisales 		= Left(tempDigisalesPath, tempDigisalesPath2)
 	
+	UploadPath			= PathDigisales & "File_Upload\"
 	LibPathDigisales	= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
@@ -35,20 +52,29 @@ Sub spLoadLibrary()
 	LoadFunctionLibrary (LibReport & "BNI_GlobalFunction.qfl")
 	LoadFunctionLibrary (LibReport & "Run Report BNI.vbs")
 	
-	rem ---- Digisales lib
+	REM ---- Digisales lib
+	
+	'Digisales Portal
 	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Menu.qfl")
+	LoadFunctionLibrary (LibPathDigisales & "Digisales_UploadDataLeads.qfl")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Upload_Data_Leads.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Sidebar.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
+	
+	'Digisales Mobile
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Store.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Home.qfl")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Store.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Home.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Profile.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Navbar.tsr")
-	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
 End Sub
 
 Sub spGetDatatable()
 	REM --------- Data
 	dt_UserLogin				= DataTable.Value("USER",dtLocalSheet)
+	dt_File1					= DataTable.Value("TEXT1",dtLocalSheet)
 	
 	REM --------- Reporting
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
@@ -58,5 +84,8 @@ Sub spGetDatatable()
 	
 	REM ---------- Navbar Menu
 	dtNavbarMenu				= DataTable.Value("NAVBAR_MENU" ,dtLocalSheet)
+	
+	REM ---------- Sidebar Menu
+	dtSidebarMenu				= DataTable.Value("SIDEBAR_MENU",dtLocalSheet)
 
 End Sub

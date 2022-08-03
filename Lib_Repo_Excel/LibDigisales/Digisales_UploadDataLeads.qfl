@@ -1,0 +1,33 @@
+﻿REM ------- Upload Data Leads
+Sub UploadDataLeads
+	Dim fileUpload, objSysInfo
+	Dim tempDigisalesPath, tempDigisalesPath2, PathDigisales
+	Dim dt_fileUpload
+	
+	dt_fileUpload = DataTable.Value("TEXT1", dtLocalSheet)
+
+	Set objkey			= CreateObject("WScript.Shell")
+	Set objSysInfo 		= Createobject("Wscript.Network")	
+	
+	tempDigisalesPath 	= Environment.Value("TestDir")
+	tempDigisalesPath2 	= InStrRev(tempDigisalesPath, "\")
+	PathDigisales 		= Left(tempDigisalesPath, tempDigisalesPath2)
+	fileUpload			= PathDigisales & "File_Upload\" & dt_fileUpload
+'	MsgBox fileUpload
+
+	Browser("DigisalesWebPortal").Page("Upload Data Leads - DigiSalesWebPortal").WebFile("Upload File").Click
+	wait 1
+	objkey.SendKeys(fileUpload)
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigisalesWebPortal").Page("Upload Data Leads - DigiSalesWebPortal"), "Pilih File Data Leads Yang Akan Diupload", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	objkey.SendKeys "{ENTER}"
+	wait 2
+	
+	If Browser("DigisalesWebPortal").Page("Upload Data Leads - DigiSalesWebPortal").WebElement("LogoSucces").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigisalesWebPortal").Page("Upload Data Leads - DigiSalesWebPortal"), "Berhasil Upload Data Leads", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigisalesWebPortal").Page("Upload Data Leads - DigiSalesWebPortal").WebButton("OK_Succes_Modal").Click
+	End If
+	
+End Sub
