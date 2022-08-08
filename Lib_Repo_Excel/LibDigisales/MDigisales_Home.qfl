@@ -62,10 +62,9 @@ End Function
 
 REM ------- Go to Sub Sub Navbar / Sub Sub Menu Pada Navbar Home menggunakan Text Untuk Navigasi
 Function GoToSubSubNavbar_Using_TEXT()
-	Dim SubNavbar, NavbarArr, counter
+	Dim SubNavbar, NavbarArr, counter, Arr_Index
 	Dim SubSubNavbar(5)
 	
-	counter = 0
 	SubNavbar	= DataTable.Value("SUB_NAVBAR" ,dtLocalSheet)
 	SubNavbar	= ucase(SubNavbar)
 	
@@ -81,21 +80,14 @@ Function GoToSubSubNavbar_Using_TEXT()
 		SubSubNavbar(2)	= ucase(DataTable.Value("TEXT3" ,dtLocalSheet))
 	End If
 	
-For each NavbarArr in SubSubNavbar
-	counter = counter + 1
+	Arr_Index = 0
 	
-		If Browser("DigiSales").Page("Menu BNI Multi Finance").WebElement("Btn Back").Exist(2) Then
-			Browser("DigiSales").Page("Menu BNI Multi Finance").WebElement("Btn Back").Click
-		End If
+For each NavbarArr in SubSubNavbar
 		
 		If NavbarArr = "" Then
 			Exit For
 		End If
 		
-		If counter <> 1 Then
-			Call GoToSubNavbar()	
-		End If
-	
 			Select Case SubNavbar
 		Case "DASHBOARD"
 			msgbox "FiturBelumTersedia"
@@ -131,6 +123,18 @@ For each NavbarArr in SubSubNavbar
 					wait 2
 			End Select
 	End Select
+	
+	If Browser("DigiSales").Page("Menu BNI Multi Finance").WebElement("Btn Back").Exist(2) Then
+			Browser("DigiSales").Page("Menu BNI Multi Finance").WebElement("Btn Back").Click
+	End If
+	
+	If SubSubNavbar(Arr_Index + 1) = "" Then
+		Exit For
+	End If
+	
+	Call GoToSubNavbar()
+
+	Arr_Index = Arr_Index + 1
 	
 Next
 
