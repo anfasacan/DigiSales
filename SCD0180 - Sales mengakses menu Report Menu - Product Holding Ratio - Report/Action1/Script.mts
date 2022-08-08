@@ -18,7 +18,7 @@ Call ExportExcel()
 Call DA_Logout("0")
 
 REM ------- Open File EXCEL
-Call OpenFile(DownloadPath , dt_File1, "EXCEL")
+Call OpenLastDownloadFile(dt_File1, "EXCEL")
 
 Call spReportSave()
 	

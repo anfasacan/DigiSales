@@ -16,15 +16,17 @@ Call FR_GoTo_SidebarMenu(dtSidebarMenu)
 
 If iteration = 1 Then
 	Call GenerateProductHolding()
+	Call DA_Logout("0")
 Else
 	Call GenerateProductHolding()
 	Call ListProductHolding()
 	Call ExportExcel()
+	Call DA_Logout("0")
 	REM ------- Open File EXCEL
-	Call OpenFile(DownloadPath , dt_File1, "EXCEL")
+	Call OpenLastDownloadFile(dt_File1, "EXCEL")
 End If
 
-Call DA_Logout("0")
+
 
 Call spReportSave()
 	
