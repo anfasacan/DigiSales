@@ -1,6 +1,5 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
 Dim dtSidebarMenu, dt_UserLogin, dt_File1, dt_NPP, dt_Periode, dt_Bulan
-Dim DownloadPath
 
 REM -------------- Call Function
 Call spLoadLibrary()
@@ -10,10 +9,6 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Periode : " & dt_Bulan &" "& dt_Periode))
 
-REM ------- Open Heidi
-'Call CreateSessionHeidi_NoSS()
-'call ExecuteSQL()
-
 REM ------- Digisales
 Call DA_Login()
 call FR_GoTo_SidebarMenu(dtSidebarMenu)
@@ -21,10 +16,6 @@ Call GenerateProductHolding()
 Call ListProductHolding()
 Call ExportExcel()
 Call DA_Logout("0")
-
-REM ------- Open File EXCEL
-'Call OpenFile(DownloadPath , dt_File1, "EXCEL")
-
 
 Call spReportSave()
 	
@@ -63,7 +54,6 @@ End Sub
 Sub spGetDatatable()
 	REM --------- Data
 	dt_UserLogin				= DataTable.Value("USER",dtLocalSheet)
-	dt_File1					= DataTable.Value("FILE1",dtLocalSheet)
 	dt_NPP						= DataTable.Value("TEXT1",dtLocalSheet)
 	dt_Periode					= DataTable.Value("TEXT2",dtLocalSheet)
 	dt_Bulan					= DataTable.Value("TEXT3",dtLocalSheet)
@@ -72,7 +62,7 @@ Sub spGetDatatable()
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-'	
+	
 '	REM ---------- Menu
 	dtSidebarMenu				= DataTable.Value("SIDEBAR_MENU" ,dtLocalSheet)
 End Sub
