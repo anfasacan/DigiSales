@@ -11,7 +11,7 @@ Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Periode : " & dt_Bulan &" "& dt_Periode))
 
 REM ------- Open Heidi
-Call Login_Filezilla()
+'Call Login_Filezilla()
 'call ExecuteSQL()
 
 REM ------- Digisales
@@ -23,7 +23,7 @@ Call ExportExcel()
 Call DA_Logout("0")
 
 REM ------- Open File EXCEL
-Call OpenFile(DownloadPath , dt_File1, "EXCEL")
+Call OpenLastDownloadFile(dt_File1, "EXCEL")
 
 
 Call spReportSave()
