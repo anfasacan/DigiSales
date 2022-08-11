@@ -12,7 +12,7 @@ DevelopTool=AQT
 
 [Actions]
 Action0=Action0\Script.mts
-SCD210 - Gagal Login Role=Action1\Script.mts
+SCD0210 - Gagal Login Role=Action1\Script.mts
 
 [VuserProfiles]
 Profiles=Default Profile
