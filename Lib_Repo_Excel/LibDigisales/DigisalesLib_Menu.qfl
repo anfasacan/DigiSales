@@ -326,6 +326,7 @@ Sub OpenLastDownloadFile(FileName, AppName)
 					If Window("SS_Excel").Exist Then
 						Window("SS_Excel").Click
 					End If
+				objkey.SendKeys "^{UP}"
 				objkey.SendKeys "^{RIGHT}"
 				wait 2
 				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
@@ -338,7 +339,8 @@ Sub OpenLastDownloadFile(FileName, AppName)
 						If Window("SS_Excel").Exist Then
 							Window("SS_Excel").Click
 						End If
-							objkey.SendKeys "^{END}"
+						wait 2
+							objkey.SendKeys "^{RIGHT}"
 							wait 1
 							Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 							wait 2

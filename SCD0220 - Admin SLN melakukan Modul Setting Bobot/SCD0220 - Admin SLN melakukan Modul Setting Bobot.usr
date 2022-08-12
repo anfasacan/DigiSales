@@ -12,7 +12,7 @@ DevelopTool=AQT
 
 [Actions]
 Action0=Action0\Script.mts
-SCD220 -  Add Setting Bobot=Action1\Script.mts
+SCD0220 -  Add Setting Bobot=Action1\Script.mts
 
 [VuserProfiles]
 Profiles=Default Profile

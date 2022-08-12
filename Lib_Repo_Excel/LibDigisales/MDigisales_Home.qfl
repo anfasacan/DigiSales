@@ -550,7 +550,7 @@ Sub ExportExcel
 		wait 2
 		objkey.SendKeys "^f"
 		wait 2
-		objkey.SendKeys (dt_File1)
+		objkey.SendKeys (left(dt_File1,4))
 		wait 3
 			Call CaptureImageUFTV2(Window("SS_Full_Screen"), "Data Berhasil Didownload", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 3

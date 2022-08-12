@@ -343,12 +343,12 @@ Sub Edit_Setting_Bobot
 	wait 2
 	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Setting Bobot"), "Berikut Isi Data Sebelum Di Ubah", " ", compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
-	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebEdit("Edit Field Tanggal Efektif").Set dt_TanggalEfektif
+'	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebEdit("Edit Field Tanggal Efektif").Set dt_TanggalEfektif
 	wait 2
 	Browser("DigiSalesWebPortal").Page("Setting Bobot").WebElement("Edit Tipe Sales").Click
 	wait 1
 
-	objkey.SendKeys "{TAB 7}"
+	objkey.SendKeys "{TAB 6}"
 	objkey.SendKeys (dt_Bobot(0))
 	
 	For Iterator = 1 To ubound(dt_Bobot) Step 1

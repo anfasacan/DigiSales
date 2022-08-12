@@ -1,1 +1,1 @@
-﻿RunAction "SCD220 -  Add Setting Bobot", allIterations
+﻿RunAction "SCD0220 -  Add Setting Bobot", allIterations
