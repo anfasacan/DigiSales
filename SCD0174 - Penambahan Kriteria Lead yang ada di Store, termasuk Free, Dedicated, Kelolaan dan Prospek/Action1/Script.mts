@@ -28,10 +28,10 @@ ElseIf iteration = 2 Then
 	Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 	Call GoToSubNavbar_Using_TEXT()
 	Call DA_LogoutMobile("0")
-
+	
 End If
 
-'Call spReportSave()
+Call spReportSave()
 	
 Sub spLoadLibrary()
 	Dim LibPathDigisales, LibReport, LibRepo, objSysInfo
@@ -59,14 +59,15 @@ Sub spLoadLibrary()
 	LoadFunctionLibrary (LibPathDigisales & "Digisales_UploadDataLeads.qfl")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Upload_Data_Leads.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Sidebar.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Home_Digisales_Web.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
 	
 	'Digisales Mobile
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Store.qfl")
-	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Home.qfl")
+'	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Home.qfl")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Store.tsr")
-	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Home.tsr")
+'	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Home.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Profile.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Navbar.tsr")
 End Sub

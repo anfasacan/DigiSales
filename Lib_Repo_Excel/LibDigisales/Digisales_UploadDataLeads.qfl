@@ -13,11 +13,11 @@ Sub UploadDataLeads
 	tempDigisalesPath2 	= InStrRev(tempDigisalesPath, "\")
 	PathDigisales 		= Left(tempDigisalesPath, tempDigisalesPath2)
 	fileUpload			= PathDigisales & "File_Upload\" & dt_fileUpload
-'	MsgBox fileUpload
+	MsgBox fileUpload
 
 	Browser("DigisalesWebPortal").Page("Upload Data Leads - DigiSalesWebPortal").WebFile("Upload File").Click
-	wait 1
-	objkey.SendKeys(fileUpload)
+	wait 3
+	objkey.SendKeys fileUpload
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigisalesWebPortal").Page("Upload Data Leads - DigiSalesWebPortal"), "Pilih File Data Leads Yang Akan Diupload", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
