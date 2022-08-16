@@ -199,12 +199,12 @@ Function GoToSubSubNavbar()
 			Select Case SubSubNavbar
 				Case "CUSTOMER FLAGGING"
 						Browser("DigiSales").Page("Menu Flagging").WebElement("Customer Flagging").Click
-					wait 2
+					wait 4
 						Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Masuk Ke Sub Menu Customer Flagging", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 					wait 2
 				Case "CUSTOMER FLAGGING FAMILY"
 						Browser("DigiSales").Page("Menu Flagging").WebElement("Customer Flagging Family").Click
-					wait 2
+					wait 4
 						Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Masuk Ke Sub Menu Customer Flagging Family", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 					wait 2
 			End Select
