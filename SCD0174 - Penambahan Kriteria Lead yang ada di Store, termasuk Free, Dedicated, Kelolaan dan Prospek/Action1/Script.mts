@@ -16,7 +16,7 @@ If iteration = 1 Then
 	REM ------- Digisales
 	Call DA_Login()
 	Call FR_GoTo_SidebarMenu(dtSidebarMenu)
-	Call UploadDataLeads()
+	Call UploadDataLeadsss()
 	Call DA_Logout("0")
 	
 	REM ------ Open File Excel
@@ -61,6 +61,7 @@ Sub spLoadLibrary()
 	Call RepositoriesCollection.Add(LibRepo & "RP_Sidebar.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Home_Digisales_Web.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Function.tsr")
 	
 	'Digisales Mobile
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Store.qfl")
