@@ -831,6 +831,26 @@ Sub FR_GoTo_SidebarMenu(dtSidebarMenu)
 			Call DA_Logout("1")
 		End If
 		
+		Case "Approval"
+		If Browser("DigiSalesWebPortal").Page("Sidebar").Link("Approval").Exist(10) Then
+			Browser("DigiSalesWebPortal").Page("Sidebar").Link("Approval").Click
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Sidebar"), "Pilih Menu Approval", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		Else 
+			Reporter.ReportEvent micFail,  "Menu Tidak Ada", "Transaksi Gagal"
+			Call DA_Logout("1")
+		End If
+		
+		Case "Report"
+		If Browser("DigiSalesWebPortal").Page("Sidebar").Link("Report").Exist(10) Then
+			Browser("DigiSalesWebPortal").Page("Sidebar").Link("Report").Click
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Sidebar"), "Pilih Menu Report", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		Else 
+			Reporter.ReportEvent micFail,  "Menu Tidak Ada", "Transaksi Gagal"
+			Call DA_Logout("1")
+		End If
+		
 		Case "PENGAJUAN NASABAH"
 		If Browser("DigiSalesWebPortal").Page("Sidebar").Link("Pengajuan Nasabah").Exist(10) Then
 			Browser("DigiSalesWebPortal").Page("Sidebar").Link("Pengajuan Nasabah").Click
