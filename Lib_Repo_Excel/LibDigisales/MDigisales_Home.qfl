@@ -442,6 +442,42 @@ Sub SearchProfilingLeads
 	wait 5
 End Sub
 
+Sub CheckFamilyTree
+	Set Objkeys = CreateObject("WScript.Shell")
+		Objkeys.SendKeys "{PGDN 4}"
+	wait 1
+	If Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Add to Family Tree").Exist(3) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	Else 
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Tidak Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	End If
+End Sub
+
+Sub AddFamilyTree
+	Dim Search_Key_Family_Tree,check_Enabled_Btn_add_to_family_Tree
+	Search_Key_Family_Tree = DataTable.Value("TEXT3",dtlocalsheet)
+	Call CheckFamilyTree()
+	If Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Add to Family Tree").Exist(3) Then
+		Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Add to Family Tree").Click
+		Browser("DigiSales").Page("Menu Family Tree").WebEdit("Field Search Family Tree").Set Search_Key_Family_Tree
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Isi Field Search Family Tree dan klik Search", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Search Family Tree").Click
+		wait 2	
+		If Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Add To Family Tree Flagging").GetROProperty("disable") or Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Add To Family Tree Flagging").GetROProperty("disabled") Then
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Flagging Disabled", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		else
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Flagging Enabled", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+		end if
+		
+	End If
+End Sub
+
 REM------Add to Flagging Digisales Mobile -> Navbar Home -> Search Profiling -> Profiling Leads
 Sub AddToFlagging
 	Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Berikut Data Customer Yang Akan Diusulkan", " " , compatibilityMode.Desktop, ReportStatus.Done)
