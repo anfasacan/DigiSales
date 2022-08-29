@@ -3,7 +3,7 @@ Dim dt_UserLogin, dt_Bulan, dt_Tahun
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0227 - Searching profiling nasabah & tidak memiliki sales kelolaan.xlsx", "SCD0227")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0230 - Searching profiling nasabah & tidak memiliki sales kelolaan.xlsx", "SCD0230")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
@@ -12,7 +12,7 @@ Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedRes
 REM ------- Digisales Mobile
 Call DA_LoginMobile()
 Call SearchProfilingLeads()
-Call CheckFamilyTree()
+Call AddFamilyTree()
 Call DA_LogoutMobile("0")
 
 Call spReportSave()
