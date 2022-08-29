@@ -12,7 +12,7 @@ DevelopTool=AQT
 
 [Actions]
 Action0=Action0\Script.mts
-SCD0026 - Membuka Gembok=Action1\Script.mts
+SCD0226-Performance Calculator=Action1\Script.mts
 
 [VuserProfiles]
 Profiles=Default Profile
@@ -36,7 +36,6 @@ Version=2021
 
 [TulipAddins]
 ActiveX=
-AgGrid=
 AI=
 Database=
 File Content=
@@ -45,8 +44,6 @@ Java=
 Windows Applications=
 TEA=
 Terminal Emulators=
-UIGrid=
-Visual Basic=
 Web=
 XML=
 
