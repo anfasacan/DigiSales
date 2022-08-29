@@ -1240,3 +1240,12 @@ Sub FR_GoTo_SidebarMenu(dtSidebarMenu)
 			
 	End Select
 End Sub
+
+Sub FR_Goto_BatchSidebarMenu(IndexArr)
+	Dim dtSidebarMenuBatch,dtSidebarMenu
+	dtSidebarMenu = DataTable.Value("SIDEBAR_MENU",dtlocalsheet)
+	dtSidebarMenuBatch = split (dtSidebarMenu,",")
+	
+'	msgbox dtSidebarMenuBatch(IndexArr)
+	call FR_GoTo_SidebarMenu(dtSidebarMenuBatch(IndexArr))
+End Sub

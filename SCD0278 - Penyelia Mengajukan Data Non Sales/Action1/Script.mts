@@ -4,19 +4,23 @@ Dim DownloadPath
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0212 - Admin SLN melakukan add parameter KPI.xlsx", "SCD0212")
+Call spInitiateData("DigisalesLib_Report.xlsx", "Testing_Func.xlsx", "test")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
 
+REM--------- Split Func
+
+
 REM ------- Digisales
-Call DA_Login()
-call FR_GoTo_SidebarMenu(dtSidebarMenu)
-Call Add_Parameter_KPI_batch()
-Call Check_Parameter_KPI()
-Call DA_Logout("0")
-Call spReportSave()
+Call FR_GoTo_BatchSidebarMenu(2)
+'Call DA_Login()
+'call FR_GoTo_SidebarMenu(dtSidebarMenu)
+'Call Add_Parameter_KPI_batch()
+'Call Check_Parameter_KPI()
+'Call DA_Logout("0")
+'Call spReportSave()
 
 Sub spLoadLibrary()
 	Dim LibPathDigisales, LibReport, LibRepo, objSysInfo
@@ -51,10 +55,10 @@ End Sub
 Sub spGetDatatable()
 	REM --------- Data
 	dt_UserLogin				= DataTable.Value("USER",dtLocalSheet)
-	dt_File1					= DataTable.Value("FILE1",dtLocalSheet)
-	dt_NPP						= DataTable.Value("TEXT1",dtLocalSheet)
-	dt_Periode					= DataTable.Value("TEXT2",dtLocalSheet)
-	dt_Bulan					= DataTable.Value("TEXT3",dtLocalSheet)
+'	dt_File1					= DataTable.Value("FILE1",dtLocalSheet)
+'	dt_NPP						= DataTable.Value("TEXT1",dtLocalSheet)
+'	dt_Periode					= DataTable.Value("TEXT2",dtLocalSheet)
+'	dt_Bulan					= DataTable.Value("TEXT3",dtLocalSheet)
 	REM --------- Reporting
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)

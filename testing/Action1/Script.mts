@@ -10,8 +10,17 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
 
+REM--------- Split Func
+Dim dtSidebarMenuBatch
+
+dtSidebarMenuBatch = split (dtSidebarMenu,",")
+
+msgbox dtSidebarMenuBatch(1)
+
+
 REM ------- Digisales
 'Call DA_Login()
+'call FR_GoTo_SidebarMenu(dtSidebarMenu)
 'Call DA_Logout("0")
 '
 'strr = DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
