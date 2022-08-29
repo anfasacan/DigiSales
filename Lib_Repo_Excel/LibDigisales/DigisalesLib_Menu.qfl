@@ -355,6 +355,107 @@ Sub OpenLastDownloadFile(FileName, AppName)
 	End Select
 End Sub
 
+REM -------- Open Last Download File Without Closing The Browser
+Sub OpenLastDownloadFileNoClose(FileName, AppName)
+	Dim InitialFileName
+	Dim Openbrowser, url
+	Dim TC_ID
+	TC_ID = DataTable.Value("TC_ID",dtlocalsheet)
+	Set objkey = CreateObject("WScript.Shell")
+	Openbrowser	= DataTable.Value ("BROWSER", dtGlobalSheet)
+	url			= DataTable.Value ("URL", dtGlobalSheet)
+	Browser("Google_Chrome").OpenNewTab
+
+
+	InitialFileName = left(FileName,3)
+
+	
+	wait 2
+	objkey.SendKeys "^j"
+	wait 2
+	objkey.SendKeys "^f"
+	wait 2
+	objkey.SendKeys (InitialFileName)
+	wait 2
+	objkey.SendKeys	"{TAB 3}"
+	wait 2
+	objkey.SendKeys	"{ENTER}"
+	wait 2
+	
+	AppName	= Ucase(AppName)
+	Select Case AppName
+		Case "CHROME"
+			Call spOpenBrowser("CHROME", PathName)
+			wait 2
+			Call CaptureImageUFTV2(Browser("SS_OpenFile"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)	
+			wait 2
+		Case "EXCEL"
+			wait 5
+			If Dialog("Dialog_Trust_Microsoft Excel").Exist(5) Then
+				objkey.SendKeys "{LEFT}"
+				objkey.SendKeys "{ENTER}"
+			End If
+			
+			'Maximize File Excel
+				If Window("SS_Excel").Exist(5) Then
+					Window("SS_Excel").Click
+					If not Window("SS_Excel").GetROProperty("maximized") Then
+						Window("SS_Excel").Maximize
+      				End If
+				End If
+			
+			wait 2
+			Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+			wait 2
+			
+			For dgs = 221 To 224 Step 1
+				If TC_ID = "DGS-" & dgs Then
+					If Window("SS_Excel").Exist Then
+						Window("SS_Excel").Click
+					End If
+				objkey.SendKeys "{DOWN 7}"
+				objkey.SendKeys "{RIGHT 24}"
+				wait 2
+				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+				wait 2
+					If Window("SS_Excel").Exist Then
+						Window("SS_Excel").Click
+					End If
+				objkey.SendKeys "{RIGHT 13}"
+				wait 2
+				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+				wait 2
+					If Window("SS_Excel").Exist Then
+						Window("SS_Excel").Click
+					End If
+				objkey.SendKeys "^{UP}"
+				objkey.SendKeys "^{RIGHT}"
+				wait 2
+				Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+				wait 2
+				End If	
+			Next
+			
+				For dgs = 193 To 218 Step 1
+					If TC_ID = "DGS-" & dgs Then
+						If Window("SS_Excel").Exist Then
+							Window("SS_Excel").Click
+						End If
+						wait 2
+							objkey.SendKeys "^{RIGHT}"
+							wait 1
+							Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+							wait 2
+						Exit for 
+					End If
+				Next
+			
+		Case "WINRAR"
+			wait 2
+			Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)	
+			wait 2
+	End Select
+End Sub
 REM -------- Open file
 Function OpenFile(Path , FileName, AppName)
 	Set objkey = CreateObject("WScript.Shell")

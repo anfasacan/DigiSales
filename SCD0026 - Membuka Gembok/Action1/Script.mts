@@ -20,7 +20,7 @@ call FR_GoTo_SidebarMenu(dtSidebarMenu)
 If ucase(dt_UserLogin) = "SALES" and iteration = 1 Then
 	call DownloadDownloadFile()
 	Call Get_nama_file
-	Call OpenFile(DownloadPath , Get_nama_file, "WINRAR")
+	Call OpenLastDownloadFileNoClose(dt_File1, "EXCEL")
 End If
 
 If ucase(dt_UserLogin) = "SALES" and iteration = 3 Then
