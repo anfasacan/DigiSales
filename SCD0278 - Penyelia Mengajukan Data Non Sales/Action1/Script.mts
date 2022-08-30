@@ -1,26 +1,35 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
-Dim dtSidebarMenu, dt_UserLogin, dt_File1, dt_NPP, dt_Periode, dt_Bulan
-Dim DownloadPath
+Dim dtSidebarMenu, dt_UserLogin, dt_npp, iteration
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "Testing_Func.xlsx", "test")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0278 - Penyelia mengajukan data Non Sales.xlsx", "SCD0278")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
-Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
-
-REM--------- Split Func
-
+Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Sales Yang Diajukan : " & dt_npp))
+iteration = Environment.Value("ActionIteration")
 
 REM ------- Digisales
-Call FR_GoTo_BatchSidebarMenu(2)
-'Call DA_Login()
-'call FR_GoTo_SidebarMenu(dtSidebarMenu)
-'Call Add_Parameter_KPI_batch()
-'Call Check_Parameter_KPI()
-'Call DA_Logout("0")
-'Call spReportSave()
+If iteration = 1 Then
+	Call DA_Login()
+	Call FR_GoTo_SidebarMenu(dtSidebarMenu)
+	Call AddMonitoring()
+	Call KirimUsulanMonitoring()
+ElseIf iteration = 2 Then
+	Call DA_Login()
+	Call FR_GoTo_SidebarMenu(dtSidebarMenu)
+	Call SetujuApproval()
+Else
+	Call DA_Login()
+	Call FR_GoTo_BatchSidebarMenu(0)
+	Call FR_GoTo_BatchSidebarMenu(1)
+	Call GenerateReport()
+End If
+
+Call DA_Logout("0")
+
+Call spReportSave()
 
 Sub spLoadLibrary()
 	Dim LibPathDigisales, LibReport, LibRepo, objSysInfo
@@ -35,19 +44,19 @@ Sub spLoadLibrary()
 	LibPathDigisales	= PathDigisales & "Lib_Repo_Excel\LibDigisales\"
 	LibReport			= PathDigisales & "Lib_Repo_Excel\LibReport\"
 	LibRepo				= PathDigisales & "Lib_Repo_Excel\Repo\"
-	DownloadPath		= "C:\Users\" & objSysInfo.UserName & "\Downloads"
+	
 	REM ------- Report Library
 	LoadFunctionLibrary (LibReport & "BNI_GlobalFunction.qfl")
 	LoadFunctionLibrary (LibReport & "Run Report BNI.vbs")
 	
 	rem ---- Digisales lib
 	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Menu.qfl")
-	LoadFunctionLibrary (LibPathDigisales & "Digisales_DataMaster.qfl")
+	LoadFunctionLibrary (LibPathDigisales & "Digisales_NonSalesUpdate.qfl")
 	
 	Call RepositoriesCollection.Add(LibRepo & "RP_Home_Digisales_Web.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Sidebar.tsr")
-	Call RepositoriesCollection.Add(LibRepo & "RP_Data_Master.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Non_Sales_Update.tsr")
 	
 
 End Sub
@@ -55,16 +64,14 @@ End Sub
 Sub spGetDatatable()
 	REM --------- Data
 	dt_UserLogin				= DataTable.Value("USER",dtLocalSheet)
-'	dt_File1					= DataTable.Value("FILE1",dtLocalSheet)
-'	dt_NPP						= DataTable.Value("TEXT1",dtLocalSheet)
-'	dt_Periode					= DataTable.Value("TEXT2",dtLocalSheet)
-'	dt_Bulan					= DataTable.Value("TEXT3",dtLocalSheet)
+	dt_npp						= DataTable.Value("TEXT1",dtLocalSheet)
+
 	REM --------- Reporting
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
 	
-'	REM ---------- Menu
+	REM ---------- Menu
 	dtSidebarMenu				= DataTable.Value("SIDEBAR_MENU" ,dtLocalSheet)
 End Sub

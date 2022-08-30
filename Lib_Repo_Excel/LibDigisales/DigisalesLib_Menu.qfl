@@ -831,7 +831,7 @@ Sub FR_GoTo_SidebarMenu(dtSidebarMenu)
 			Call DA_Logout("1")
 		End If
 		
-		Case "Approval"
+		Case "APPROVAL"
 		If Browser("DigiSalesWebPortal").Page("Sidebar").Link("Approval").Exist(10) Then
 			Browser("DigiSalesWebPortal").Page("Sidebar").Link("Approval").Click
 			wait 2
@@ -841,7 +841,7 @@ Sub FR_GoTo_SidebarMenu(dtSidebarMenu)
 			Call DA_Logout("1")
 		End If
 		
-		Case "Report"
+		Case "REPORT"
 		If Browser("DigiSalesWebPortal").Page("Sidebar").Link("Report").Exist(10) Then
 			Browser("DigiSalesWebPortal").Page("Sidebar").Link("Report").Click
 			wait 2

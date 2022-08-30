@@ -1,0 +1,123 @@
+﻿REM ----- Tambah monitoring pengajuan data non sales, Login penyelia->Monitoring->Add
+Sub AddMonitoring
+	Set objkey = CreateObject("WScript.Shell")
+	Dim dt_npp, dt_tglAwal, dt_tglAkhir, dt_ns
+		dt_npp 		= DataTable.Value("TEXT1",dtlocalsheet)
+		dt_tglAwal	= DataTable.Value("TEXT2",dtlocalsheet)
+		dt_tglAkhir = DataTable.Value("TEXT3",dtlocalsheet)
+		dt_ns 		= DataTable.Value("TEXT4",dtlocalsheet)
+	
+	wait 1
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Klik Button Add", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2	
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Add").Click
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").Click
+	wait 1
+	objkey.SendKeys(dt_npp)
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Set dt_tglAwal
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Set dt_tglAkhir
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NS").Click
+	wait 1
+	objkey.SendKeys(dt_ns)
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Isi Semua Field yang Dibutuhkan, Kemudian Klik Button Save changes", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Save Changes").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berhasil Mengajukan Data Non Sales", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", "Setelah berhasil save maka hasil di monitoringnya berubah jadi pengajuan" , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+End Sub
+
+REM ------ Kirim Usulan Data Non Sales, Login Penyelia->Monitoring->Kirim Usulan
+Sub KirimUsulanMonitoring
+	Dim dt_npp
+	dt_npp = DataTable.Value("TEXT1",dtlocalsheet)
+		
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext",dt_npp
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Row 1 NPP").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Klik Data yang Akan Di Kirim Usulan, Kemudian Klik Button Kirim Usulan", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Kirim Usulan").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Konfirmasi Pengajuan Usulan, Klik OK", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berhasil Melakukan Pengajuan Usulan", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", "Setelah berhasil kirim usulan, status approval berubah jadi Menunggu Approval" , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+
+End Sub
+
+REM ----- Pemimpin Cabang Setuju Approval, Login Pemimpin Cabang->Approval->Setuju
+Sub SetujuApproval
+	Dim dt_npp
+	dt_npp = DataTable.Value("TEXT1",dtlocalsheet)
+	
+	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext", dt_npp
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Klik Data yang Akan Di Approve, Kemudian Klik Button Setuju", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebButton("Btn Setuju").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Konfirmasi Pengajuan yang Akan Diapprove, Klik OK", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebButton("Btn OK").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Berhasil Melakukan Approve", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebButton("Btn OK").Click
+End Sub
+
+REM ----- Generate Report, Login Penyelia->Report->Generate
+Sub GenerateReport
+	Set objkey = CreateObject("WScript.Shell")
+	Dim dt_npp, dt_tahun
+		dt_npp		= DataTable.Value("TEXT1",dtlocalsheet)
+		dt_tahun	= DataTable.Value("TEXT2",dtlocalsheet)
+		
+	Browser("DigiSalesWebPortal").Page("Menu Report - DigiSalesWebPortal").WebElement("Dropdown NPP").Click
+	wait 1
+	objkey.SendKeys (dt_npp)
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Menu Report - DigiSalesWebPortal").WebEdit("Field Tahun").Set dt_tahun
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Report - DigisalesWebPortal"), "Isi Semua Field yang Dibutuhkan, Kemudian Klik Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Report - DigiSalesWebPortal").WebButton("Btn Generate").Click
+	wait 1
+	objkey.SendKeys "{PGDN}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Report - DigisalesWebPortal"), "Berhasil Menampilkan Data Report", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+End Sub
+
+REM ------ Lihat List Data Non Sales, Login Penyelia->Monitoring
+Sub ListDataNonSales
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+End Sub
+
+
