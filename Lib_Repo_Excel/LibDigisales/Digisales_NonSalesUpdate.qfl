@@ -15,7 +15,7 @@ Sub AddMonitoring
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Klik Button Add", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2	
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Add").Click
-	wait 1
+	wait 5
 	
 	'jika yg login sales
 	If dt_userLogin = "Sales" Then
@@ -51,7 +51,11 @@ Sub AddMonitoring
 	wait 2
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
 	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", "Setelah berhasil save maka hasil di monitoringnya berubah jadi pengajuan" , compatibilityMode.Desktop, ReportStatus.Passed)
+		If DataTable.Value("USER",dtlocalsheet) = "Admin SLN" or DataTable.Value("USER",dtlocalsheet) = "Admin WEM" Then
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", "Setelah berhasil save maka hasil di monitoringnya otomatis menjadi disetujui karena Admin SLN/Admin WEM yang mengirim usulan" , compatibilityMode.Desktop, ReportStatus.Passed)
+		else
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", "Setelah berhasil save maka hasil di monitoringnya berubah jadi Pengajuan" , compatibilityMode.Desktop, ReportStatus.Passed)
+		End If
 	wait 2
 End Sub
 
@@ -138,7 +142,12 @@ Sub GenerateReport
 	wait 1
 	objkey.SendKeys "{ENTER}"
 	wait 1
-	Browser("DigiSalesWebPortal").Page("Menu Report - DigiSalesWebPortal").WebEdit("Field Tahun").Set dt_tahun
+	If DataTable.Value("USER",dtlocalsheet) = "Admin SLN" or DataTable.Value("USER",dtlocalsheet) = "Admin WEM" Then
+		dt_tahun = left(DataTable.Value("TEXT2",dtlocalsheet),4)
+		Browser("DigiSalesWebPortal").Page("Menu Report - DigiSalesWebPortal").WebEdit("Field Tahun").Set dt_tahun
+	Else 
+		Browser("DigiSalesWebPortal").Page("Menu Report - DigiSalesWebPortal").WebEdit("Field Tahun").Set dt_tahun
+	End If
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Report - DigisalesWebPortal"), "Isi Semua Field yang Dibutuhkan, Kemudian Klik Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
