@@ -1,32 +1,18 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
-Dim dtSidebarMenu, dt_UserLogin, dt_npp, iteration
+Dim dtSidebarMenu, dt_UserLogin, dt_npp
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0279 - Penyelia mengajukan data Non Sales NS 50 persen hari kerja.xlsx", "SCD0279")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0292 - Penyelia, CRO CRM, dan SRM mengajukan data Non Sales.xlsx", "SCD0292")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Sales Yang Diajukan : " & dt_npp))
-iteration = Environment.Value("ActionIteration")
 
 REM ------- Digisales
-If iteration = 1 Then
-	Call DA_Login()
-	Call FR_GoTo_SidebarMenu(dtSidebarMenu)
-	Call AddMonitoring()
-	Call KirimUsulanMonitoring()
-ElseIf iteration = 2 Then
-	Call DA_Login()
-	Call FR_GoTo_SidebarMenu(dtSidebarMenu)
-	Call SetujuApproval()
-Else
-	Call DA_Login()
-	Call FR_GoTo_BatchSidebarMenu(0)
-	Call FR_GoTo_BatchSidebarMenu(1)
-	Call GenerateReport()
-End If
-
+Call DA_Login()
+Call FR_GoTo_SidebarMenu(dtSidebarMenu)
+Call AddMonitoring()
 Call DA_Logout("0")
 
 Call spReportSave()
