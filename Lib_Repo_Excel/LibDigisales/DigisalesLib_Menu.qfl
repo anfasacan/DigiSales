@@ -1234,6 +1234,16 @@ Sub FR_GoTo_SidebarMenu(dtSidebarMenu)
 			Call DA_Logout("1")
 		End If
 		
+		Case "PARAMETER HARI LIBUR"
+		If Browser("DigiSalesWebPortal").Page("Sidebar").Link("Parameter Hari Libur").Exist(10) Then
+			Browser("DigiSalesWebPortal").Page("Sidebar").Link("Parameter Hari Libur").Click
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Sidebar"), "Pilih Menu Parameter Hari Libur", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		Else 
+			Reporter.ReportEvent micFail,  "Menu Tidak Ada", "Transaksi Gagal"
+			Call DA_Logout("1")
+		End If
+		
 		Case Else 
 			Reporter.ReportEvent micFail,  "Pilihan Tidak ada", "Transaksi Gagal"
 			Call DA_Logout("1")

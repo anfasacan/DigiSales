@@ -1,0 +1,99 @@
+﻿Sub AddHolidayDate
+	Dim dtTanggalLibur,dtKeterangan
+	
+	dtTanggalLibur = DataTable.Value("TEXT1",dtlocalsheet)
+	dtKeterangan = DataTable.Value("TEXT2",dtlocalsheet)
+	
+	Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebEdit("Field Add Tanggal").Set dtTanggalLibur
+	Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebEdit("Field Add Keterangan").Set dtKeterangan
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur"), "Isi Tanggal Dan Keterangan Yang Ingin Ditambah, lalu Klik Add", " " , compatibilityMode.Desktop, ReportStatus.Done)	
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebButton("Btn Add Hari Libur").Click
+	If Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebElement("LogoSuccess").Exist(4) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur"), "Data Berhasil Ditambah", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+		wait 2	
+		Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebButton("Btn Ok").Click
+	End If
+End Sub
+
+Sub SearchHolidayDate
+	Set objkey = CreateObject("WScript.Shell")
+	Set devices = CreateObject("Mercury.DeviceReplay")
+	
+	Dim dtTahunSearch,dtTanggalSearch
+	dtTahunSearch = left(DataTable.Value("TEXT1",dtlocalsheet),4)
+	dtTanggalSearch = DataTable.Value("TEXT3",dtlocalsheet)
+	
+	Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebEdit("Field Search Hari Libur").Set dtTahunSearch
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur"), "Isi Tahun Yang Ingin Dicari, lalu klik Enter", " " , compatibilityMode.Desktop, ReportStatus.Done)	
+	wait 2
+	objkey.SendKeys "{ENTER}"
+	wait 5
+	Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebElement("Table Tanggal").SetTOProperty "innertext",dtTanggalSearch
+	Do
+		Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebElement("Table Tanggal").SetTOProperty "innertext",dtTanggalSearch
+		Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebElement("Btn Next Table Search").Click
+	Loop Until Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebElement("Table Tanggal").Exist(2)
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur"), "Berikut Data yang Dicari", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+	wait 2
+	
+	x = Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebElement("Table Tanggal").getRoProperty("abs_x")
+	y = Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebElement("Table Tanggal").getRoProperty("abs_y")
+	devices.MouseMove x , y
+	devices.MouseClick x , y , LEFT_MOUSE_BUTTON
+	devices.MouseClick x , y , LEFT_MOUSE_BUTTON
+	devices.MouseClick x , y , LEFT_MOUSE_BUTTON
+	
+End Sub
+
+Sub EditHolidayDate
+	Dim dtKeteranganEdit
+	dtKeteranganEdit = DataTable.Value("TEXT4",dtlocalsheet)
+	Set objkey = CreateObject("WScript.Shell")
+	Call SearchHolidayDate()
+	objkey.SendKeys "{TAB}"
+	wait 2
+	objkey.SendKeys "{ENTER}"
+	wait 3
+	objkey.SendKeys "{TAB 2}"
+	wait 2
+	objkey.SendKeys dtKeteranganEdit
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur"), "Masuk Kehalaman Edit Dan Ubah Keterangan, Klik Save Changes", " " , compatibilityMode.Desktop, ReportStatus.Done)	
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebButton("Btn Save changes Edit").Click
+	If Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebElement("LogoSuccess").Exist(4) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur"), "Data Berhasil Diubah", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+		wait 2	
+		Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebButton("Btn Ok").Click
+	End If
+	
+End Sub
+
+Sub DeleteHolidayDate
+	Set objkey = CreateObject("WScript.Shell")
+	Call SearchHolidayDate()
+	objkey.SendKeys "{TAB}"
+	wait 1
+	objkey.SendKeys "{TAB}"
+	wait 2
+	objkey.SendKeys "{ENTER}"
+	
+	If Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebElement("LogoSuccess").Exist(4) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur"), "Data Berhasil Dihapus", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+		wait 2	
+		Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebButton("Btn Ok").Click
+	ElseIf Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebElement("LogoWarning").Exist(4) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur"), "Data Tidak Berhasil Dihapus", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+		wait 2	
+		Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebButton("Btn Ok").Click
+	End If
+	
+End Sub
