@@ -15,7 +15,7 @@ Sub AddMonitoring
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Klik Button Add", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2	
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Add").Click
-	wait 3
+	wait 5
 	
 	If DataTable.Value("TC_ID",dtlocalsheet) = "DGS-308" Then
 		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Click
@@ -46,7 +46,7 @@ Sub AddMonitoring
 		Else
 			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").Click
 		End If
-		wait 1
+		wait 2
 		objkey.SendKeys(dt_npp)
 		wait 1
 		objkey.SendKeys "{ENTER}"
@@ -85,11 +85,7 @@ Sub AddMonitoring
 			
 			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
 			wait 2
-			If dt_userLogin = "Admin SLN" or dt_userLogin = "Admin WEM" Then
-				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", "Setelah berhasil save maka hasil di monitoringnya otomatis menjadi disetujui karena Admin SLN/Admin WEM yang mengirim usulan" , compatibilityMode.Desktop, ReportStatus.Passed)
-			else
 				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", "Setelah berhasil save maka hasil di monitoringnya berubah jadi Pengajuan" , compatibilityMode.Desktop, ReportStatus.Passed)
-			End If
 			wait 2
 		End If
 	End If
@@ -98,8 +94,9 @@ End Sub
 
 REM ------ Kirim Usulan Data Non Sales, Login Penyelia->Monitoring->Kirim Usulan
 Sub KirimUsulanMonitoring
-	Dim dt_npp
-	dt_npp = DataTable.Value("TEXT1",dtlocalsheet)
+	Dim dt_npp, dt_userLogin
+	dt_npp 			= DataTable.Value("TEXT1",dtlocalsheet)
+	dt_userLogin	= DataTable.Value("USER", dtlocalsheet)
 		
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext",dt_npp
 	wait 1
@@ -117,9 +114,15 @@ Sub KirimUsulanMonitoring
 	wait 2
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
 	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", "Setelah berhasil kirim usulan, status approval berubah jadi Menunggu Approval" , compatibilityMode.Desktop, ReportStatus.Passed)
+	
+	'Jika user yg login Admin SLN atau Admin WEM
+	If dt_userLogin = "Admin SLN" or dt_userLogin = "Admin WEM" Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", "Setelah berhasil kirim usulan, status approval berubah jadi Disetujui" , compatibilityMode.Desktop, ReportStatus.Passed)
+	Else
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", "Setelah berhasil kirim usulan, status approval berubah jadi Menunggu Approval" , compatibilityMode.Desktop, ReportStatus.Passed)	
+	End If
+	
 	wait 2
-
 End Sub
 
 REM ----- Pemimpin Cabang Setuju Approval, Login Pemimpin Cabang->Approval->Setuju
