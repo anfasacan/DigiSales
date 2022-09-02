@@ -15,6 +15,11 @@
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur"), "Data Berhasil Ditambah", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
 		wait 2	
 		Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebButton("Btn Ok").Click
+	ElseIf Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebElement("LogoWarning").Exist(4) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur"), "Data Tidak Berhasil Dihapus", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+		wait 2	
+		Browser("DigiSalesWebPortal").Page("Menu Parameter Hari Libur").WebButton("Btn Ok").Click
 	End If
 End Sub
 
