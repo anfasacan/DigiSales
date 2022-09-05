@@ -101,3 +101,15 @@ Sub ExportExcel
 	wait 5	
 	End If
 End Sub
+
+Sub CheckNPP
+	Set objkey = CreateObject("WScript.Shell")
+	
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("Field NPP").Click
+	wait 1
+	objkey.SendKeys "{DOWN}"
+	
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Berikut NPP Yang Tersedia Pada User "& DataTable.value("USER",dtlocalsheet), " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	
+End Sub

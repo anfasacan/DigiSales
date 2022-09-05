@@ -207,3 +207,60 @@ Sub ListDataNonSales
 End Sub
 
 
+Sub CheckNPP
+	Set objkey = CreateObject("WScript.Shell")
+	
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Menu Report - DigiSalesWebPortal").WebElement("Dropdown NPP").Click
+	wait 1
+	objkey.SendKeys "{DOWN}"
+	
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Report - DigiSalesWebPortal"), "Berikut NPP Yang Tersedia Pada User "& DataTable.value("USER",dtlocalsheet), " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	
+End Sub
+
+Sub CancelMonitoring
+	Call CancelMonitoringV2
+	wait 1
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Klik Data yang Akan Di Cancel, Kemudian Klik Button Cancel", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Cancel").Click
+	wait 2
+	if Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Logo Information").Exist(2) then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Klik OK untuk Mengubah Status Menjadi Cancel", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
+		If Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Logo Success").Exist(2) Then
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Data Berhasil Diubah Statusnya", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2	
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
+			Call CancelMonitoringV2
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Data Telah Diubah Status Approval Menjadi Pengajuan Cancel", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		End If
+	ElseIf Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Logo Failed").Exist(3) Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Data Gagal Diubah Statusnya", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2	
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
+			Call CancelMonitoringV2
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Data Gagal Diubah Status Approvalnya", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+	End If
+
+End Sub
+
+Sub CancelMonitoringV2
+	Dim dt_npp, dt_userLogin
+	dt_npp 			= DataTable.Value("TEXT1",dtlocalsheet)
+	dt_userLogin	= DataTable.Value("USER", dtlocalsheet)
+		
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext",dt_npp
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Row 1 NPP").Click
+	
+end sub 
