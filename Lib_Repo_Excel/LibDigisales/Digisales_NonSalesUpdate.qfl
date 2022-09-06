@@ -3,13 +3,29 @@ Sub AddMonitoring
 	Set objkey = CreateObject("WScript.Shell")
 	Dim dt_userLogin
 		dt_userLogin	= DataTable.Value("USER",dtlocalsheet)
-	Dim dt_npp, dt_tglAwal, dt_tglAkhir, dt_noSurat, dt_ketSurat, dt_ns
+	Dim dt_npp, dt_tglAwal, dt_tglAkhir, dt_noSurat, dt_ketSurat, dt_ns, dt_tgl1, dt_tgl2, dt_tglIf1, dt_tglIf2
 		dt_npp 			= DataTable.Value("TEXT1",dtlocalsheet)
 		dt_tglAwal		= DataTable.Value("TEXT2",dtlocalsheet)
 		dt_tglAkhir 	= DataTable.Value("TEXT3",dtlocalsheet)
 		dt_noSurat		= DataTable.Value("TEXT4",dtlocalsheet)
 		dt_ketSurat		= DataTable.Value("TEXT5",dtlocalsheet)
 		dt_ns 			= DataTable.Value("TEXT6",dtlocalsheet)
+		dt_tgl1			= Right(DataTable.Value("TEXT2",dtlocalsheet), 2)
+		dt_tgl2			= Right(DataTable.Value("TEXT3",dtlocalsheet), 2)
+		dt_tglIf1		= Left(dt_tgl1, 1)
+		dt_tglIf2		= Left(dt_tgl2, 1)
+		
+		If dt_tglIf1 = 0 Then
+			dt_tgl1		= Right(DataTable.Value("TEXT2" ,dtLocalSheet), 1)
+		Else
+			dt_tgl1		= Right(DataTable.Value("TEXT2" ,dtLocalSheet), 2)
+		End If
+		
+		If dt_tglIf2 = 0 Then
+			dt_tgl2		= Right(DataTable.Value("TEXT3" ,dtLocalSheet), 1)
+		Else
+			dt_tgl2		= Right(DataTable.Value("TEXT3" ,dtLocalSheet), 2)
+		End If
 	
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Klik Button Add", " " , compatibilityMode.Desktop, ReportStatus.Done)
@@ -26,7 +42,7 @@ Sub AddMonitoring
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Tampilan Tanggal Awal, Bulan lalu disabled dan tidak bisa ditambahkan", "Tgl awal : karna tidak bisa backmonth maka tampilan date nya jika di geser ke bulan sebelumnya akan disabled" , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
-		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Cancel Date").Click
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Cancel Date Tgl Awal").Click
 		wait 1
 		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Click
 		wait 2
@@ -36,8 +52,9 @@ Sub AddMonitoring
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Tampilan Tanggal Akhir, Bulan lalu disabled dan tidak bisa ditambahkan", "Tgl akhir : karna tidak bisa backmonth maka tampilan date nya jika di geser ke bulan sebelumnya akan disabled" , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
-		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Cancel Date").Click
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Cancel Date Tgl Akhir").Click
 		wait 1
+
 	Else
 		'jika yg login sales
 		If dt_userLogin = "Sales" Then
@@ -51,10 +68,35 @@ Sub AddMonitoring
 		wait 1
 		objkey.SendKeys "{ENTER}"
 		wait 1
-		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Set dt_tglAwal
-		wait 1
-		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Set dt_tglAkhir
-		wait 1
+		
+		If DataTable.Value("TC_ID", dtlocalsheet) = "DGS-307" or DataTable.Value("TC_ID", dtlocalsheet) = "DGS-309" Then
+		
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Click
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Choose Date").SetTOProperty "name", dt_tgl1
+			wait 1
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Choose Date").Click
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Pilih Tanggal Awal", " " , compatibilityMode.Desktop, ReportStatus.Done)
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Ok Date Tgl Awal").Click
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Click
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Choose Date").SetTOProperty "name", dt_tgl2
+			wait 1
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Choose Date").Click
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Pilih Tanggal Akhir", " " , compatibilityMode.Desktop, ReportStatus.Done)
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Ok Date Tgl Akhir").Click
+		Else
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Set dt_tglAwal
+			wait 1
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Set dt_tglAkhir
+		End If
+		
+		wait 2
 		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field No.Surat").Set dt_noSurat
 		wait 1
 		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Keterangan Surat").Set dt_ketSurat
