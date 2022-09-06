@@ -1,6 +1,8 @@
 ﻿REM ----- Tambah monitoring pengajuan data non sales, Login User->Monitoring->Add
 Sub AddMonitoring
 	Set objkey = CreateObject("WScript.Shell")
+	Dim TC_ID
+		TC_ID = DataTable.Value("TC_ID",dtlocalsheet)
 	Dim dt_userLogin
 		dt_userLogin	= DataTable.Value("USER",dtlocalsheet)
 	Dim dt_npp, dt_tglAwal, dt_tglAkhir, dt_noSurat, dt_ketSurat, dt_ns, dt_tgl1, dt_tgl2, dt_tglIf1, dt_tglIf2
@@ -15,12 +17,14 @@ Sub AddMonitoring
 		dt_tglIf1		= Left(dt_tgl1, 1)
 		dt_tglIf2		= Left(dt_tgl2, 1)
 		
+		'Penentuan tgl awal ketika choose date
 		If dt_tglIf1 = 0 Then
 			dt_tgl1		= Right(DataTable.Value("TEXT2" ,dtLocalSheet), 1)
 		Else
 			dt_tgl1		= Right(DataTable.Value("TEXT2" ,dtLocalSheet), 2)
 		End If
 		
+		'Penentuan tgl akhir ketika choose date
 		If dt_tglIf2 = 0 Then
 			dt_tgl2		= Right(DataTable.Value("TEXT3" ,dtLocalSheet), 1)
 		Else
@@ -33,7 +37,8 @@ Sub AddMonitoring
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Add").Click
 	wait 5
 	
-	If DataTable.Value("TC_ID",dtlocalsheet) = "DGS-308" Then
+	'jika choose date nya backmonth dan usernya Penyelia/Sales
+	If dt_userLogin = "Penyelia" or dt_userLogin = "Sales" and TC_ID = "DGS-308" Then
 		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Click
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Tampilan Tanggal Awal, Pada bulan ini", " " , compatibilityMode.Desktop, ReportStatus.Done)
@@ -54,9 +59,8 @@ Sub AddMonitoring
 		wait 2
 		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Cancel Date Tgl Akhir").Click
 		wait 1
-
 	Else
-		'jika yg login sales
+		'jika yg login sales, npp dropdown yg diklik menyesuaikan object nya
 		If dt_userLogin = "Sales" Then
 			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").SetTOProperty "innertext", dt_npp
 			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").Click
@@ -72,8 +76,8 @@ Sub AddMonitoring
 		objkey.SendKeys "{ENTER}"
 		wait 1
 		
-		If DataTable.Value("TC_ID", dtlocalsheet) = "DGS-307" or DataTable.Value("TC_ID", dtlocalsheet) = "DGS-309" Then
-		
+		' jika choose date nya backdate
+		If TC_ID = "DGS-307" or TC_ID = "DGS-309" Then
 			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Click
 			wait 2
 			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Choose Date").SetTOProperty "name", dt_tgl1
@@ -91,6 +95,32 @@ Sub AddMonitoring
 			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Choose Date").Click
 			wait 2
 				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Pilih Tanggal Akhir", " " , compatibilityMode.Desktop, ReportStatus.Done)
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Ok Date Tgl Akhir").Click
+		
+		'jika choose date nya backmonth dan user nya Admin SLN/Admin WEM
+		ElseIf TC_ID = "DGS-310" Then
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Click
+			wait 2			
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Backmonth").Click
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Choose Date").SetTOProperty "name", dt_tgl1
+			wait 1
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Choose Date").Click
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Pilih Tanggal Awal Backmonth", " " , compatibilityMode.Desktop, ReportStatus.Done)
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Ok Date Tgl Awal").Click
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Click
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Backmonth").Click
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Choose Date").SetTOProperty "name", dt_tgl2
+			wait 1
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Choose Date").Click
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Pilih Tanggal Akhir Backmonth", " " , compatibilityMode.Desktop, ReportStatus.Done)
 			wait 2
 			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Ok Date Tgl Akhir").Click
 		Else
@@ -137,7 +167,87 @@ Sub AddMonitoring
 	
 End Sub
 
-REM ------ Kirim Usulan Data Non Sales, Login Penyelia->Monitoring->Kirim Usulan
+REM ------ Edit Data Non Sales, Login->Monitoring->Edit
+Sub EditMonitoring
+	Set objkey = CreateObject("WScript.Shell")
+	Dim TC_ID
+		TC_ID = DataTable.Value("TC_ID",dtlocalsheet)
+	Dim dt_userLogin
+		dt_userLogin	= DataTable.Value("USER",dtlocalsheet)
+	Dim dt_ID, dt_npp, dt_tglAwal, dt_tglAkhir, dt_noSurat, dt_ketSurat, dt_ns
+		dt_ID			= DataTable.Value("TEXT7",dtlocalsheet)
+		dt_npp 			= DataTable.Value("TEXT1",dtlocalsheet)
+		dt_tglAwal		= DataTable.Value("TEXT2",dtlocalsheet)
+		dt_tglAkhir 	= DataTable.Value("TEXT3",dtlocalsheet)
+		dt_noSurat		= DataTable.Value("TEXT4",dtlocalsheet)
+		dt_ketSurat		= DataTable.Value("TEXT5",dtlocalsheet)
+		dt_ns 			= DataTable.Value("TEXT6",dtlocalsheet)
+		
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Row 1 ID").Click
+
+		
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Edit"), "Klik Button Edit", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Edit").Click
+	wait 5
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut data Sebelum diedit", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	'jika yg login sales, npp dropdown yg diklik menyesuaikan object nya
+'		If dt_userLogin = "Sales" Then
+'			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").SetTOProperty "innertext", dt_npp
+'			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").Click
+'		ElseIf dt_userLogin = "Penyelia" Then
+'			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").SetTOProperty "innertext", DataTable.Value("TEXT1",dtlocalsheet)
+'			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").Click
+'		Else
+'			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").Click
+'		End If
+'		wait 2
+'		objkey.SendKeys(dt_npp)
+'		wait 1
+'		objkey.SendKeys "{ENTER}"
+'		wait 1
+'		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Set dt_tglAwal
+'		wait 1
+'		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Set dt_tglAkhir
+'		wait 2
+'		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field No.Surat").Set dt_noSurat
+'		wait 1
+'		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Keterangan Surat").Set dt_ketSurat
+'		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NS").Click
+		wait 1
+		objkey.SendKeys(dt_ns)
+		wait 1
+		objkey.SendKeys "{ENTER}"
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Edit data yang diperlukan, Kemudian Klik Button Save changes", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Save Changes").Click
+		
+		Dim error_tglAwal, error_tglAkhir, error_Ns
+			error_tglAwal 		= Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Error Tanggal Awal").Exist(5)
+			error_dt_tglAkhir	= Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Error Tanggal Akhir").Exist(5)
+			error_Ns			= Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Error Alasan NS").Exist(5)
+		'Jika field mandatory tidak diisi
+		If error_tglAwal or error_tglAkhir or error_Ns Then
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Gagal Menginput Data Non Sales", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		Else
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berhasil Mengajukan Data Non Sales", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+			
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", "Setelah berhasil save maka hasil di monitoringnya berubah jadi Pengajuan" , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		End If
+End Sub
+
+REM ------ Kirim Usulan Data Non Sales, Login->Monitoring->Kirim Usulan
 Sub KirimUsulanMonitoring
 	Dim dt_npp, dt_userLogin
 	dt_npp 			= DataTable.Value("TEXT1",dtlocalsheet)
