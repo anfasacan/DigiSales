@@ -60,6 +60,9 @@ Sub AddMonitoring
 		If dt_userLogin = "Sales" Then
 			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").SetTOProperty "innertext", dt_npp
 			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").Click
+		ElseIf dt_userLogin = "Penyelia" Then
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").SetTOProperty "innertext", DataTable.Value("TEXT1",dtlocalsheet)
+			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").Click
 		Else
 			Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NPP").Click
 		End If
@@ -172,9 +175,10 @@ Sub SetujuApproval
 	Dim dt_npp
 	dt_npp = DataTable.Value("TEXT1",dtlocalsheet)
 	
-	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext", dt_npp
-	wait 1
-	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").Click
+'	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext", dt_npp
+'	wait 1
+'	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").Click
+	Call PilihData()
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Klik Data yang Akan Di Approve, Kemudian Klik Button Setuju", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
@@ -194,9 +198,10 @@ Sub TolakApproval
 	Dim dt_npp
 	dt_npp = DataTable.Value("TEXT1",dtlocalsheet)
 	
-	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext", dt_npp
-	wait 1
-	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").Click
+'	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext", dt_npp
+'	wait 1
+'	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").Click
+	Call PilihDataApproval()
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Klik Data yang Akan Di Approve, Kemudian Klik Button Tolak", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
@@ -306,3 +311,27 @@ Sub CancelMonitoringV2
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Row 1 NPP").Click
 	
 end sub 
+
+Sub PilihDataMonitoring()
+	Dim dt_npp, dt_userLogin
+	dt_npp 			= DataTable.Value("TEXT1",dtlocalsheet)
+	dt_userLogin	= DataTable.Value("USER", dtlocalsheet)
+		
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext",dt_npp
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Row 1 NPP").Click
+	
+end sub 
+
+Sub PilihDataApproval()
+	Dim dt_npp, dt_userLogin
+	dt_npp 			= DataTable.Value("TEXT1",dtlocalsheet)
+	dt_userLogin	= DataTable.Value("USER", dtlocalsheet)
+		
+	
+	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext", dt_npp
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").Click
+	
+end sub 
+
