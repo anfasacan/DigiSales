@@ -3,7 +3,7 @@ Dim dtSidebarMenu, dt_UserLogin, dt_npp, iteration
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0317 - Admin SLN melakukan approval pengajuan cancel  distujui.xlsx", "SCD0317")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0320 - Admin WEM melakukan approval pengajuan cancel ditolak.xlsx", "SCD0320")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
@@ -26,7 +26,7 @@ End If
 
 If iteration = 3 or iteration = 7 Then
 	Call FR_GoTo_SidebarMenu(dtSidebarMenu)
-	Call SetujuApproval()
+	Call TolakApproval()
 End If
 
 If iteration = 4 or iteration = 8 Then

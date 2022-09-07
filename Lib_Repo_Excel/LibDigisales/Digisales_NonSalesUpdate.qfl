@@ -178,7 +178,7 @@ Sub SetujuApproval
 '	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext", dt_npp
 '	wait 1
 '	Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal").WebElement("Row 1 NPP").Click
-	Call PilihData()
+	Call PilihDataApproval()
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Approval - DigisalesWebPortal"), "Klik Data yang Akan Di Approve, Kemudian Klik Button Setuju", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
