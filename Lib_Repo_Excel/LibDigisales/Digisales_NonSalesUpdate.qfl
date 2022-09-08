@@ -7,6 +7,16 @@ Function NsSplit(indexArr)
 '	MsgBox result
 End Function
 
+Function Flag_SplitData(dtName)
+	Dim dt_Split
+	dt_Split = Split(DataTable.Value(dtName,dtlocalsheet), ",")
+	msgbox UBound(dt_Split) + 1
+'	If  Then
+'			
+'	End If
+'		Flag_SplitData	= 
+End Function
+
 REM ----- Tambah monitoring pengajuan data non sales, Login User->Monitoring->Add
 Sub AddMonitoring
 	Set objkey = CreateObject("WScript.Shell")
@@ -190,7 +200,8 @@ Sub AddMonitoring_noSS
 		dt_noSurat		= DataTable.Value("TEXT4",dtlocalsheet)
 		dt_ketSurat		= DataTable.Value("TEXT5",dtlocalsheet)
 		dt_ns 			= DataTable.Value("TEXT6",dtlocalsheet)
-	
+		
+		
 	Call NsSplit(0)
 	
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Add").Click
@@ -234,6 +245,36 @@ Sub AddMonitoring_noSS
 	Else
 		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
 	End If
+End Sub
+
+Sub ViewMonitoring
+	call PilihDataMonitoring()
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn View"), "Pilih data yang akan diview, Kemudian klik Button View", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn View").Click
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut Isi Data Yang di View", "" , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Close").Click
+End Sub
+
+Sub DeleteMonitoring
+	call PilihDataMonitoring()
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Delete"), "Pilih data yang akan di hapus, Kemudian klik Button Delete", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Delete").Click
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Pada Dialog Konfirmasi Hapus data Klik OK", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
+	If Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Logo Success").Exist(2) Then
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Data Berhasil Dihapus", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2	
+	End If
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn OK").Click
 End Sub
 
 REM ------ Edit Data Non Sales, Login->Monitoring->Edit
