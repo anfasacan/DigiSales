@@ -13,6 +13,7 @@ Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedRes
 REM ------- Digisales
 Call DA_Login()
 Call FR_GoTo_SidebarMenu(dtSidebarMenu)
+Call AddMonitoring_noSS()
 Call EditMonitoring()
 Call DA_Logout("0")
 
