@@ -7,14 +7,36 @@ Function NsSplit(indexArr)
 '	MsgBox result
 End Function
 
-Function Flag_SplitData(dtName)
-	Dim dt_Split
-	dt_Split = Split(DataTable.Value(dtName,dtlocalsheet), ",")
-	msgbox UBound(dt_Split) + 1
-'	If  Then
-'			
-'	End If
-'		Flag_SplitData	= 
+REM ----- Split Field Tgl Awal
+Function TglAwalSplit(indexArr)
+	Dim dt_TglAwal, dt_TglAwalSplit
+	dt_TglAwal		= DataTable.Value("TEXT2",dtlocalsheet)
+	dt_TglAwalSplit	= Split (dt_TglAwal, ",")
+	TglAwalSplit	= dt_TglAwalSplit(indexArr)
+End Function
+
+REM ----- Split Field Tgl Akhir
+Function TglAkhirSplit(indexArr)
+	Dim dt_TglAkhir, dt_TglAkhirSplit
+	dt_TglAkhir			= DataTable.Value("TEXT3",dtlocalsheet)
+	dt_TglAkhirSplit	= Split (dt_TglAkhir, ",")
+	TglAkhirSplit		= dt_TglAkhirSplit(indexArr)
+End Function
+
+REM ----- Split Field Nomor Surat
+Function NoSuratSplit(indexArr)
+	Dim dt_NoSurat, dt_NoSuratSplit
+	dt_NoSurat		= DataTable.Value("TEXT4",dtlocalsheet)
+	dt_NoSuratSplit	= Split (dt_NoSurat, ",")
+	NoSuratSplit	= dt_NoSuratSplit(indexArr)
+End Function
+
+REM ----- Split Field Keterangan Surat
+Function KetSuratSplit(indexArr)
+	Dim dt_KetSurat, dt_KetSuratSplit
+	dt_KetSurat			= DataTable.Value("TEXT5",dtlocalsheet)
+	dt_KetSuratSplit	= Split (dt_KetSurat, ",")
+	KetSuratSplit		= dt_KetSuratSplit(indexArr)
 End Function
 
 REM ----- Tambah monitoring pengajuan data non sales, Login User->Monitoring->Add
@@ -201,7 +223,8 @@ Sub AddMonitoring_noSS
 		dt_ketSurat		= DataTable.Value("TEXT5",dtlocalsheet)
 		dt_ns 			= DataTable.Value("TEXT6",dtlocalsheet)
 		
-		
+	Call TglAwalSplit(0)	
+	Call TglAkhirSplit(0)
 	Call NsSplit(0)
 	
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Add").Click
@@ -218,14 +241,31 @@ Sub AddMonitoring_noSS
 	objkey.SendKeys(dt_npp)
 	wait 1
 	objkey.SendKeys "{ENTER}"
-	wait 1	
-	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Set dt_tglAwal
 	wait 1
-	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Set dt_tglAkhir	
-	wait 2
-	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field No.Surat").Set dt_noSurat
-	wait 1
-	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Keterangan Surat").Set dt_ketSurat
+	
+	If TC_ID = "DGS-313" or TC_ID = "DGS-314" Then
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Set TglAwalSplit(0)
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Set TglAkhirSplit(0)
+	Else
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Set dt_tglAwal
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Set dt_tglAkhir	
+		wait 2
+	End If
+	
+	If TC_ID = "DGS-314" Then
+		Call NoSuratSplit(0)
+		Call KetSuratSplit(0)
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field No.Surat").Set NoSuratSplit(0)
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Keterangan Surat").Set KetSuratSplit(0)
+	Else	
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field No.Surat").Set dt_noSurat
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Keterangan Surat").Set dt_ketSurat
+	End If
+
 	wait 1
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NS").Click
 	wait 1
@@ -292,7 +332,9 @@ Sub EditMonitoring
 		dt_ketSurat		= DataTable.Value("TEXT5",dtlocalsheet)
 		dt_ns 			= DataTable.Value("TEXT6",dtlocalsheet)
 		
-	Call NsSplit(1)
+'	Call TglAwalSplit(1)
+'	Call TglAkhirSplit(1)	
+'	Call NsSplit(1)
 	
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Row 1 NPP").SetTOProperty "innertext", dt_npp
 	wait 1	
@@ -306,6 +348,8 @@ Sub EditMonitoring
 	wait 2
 
 	If TC_ID = "DGS-311" or TC_ID = "DGS-312" Then
+		Call NsSplit(1)
+		
 		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebElement("Dropdown NS").Click
 		wait 1
 		objkey.SendKeys(NsSplit(1))
@@ -313,6 +357,32 @@ Sub EditMonitoring
 		objkey.SendKeys "{ENTER}"
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Edit data NS, Kemudian Klik Button Save changes", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	ElseIf TC_ID = "DGS-313" Then
+		Call TglAwalSplit(1)
+		Call TglAkhirSplit(1)
+		
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Set TglAwalSplit(1)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Set TglAkhirSplit(1)
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Edit data Tanggal Awal dan Tanggal Akhir Backdate, Kemudian Klik Button Save changes", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	ElseIf TC_ID = "DGS-314" Then
+		Call TglAwalSplit(1)
+		Call TglAkhirSplit(1)
+		Call NoSuratSplit(1)
+		Call KetSuratSplit(1)
+		
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Set TglAwalSplit(1)
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Akhir").Set TglAkhirSplit(1)
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field No.Surat").Set NoSuratSplit(1)
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Keterangan Surat").Set KetSuratSplit(1)
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Edit data Tanggal Awal dan Tanggal Akhir Backmonth, Kemudian Klik Button Save changes", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
 	Else
 		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Tanggal Awal").Set dt_tglAwal
@@ -322,11 +392,6 @@ Sub EditMonitoring
 		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field No.Surat").Set dt_noSurat
 		wait 1
 		Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Field Keterangan Surat").Set dt_ketSurat
-		If TC_ID = "DGS-313" Then
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Edit data Tanggal Awal dan Tanggal Akhir Backdate, Kemudian Klik Button Save changes", " " , compatibilityMode.Desktop, ReportStatus.Done)
-			wait 2	
-		End If
 	End If
 		
 	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebButton("Btn Save Changes").Click
