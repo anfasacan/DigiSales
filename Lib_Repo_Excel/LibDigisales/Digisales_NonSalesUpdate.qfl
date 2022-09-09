@@ -527,6 +527,14 @@ End Sub
 
 REM ------ Lihat List Data Non Sales, Login Penyelia->Monitoring
 Sub ListDataNonSales
+	Set objkey = CreateObject("WScript.Shell")
+	Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal").WebEdit("Drop Down Show Row").Click
+	wait 2
+	objkey.SendKeys "{DOWN 5}"
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 5
+	objkey.SendKeys "{PGDN}"
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Monitoring - DigisalesWebPortal"), "Berikut List Data Non Sales", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
@@ -544,6 +552,7 @@ Sub CheckNPP
 	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Report - DigiSalesWebPortal"), "Berikut NPP Yang Tersedia Pada User "& DataTable.value("USER",dtlocalsheet), " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	
 End Sub
+
 
 Sub CancelMonitoring
 	Call CancelMonitoringV2
