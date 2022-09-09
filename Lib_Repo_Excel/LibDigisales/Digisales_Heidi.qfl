@@ -115,11 +115,21 @@ Sub ExecuteSQL
 	wait 1
 		objkey.SendKeys("^a")
 		objkey.SendKeys "{BACKSPACE}"
+		If len(DataTable.Value("QUERY1", dtLocalsheet)) > 600  Then
+		wait 10
+			objkey.SendKeys(query1)
+		wait 20
+		else
 		objkey.SendKeys(query1)
+		End If
+		
 	'Running query	
 	wait 2
 		objkey.SendKeys "{F9}"
-	wait 4
+	If len(DataTable.Value("QUERY1", dtLocalsheet)) > 600  Then
+		wait 20	
+	End If
+	wait 5
 		Call CaptureImageUFTV2(Window("HeidiSQL 12.0.0.6468"), Expl_Query1 , " ", compatibilityMode.Desktop, ReportStatus.Passed)	
 	'Menutup field query
 	wait 4

@@ -7,7 +7,7 @@ Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0302 - Sales,Penyelia,Penyel
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
-Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Sales Yang Diajukan : " & dt_npp))
+Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
 
 REM ------- Digisales
 Call DA_Login()
