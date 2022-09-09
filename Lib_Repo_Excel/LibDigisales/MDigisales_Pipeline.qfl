@@ -49,36 +49,6 @@ Sub Get_ProdukDetail()
 End Sub
 
 REM ========= Go to Sub Navbar / Navbar Menu Digisales Mobile
-Function GoToSubNavbar_Pipeline()
-	Dim SubNavbar
-	SubNavbar	= DataTable.Value("SUB_NAVBAR" ,dtLocalSheet)
-	SubNavbar	= ucase(SubNavbar)
-	Select Case SubNavbar
-		Case "CART"
-			Browser("DigiSales").Page("NavPipeline").WebElement("Menu Cart").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Cart", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-		Case "FOLLOW UP"
-			Browser("DigiSales").Page("NavPipeline").WebElement("Menu Follow Up").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Follow Up", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-		Case "MONITORING"
-				Browser("DigiSales").Page("NavPipeline").WebElement("Menu Monitoring").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Monitoring", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-		Case "CLOSING"
-				Browser("DigiSales").Page("NavPipeline").WebElement("Menu Closing").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Closing", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-	End Select
-End Function
-
-
-REM ========= Go to Sub Navbar / Navbar Menu Digisales Mobile
 Function GoToSubNavbar()
 	Dim SubNavbar
 	SubNavbar	= DataTable.Value("SUB_NAVBAR" ,dtLocalSheet)
@@ -106,6 +76,42 @@ Function GoToSubNavbar()
 			wait 2
 	End Select
 End Function
+
+REM ========= Go to Sub Navbar / Navbar Menu Split Digisales Mobile
+Function GoToSubNavbarSplit(SubNavbar)
+	Dim SubNavbar
+	SubNavbar	= ucase(SubNavbar)
+	Select Case SubNavbar
+		Case "CART"
+			Browser("DigiSales").Page("NavPipeline").WebElement("Menu Cart").Click
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Cart", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		Case "FOLLOW UP"
+			Browser("DigiSales").Page("NavPipeline").WebElement("Menu Follow Up").Click
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Follow Up", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		Case "MONITORING"
+				Browser("DigiSales").Page("NavPipeline").WebElement("Menu Monitoring").Click
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Monitoring", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		Case "CLOSING"
+				Browser("DigiSales").Page("NavPipeline").WebElement("Menu Closing").Click
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Closing", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+	End Select
+End Function
+
+REM ----- Tampil Sub Navbar Split
+Sub Goto_BatchSubNavbar(IndexArr)
+	Dim dtSubNavbar, dtSubNavbarBatch
+	dtSubNavbar			= DataTable.Value("SUB_NAVBAR",dtlocalsheet)
+	dtSubNavbarBatch	= Split (dtSubNavbar,",")
+	Call GoToSubNavbarSplit(dtSubNavbarBatch(IndexArr))
+End Sub
 
 REM ========= Filter data pada menu pipeline
 Sub FilterDataPipeline

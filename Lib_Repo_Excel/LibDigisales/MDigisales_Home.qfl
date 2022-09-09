@@ -402,6 +402,7 @@ End Sub
 
 REM------Search Data Profiling Leads Digisales Mobile -> Navbar Home -> Search Profiling
 Sub SearchProfilingLeads
+	Set objkey = CreateObject("WScript.Shell")
 	Dim dt_Search, dt_FilterBy
 	dt_FilterBy	=	ucase(DataTable.Value("TEXT2", dtLocalSheet))
 	dt_Search	=	DataTable.Value("TEXT1", dtLocalSheet)
@@ -440,6 +441,22 @@ Sub SearchProfilingLeads
 	wait 2
 		Browser("DigiSales").Page("Profiling Leads").WebButton("Btn Search Profiling").Click
 	wait 5
+End Sub
+
+REM ----- Cek Data Customer 
+Sub CheckDataCustomer
+	Set objkey = CreateObject("WScript.Shell")
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Berikut Data Customer", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	objkey.SendKeys "{PGDN}"
+	wait 2
+	If Browser("DigiSales").Page("Menu Flagging").WebElement("Btn Add to Flagging").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Button Add to Flagging Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	Else
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Button Add to Flagging Tidak Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	End If
 End Sub
 
 Sub CheckFamilyTree

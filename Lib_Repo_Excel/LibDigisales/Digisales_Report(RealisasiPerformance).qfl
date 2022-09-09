@@ -1,0 +1,121 @@
+﻿REM.....Fungsi Filter/Generate Product Holding Pada Digisales Web dengan User Sales di Menu Report->Product Holding
+Sub GenerateProductHolding
+	Set objkey = CreateObject("WScript.Shell")
+	Dim dt_NPP, dt_Periode, dt_Bulan, dt_CIF, dt_CustType
+		dt_NPP		= DataTable.Value("TEXT1", dtlocalsheet)
+		dt_Periode 	= DataTable.Value("TEXT2", dtlocalsheet)
+		dt_Bulan 	= DataTable.Value("TEXT3", dtlocalsheet)
+		dt_CIF	 	= DataTable.Value("TEXT4", dtlocalsheet)
+		dt_CustType	= DataTable.Value("TEXT5", dtlocalsheet)
+	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("Field NPP").Click
+	wait 1
+		objkey.SendKeys(dt_NPP)
+	wait 1
+		objkey.SendKeys"{ENTER}"
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebEdit("Field Tahun").Set dt_Periode
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("Field Bulan").Click
+	wait 1
+		objkey.SendKeys(dt_Bulan)
+	wait 1
+		objkey.SendKeys"{ENTER}"
+	wait 1
+		Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebEdit("Field CIF").Set dt_CIF
+	wait 2	
+		Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("Field Cust Type").Click
+	wait 2
+		objkey.SendKeys (dt_CustType)
+	wait 1
+		objkey.SendKeys"{ENTER}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Isi field pencarian sesuai kebutuhan, Lalu Klik Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+		Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebButton("Btn Generate").Click
+	wait 2
+'	Jika field ada yang tidak diisi
+	If Browser("DigiSalesWebPortal").DialogExists = true Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Muncul peringatan Field NPP, Bulan, & Tahun Wajib Diisi", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+		wait 2
+		objkey.SendKeys"{ENTER}"
+		wait 2
+	End If
+	
+End Sub
+
+REM.....Fungsi Check List data pada Product Holding Pada Digisales Web dengan User Sales di Menu Report->Product Holding
+Function ListProductHolding
+	Set objkey = CreateObject("WScript.Shell")
+	Dim dt_Periode, dt_Bulan
+		dt_Periode 	= DataTable.Value("TEXT2", dtlocalsheet)
+		dt_Bulan 	= DataTable.Value("TEXT3", dtlocalsheet)
+		
+		objkey.SendKeys "{PGDN}"
+	wait 3
+	If Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("No data available in table").Exist(2) Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Data Tidak Tersedia Pada Periode "& dt_Bulan &" "& dt_Periode, " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	Else 
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Berikut File Pada Periode "& dt_Bulan &" "& dt_Periode, " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	End If
+	wait 2
+End Function
+
+REM.....Fungsi Export Excel Pada Digisales Web dengan User Sales di Menu Report->Product Holding
+Sub ExportExcel
+	Set objkey = CreateObject("WScript.Shell")
+	Dim dt_File1
+		dt_File1 = DataTable.Value("FILE1", dtLocalsheet)
+	
+	objkey.SendKeys "{PGUP}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Klik Button Export Excel", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").Link("Btn Export Excel").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Pilih xlsx", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2	
+	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("Export to xlsx").Click
+	wait 3
+	
+	If Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("No data available in table").Exist(3) Then
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Gagal Download Excel, Karena Data Tidak Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebButton("Btn OK Gagal Export").Click
+	
+	else
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Berhasil Export ke Excel, Klik OK", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+		Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebButton("Btn OK Berhasil Export").Click
+	wait 2
+	
+	'Cek data Excel berhasil diexport
+	objkey.SendKeys "^j"
+	wait 3
+	objkey.SendKeys "^f"
+	wait 2
+	objkey.SendKeys (left(dt_File1,4))
+	wait 5
+		Call CaptureImageUFTV2(Window("SS_Full_Screen"), "Data Berhasil Didownload", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 5	
+	End If
+End Sub
+
+Sub CheckNPP
+	Set objkey = CreateObject("WScript.Shell")
+	
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("Field NPP").Click
+	wait 1
+	objkey.SendKeys "{DOWN}"
+	
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Berikut NPP Yang Tersedia Pada User "& DataTable.value("USER",dtlocalsheet), " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	
+End Sub
+
+REM ----- Cek Sidebar yang tersedia
+Sub CheckAvailableSidebar
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("DigiSales"), "Terdapat Menu Staging History dan Staging Activity", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+End Sub

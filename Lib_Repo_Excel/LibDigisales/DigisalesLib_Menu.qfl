@@ -1095,7 +1095,7 @@ Sub FR_GoTo_SidebarMenu(dtSidebarMenu)
 			Call DA_Logout("1")
 		End If
 		
-		Case "STAGGING ACTIVITY"
+		Case "STAGING ACTIVITY"
 		If Browser("DigiSalesWebPortal").Page("Sidebar").Link("Staging Activity").Exist(10) Then
 			Browser("DigiSalesWebPortal").Page("Sidebar").Link("Staging Activity").Click
 			wait 2
@@ -1251,11 +1251,11 @@ Sub FR_GoTo_SidebarMenu(dtSidebarMenu)
 	End Select
 End Sub
 
+REM ----- Tampil Sidebar Split
 Sub FR_Goto_BatchSidebarMenu(IndexArr)
 	Dim dtSidebarMenuBatch,dtSidebarMenu
 	dtSidebarMenu = DataTable.Value("SIDEBAR_MENU",dtlocalsheet)
 	dtSidebarMenuBatch = split (dtSidebarMenu,",")
 	
-'	msgbox dtSidebarMenuBatch(IndexArr)
 	call FR_GoTo_SidebarMenu(dtSidebarMenuBatch(IndexArr))
 End Sub
