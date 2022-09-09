@@ -13,13 +13,11 @@ REM ------- Digisales
 Call DA_Login()
 Call FR_GoTo_SidebarMenu(dtSidebarMenu)
 Call CheckNPP()
-Call DA_Logout("0")
-
 If ucase(DataTable.Value("USER",dtlocalsheet)) <> "SALES" Then
 	Call CreateSessionHeidi_noSS()
 	Call ExecuteSQL()
 End If
-
+Call DA_Logout("0")
 Call spReportSave()
 
 Sub spLoadLibrary()
@@ -50,6 +48,7 @@ Sub spLoadLibrary()
 	Call RepositoriesCollection.Add(LibRepo & "RP_Sidebar.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Non_Sales_Update.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Heidi.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Function.tsr")
 	
 
 End Sub
