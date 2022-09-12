@@ -109,10 +109,10 @@ Sub ExecuteSQL
 	'buka tab field query baru
 	Set objkey = CreateObject("WScript.Shell")
 		objkey.SendKeys("^t")
-	wait 1
+	wait 3
 		Window("HeidiSQL 12.0.0.6468").WinObject("Query_2").Click
 	'Mengisi Field query dengan query dari excel
-	wait 1
+	wait 3
 		objkey.SendKeys("^a")
 		objkey.SendKeys "{BACKSPACE}"
 		If len(DataTable.Value("QUERY1", dtLocalsheet)) > 600  Then
@@ -124,13 +124,13 @@ Sub ExecuteSQL
 		End If
 		
 	'Running query	
-	wait 2
+		wait 10
 		objkey.SendKeys "{F9}"
 		wait 10
 	Call CaptureImageUFTV2(Window("HeidiSQL 12.0.0.6468"), Expl_Query1 , " ", compatibilityMode.Desktop, ReportStatus.Passed)		
 		
 	'Menutup field query
-	Window("HeidiSQL 12.0.0.6468").WinObject("Query_2").Click
+'	Window("HeidiSQL 12.0.0.6468").WinObject("Query_2").Click
 	wait 4
 		objkey.SendKeys "^{F4}"
 	wait 2
