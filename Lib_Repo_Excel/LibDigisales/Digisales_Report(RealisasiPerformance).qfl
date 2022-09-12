@@ -43,74 +43,129 @@ Sub GenerateProductHolding
 	
 End Sub
 
-REM.....Fungsi Check List data pada Product Holding Pada Digisales Web dengan User Sales di Menu Report->Product Holding
-Function ListProductHolding
+REM.....Fungsi Isi Field Untuk Di Report Staging
+Function IsiFieldReportStaging
 	Set objkey = CreateObject("WScript.Shell")
-	Dim dt_Periode, dt_Bulan
+	Dim dt_Periode, dt_Bulan, dt_NPP
+		dt_NPP		= DataTable.Value("TEXT1", dtlocalsheet)
 		dt_Periode 	= DataTable.Value("TEXT2", dtlocalsheet)
 		dt_Bulan 	= DataTable.Value("TEXT3", dtlocalsheet)
+		dt_Tanggapan	= DataTable.Value("TEXT4",dtlocalsheet)
 		
-		objkey.SendKeys "{PGDN}"
-	wait 3
-	If Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("No data available in table").Exist(2) Then
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Data Tidak Tersedia Pada Periode "& dt_Bulan &" "& dt_Periode, " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	Else 
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Berikut File Pada Periode "& dt_Bulan &" "& dt_Periode, " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	If ucase(DataTable.Value("SIDEBAR_MENU",dtlocalsheet)) = "STAGING ACTIVITY" Then
+		Browser("DigiSalesWebPortal").Page("Staging Activity").WebElement("Dropdown NPP").Click
+		objkey.SendKeys(dt_NPP)
+		wait 1
+		objkey.SendKeys "{ENTER}"
+		
+		Browser("DigiSalesWebPortal").Page("Staging Activity").WebElement("Dropdown Bulan").Click
+		objkey.SendKeys(dt_Bulan)
+		wait 1
+		objkey.SendKeys "{ENTER}"
+		
+		Browser("DigiSalesWebPortal").Page("Staging Activity").WebEdit("Field Tahun").Set dt_Periode
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Staging Activity"), "Isi Field Pada Halaman", " " , compatibilityMode.Desktop, ReportStatus.Done)	
+		wait 2
+		
+	ElseIf ucase(DataTable.Value("SIDEBAR_MENU",dtlocalsheet)) = "STAGING HISTORY" Then	
+		Browser("DigiSalesWebPortal").Page("Staging History").WebElement("Dropdown NPP").Click
+		objkey.SendKeys(dt_NPP)
+		wait 1
+		objkey.SendKeys "{ENTER}"
+		
+		Browser("DigiSalesWebPortal").Page("Staging History").WebElement("Dropdown Tanggapan").Click
+		objkey.SendKeys(dt_Tanggapan)
+		wait 1
+		objkey.SendKeys "{ENTER}"
+		
+		Browser("DigiSalesWebPortal").Page("Staging History").WebEdit("Field Tahun").Set dt_Periode
+		
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Staging History"), "Isi Field Pada Halaman", " " , compatibilityMode.Desktop, ReportStatus.Done)	
 	End If
-	wait 2
+	
+	
+		
+		
 End Function
 
 REM.....Fungsi Export Excel Pada Digisales Web dengan User Sales di Menu Report->Product Holding
-Sub ExportExcel
+Sub ExportReportStagging
+	Call IsiFieldReportStaging()
+	
 	Set objkey = CreateObject("WScript.Shell")
 	Dim dt_File1
 		dt_File1 = DataTable.Value("FILE1", dtLocalsheet)
-	
-	objkey.SendKeys "{PGUP}"
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Klik Button Export Excel", " " , compatibilityMode.Desktop, ReportStatus.Done)
-	wait 2
-	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").Link("Btn Export Excel").Click
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Pilih xlsx", " " , compatibilityMode.Desktop, ReportStatus.Done)
-	wait 2	
-	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("Export to xlsx").Click
-	wait 3
-	
-	If Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("No data available in table").Exist(3) Then
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Gagal Download Excel, Karena Data Tidak Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
-	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebButton("Btn OK Gagal Export").Click
-	
-	else
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Berhasil Export ke Excel, Klik OK", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
-		Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebButton("Btn OK Berhasil Export").Click
-	wait 2
-	
-	'Cek data Excel berhasil diexport
-	objkey.SendKeys "^j"
-	wait 3
-	objkey.SendKeys "^f"
-	wait 2
-	objkey.SendKeys (left(dt_File1,4))
-	wait 5
-		Call CaptureImageUFTV2(Window("SS_Full_Screen"), "Data Berhasil Didownload", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 5	
+	If ucase(DataTable.Value("SIDEBAR_MENU",dtlocalsheet)) = "STAGING ACTIVITY" Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Staging Activity"), "Klik Button Export Excel", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Staging Activity").Link("Btn Export Excel").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Staging Activity"), "Pilih xlsx", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2	
+		Browser("DigiSalesWebPortal").Page("Staging Activity").WebElement("Btn Excel xlsx").Click
+		wait 3
+		If Browser("DigiSalesWebPortal").Page("Staging Activity").WebElement("Logo Success").Exist(3) Then
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Staging Activity"), "Berhasil Export ke Excel, Klik OK", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+				Browser("DigiSalesWebPortal").Page("Staging Activity").WebButton("Btn OK").Click
+			wait 2	
+		ElseIf Browser("DigiSalesWebPortal").DialogExists = true Then	
+			wait 5
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Staging Activity"), "Ada Peringatan Field Tidak Diisi", " " , compatibilityMode.Desktop, ReportStatus.Done)				
+			wait 3
+				objkey.SendKeys "{ENTER}"
+			wait 3	
+		End If	
+		
+	ElseIf ucase(DataTable.Value("SIDEBAR_MENU",dtlocalsheet)) = "STAGING HISTORY" Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Staging History"), "Klik Button Export Excel", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Staging History").Link("Btn Export Excel").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Staging History"), "Pilih xlsx", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2	
+		Browser("DigiSalesWebPortal").Page("Staging History").WebElement("Btn Excel xlsx").Click
+		wait 3
+		If Browser("DigiSalesWebPortal").Page("Staging History").WebElement("Logo Success").Exist(3) Then
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Staging History"), "Berhasil Export ke Excel, Klik OK", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+				Browser("DigiSalesWebPortal").Page("Staging History").WebButton("Btn OK").Click
+			wait 2
+				'Cek data Excel berhasil diexport
+			objkey.SendKeys "^j"
+			wait 3
+			objkey.SendKeys "^f"
+			wait 2
+			objkey.SendKeys (left(dt_File1,4))
+			wait 5
+				Call CaptureImageUFTV2(Window("SS_Full_Screen"), "Data Berhasil Didownload", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 5
+		ElseIf Browser("DigiSalesWebPortal").DialogExists = true Then	
+		wait 5
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Staging History"), "Ada Peringatan Field Tidak Diisi", " " , compatibilityMode.Desktop, ReportStatus.Done)				
+		wait 3
+			objkey.SendKeys "{ENTER}"
+		wait 3		
+		End If	
 	End If
+	
+	
+
 End Sub
 
 Sub CheckNPP
 	Set objkey = CreateObject("WScript.Shell")
 	
 	wait 1
-	Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal").WebElement("Field NPP").Click
+	Browser("DigiSalesWebPortal").Page("Staging Activity").WebElement("Dropdown NPP").Click
 	wait 1
 	objkey.SendKeys "{DOWN}"
-	
-	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Product Holding - DigiSalesWebPortal"), "Berikut NPP Yang Tersedia Pada User "& DataTable.value("USER",dtlocalsheet), " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Staging Activity"), "Berikut NPP Yang Tersedia Pada User "& DataTable.value("USER",dtlocalsheet), " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	
 End Sub
 
