@@ -139,26 +139,31 @@ Sub GenerateLogWA
 	objkey.SendKeys "{PGDN}"
 	wait 2
 	
-'	If TC_ID = "DGS-347" Then
-'		Do
-'			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Btn Next Data List").Click
-'		Loop Until Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Data List Gagal").Exist(5)
-'	Else
-'		Do
-'			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Btn Next Data List").Click
-'		Loop Until Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Data List Sukses").Exist(5)
-'	End If
+	If TC_ID = "DGS-347" Then
+		Do Until Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Data List Gagal").Exist(5)
+			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Btn Next Data List").Click
+			wait 1
+		Loop
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	Else
+		Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebEdit("Data List Length").Click
+		wait 1
+		objkey.SendKeys "{DOWN 3}"
+		wait 1
+		objkey.SendKeys "{ENTER}"
+		wait 1
+		objkey.SendKeys "{PGDN}"
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		objkey.SendKeys "{PGDN}"
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	End If
 
-	Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebEdit("Data List Length").Click
-	wait 1
-	objkey.SendKeys "{DOWN 3}"
-	wait 1
-	objkey.SendKeys "{ENTER}"
-	wait 1
-	objkey.SendKeys "{PGDN}"
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
 End Sub
 
 REM ----- Export CSV Log Pengiriman WA
