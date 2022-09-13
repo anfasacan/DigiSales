@@ -117,6 +117,8 @@ End Sub
 REM ------ Sidebar Log Pengiriman WA->Generate
 Sub GenerateLogWA
 	Set objkey = CreateObject("WScript.Shell")
+	Dim TC_ID
+	TC_ID			= DataTable.Value("TC_ID",dtlocalsheet)
 	Dim dt_periode, dt_tipeLogWA
 	dt_periode		= DataTable.Value("TEXT1",dtlocalsheet)
 	dt_tipeLogWA	= DataTable.Value("TEXT2",dtlocalsheet)
@@ -125,7 +127,7 @@ Sub GenerateLogWA
 	Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebEdit("Field Date").Set dt_periode
 	wait 1
 	Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Dropdown Tipe Log WA").Click
-	wait 1
+	wait 2
 	objkey.SendKeys(dt_tipeLogWA)
 	wait 2
 	objkey.SendKeys "{ENTER}"
@@ -136,18 +138,45 @@ Sub GenerateLogWA
 	wait 2
 	objkey.SendKeys "{PGDN}"
 	wait 2
+	
+'	If TC_ID = "DGS-347" Then
+'		Do
+'			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Btn Next Data List").Click
+'		Loop Until Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Data List Gagal").Exist(5)
+'	Else
+'		Do
+'			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Btn Next Data List").Click
+'		Loop Until Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Data List Sukses").Exist(5)
+'	End If
+
+	Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebEdit("Data List Length").Click
+	wait 1
+	objkey.SendKeys "{DOWN 3}"
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 1
+	objkey.SendKeys "{PGDN}"
+	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
 End Sub
 
 REM ----- Export CSV Log Pengiriman WA
 Sub ExportLogWA
-	Set objkey = CreateObject("WScript.Shell")
+
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebButton("Btn Export To CSV"), "Klik Button Export to CSV", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
 	Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebButton("Btn Export To CSV").Click
 	wait 4
+End Sub
+
+REM ----- Cek hasil download
+Sub CheckDownloadLogWA
+	Set objkey	= CreateObject("WScript.Shell")
+	Dim dt_File1
+	dt_File1	= DataTable.Value("FILE1",dtlocalsheet)
+	
 	'Cek data Excel berhasil diexport
 	objkey.SendKeys "^j"
 	wait 3
