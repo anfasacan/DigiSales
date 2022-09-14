@@ -153,8 +153,6 @@ Sub GenerateLogWA
 		objkey.SendKeys "{DOWN 3}"
 		wait 1
 		objkey.SendKeys "{ENTER}"
-		wait 1
-		objkey.SendKeys "{PGDN}"
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 2
