@@ -37,7 +37,6 @@ Sub spLoadLibrary()
 	rem ---- Digisales lib
 	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Menu.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Store.qfl")
-	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Pipeline.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "Digisales_Heidi.qfl")
 	
 	Call RepositoriesCollection.Add(LibRepo & "RP_Heidi.tsr")

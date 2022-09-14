@@ -468,14 +468,9 @@ Sub CheckFamilyTree
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 2
 	Else 
-		If DataTable.Value("TC_ID",dtlocalsheet) = "DGS-244" or DataTable.Value("TC_ID",dtlocalsheet) = "DGS-245" Then
-			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Tidak Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Failed)
-		else
-			wait 2
-			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Tidak Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-		End If
-		
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Tidak Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
 	End If
 End Sub
 
