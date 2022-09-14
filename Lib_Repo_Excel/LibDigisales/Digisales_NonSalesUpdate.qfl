@@ -4,7 +4,6 @@ Function NsSplit(indexArr)
 	dt_Ns 		= DataTable.Value("TEXT6",dtlocalsheet)
 	dt_NsSplit	= Split (dt_Ns, ",")
 	NsSplit		= dt_NsSplit(indexArr) 
-'	MsgBox result
 End Function
 
 REM ----- Split Field Tgl Awal

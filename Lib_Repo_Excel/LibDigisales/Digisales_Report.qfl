@@ -114,6 +114,22 @@ Sub CheckNPP
 	
 End Sub
 
+REM ---- Split Field Date
+Function DateSplit(indexArr)
+	Dim dt_Date, dt_DateSplit
+	dt_Date			= DataTable.Value("TEXT1",dtlocalsheet)
+	dt_DateSplit	= Split (dt_Date, ",")
+	DateSplit		= dt_DateSplit(indexArr) 
+End Function
+
+REM ---- Split Field Tipe Log WA
+Function TipeLogWASplit(indexArr)
+	Dim dt_TipeLogWA, dt_TipeLogWASplit
+	dt_TipeLogWA		= DataTable.Value("TEXT2",dtlocalsheet)
+	dt_TipeLogWASplit	= Split (dt_TipeLogWA, ",")
+	TipeLogWASplit		= dt_TipeLogWASplit(indexArr) 
+End Function
+
 REM ------ Sidebar Log Pengiriman WA->Generate
 Sub GenerateLogWA
 	Set objkey = CreateObject("WScript.Shell")
@@ -123,55 +139,142 @@ Sub GenerateLogWA
 	dt_periode		= DataTable.Value("TEXT1",dtlocalsheet)
 	dt_tipeLogWA	= DataTable.Value("TEXT2",dtlocalsheet)
 	
-	
-	Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebEdit("Field Date").Set dt_periode
-	wait 1
-	Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Dropdown Tipe Log WA").Click
-	wait 2
-	objkey.SendKeys(dt_tipeLogWA)
-	wait 2
-	objkey.SendKeys "{ENTER}"
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Isi Semua Field, Kemudian Klik Button Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
-	wait 2
-	Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebButton("Btn Generate").Click
-	wait 2
-	objkey.SendKeys "{PGDN}"
-	wait 2
-	
-	If TC_ID = "DGS-347" Then
-		Do Until Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Data List Gagal").Exist(5)
-			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Btn Next Data List").Click
+	If TC_ID = "DGS-351" Then
+		Call DateSplit(0)
+		Call DateSplit(1)
+		Call DateSplit(2)
+		Call TipeLogWASplit(0)
+		Call TipeLogWASplit(1)
+		Call TipeLogWASplit(2)
+		
+		'Jika date diisi dan tipe log WA kosong maka muncul dialog peringatan
+'		If DateSplit(0) <> "" and TipeLogWASplit(0) = "" Then
+			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebEdit("Field Date").Set DateSplit(0)
 			wait 1
-		Loop
-		wait 2
-			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-		wait 2
+			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Dropdown Tipe Log WA").Click
+			wait 2
+			objkey.SendKeys(TipeLogWASplit(0))
+			wait 2
+			objkey.SendKeys "{ENTER}"
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Isi Field Hanya Date, Kemudian Klik Button Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebButton("Btn Generate").Click
+			
+			If Browser("DigiSalesWebPortal").DialogExists = true Then
+				wait 2
+					Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Terdapat Peringatan karena field mandatory tidak diisi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+				wait 2
+				objkey.SendKeys "{ENTER}"
+			End If
+			
+			wait 2
+			objkey.SendKeys "{F5}"
+			wait 2
+			
+		'Jika date kosong dan tipe log WA diisi maka muncul dialog peringatan		
+'		ElseIf DateSplit(1) = "" and TipeLogWASplit(1) <> "" Then
+			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebEdit("Field Date").Set DateSplit(1)
+			wait 1
+			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Dropdown Tipe Log WA").Click
+			wait 2
+			objkey.SendKeys(TipeLogWASplit(1))
+			wait 2
+			objkey.SendKeys "{ENTER}"
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Isi Field Hanya Tipe Log WA, Kemudian Klik Button Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebButton("Btn Generate").Click
+			
+			If Browser("DigiSalesWebPortal").DialogExists = true Then
+				wait 2
+					Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Terdapat Peringatan karena field mandatory tidak diisi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+				wait 2
+				objkey.SendKeys "{ENTER}"
+			End If
+			
+			wait 2
+			objkey.SendKeys "{F5}"
+			wait 2
+			
+		'Jika date dan tipe log WA kosong semua maka muncul dialog peringatan			
+'		ElseIf DateSplit(2) = "" and TipeLogWASplit(2) = "" Then
+			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebEdit("Field Date").Set DateSplit(2)
+			wait 1
+			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Dropdown Tipe Log WA").Click
+			wait 2
+			objkey.SendKeys(TipeLogWASplit(2))
+			wait 2
+			objkey.SendKeys "{ENTER}"
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Semua Field Dikosongi, Kemudian Klik Button Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebButton("Btn Generate").Click
+			
+			If Browser("DigiSalesWebPortal").DialogExists = true Then
+				wait 2
+					Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Terdapat Peringatan karena field mandatory tidak diisi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+				wait 2
+				objkey.SendKeys "{ENTER}"
+			End If
+			
+'		End If
+		
 	Else
-		Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebEdit("Data List Length").Click
+		Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebEdit("Field Date").Set dt_periode
 		wait 1
-		objkey.SendKeys "{DOWN 3}"
-		wait 1
+		Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Dropdown Tipe Log WA").Click
+		wait 2
+		objkey.SendKeys(dt_tipeLogWA)
+		wait 2
 		objkey.SendKeys "{ENTER}"
 		wait 2
-			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Isi Semua Field, Kemudian Klik Button Generate", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebButton("Btn Generate").Click
 		wait 2
 		objkey.SendKeys "{PGDN}"
 		wait 2
-			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-		wait 2
+		
+		If TC_ID = "DGS-347" Then
+			Do Until Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Data List Gagal").Exist(5)
+				Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Btn Next Data List").Click
+				wait 1
+			Loop
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		Else
+			Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebEdit("Data List Length").Click
+			wait 1
+			objkey.SendKeys "{DOWN 3}"
+			wait 1
+			objkey.SendKeys "{ENTER}"
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+			objkey.SendKeys "{PGDN}"
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		End If
 	End If
-
+	
 End Sub
 
 REM ----- Export CSV Log Pengiriman WA
 Sub ExportLogWA
-
+	Set objkey = CreateObject("WScript.Shell")
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebButton("Btn Export To CSV"), "Klik Button Export to CSV", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
 	Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebButton("Btn Export To CSV").Click
 	wait 4
+	If Browser("DigiSalesWebPortal").DialogExists = true Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Gagal Export Data Karena Field Mandatory Tidak Diisi", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		objkey.SendKeys "{ENTER}"
+	End If
 End Sub
 
 REM ----- Cek hasil download
