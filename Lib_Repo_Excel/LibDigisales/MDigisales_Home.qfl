@@ -474,6 +474,47 @@ Sub CheckFamilyTree
 	End If
 End Sub
 
+Sub SearchFamilyTreeFlagging
+	Dim dtType,dtDataSearch
+	dtType = DataTable.Value("TEXT2",dtlocalsheet)
+	dtDataSearch = DataTable.Value("TEXT1",dtlocalsheet)
+	wait 2
+	Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Filter Search Customer Family Tree Flagging"), "Click Button Filter By", "Plih Data Filter yang akan digunakan untuk mencari data" , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Filter Search Customer Family Tree Flagging").Click
+	If ucase(dtType) = "CIF" Then
+		Browser("DigiSales").Page("Menu Family Tree").WebElement("Filter Search By CIF").Click
+	ElseIf ucase(dtType) = "NAMA" Then
+		Browser("DigiSales").Page("Menu Family Tree").WebElement("Filter Search By Nama").Click
+	ElseIf UCase(dtType) = "NAMA PROGRAM" Then
+		Browser("DigiSales").Page("Menu Family Tree").WebElement("Filter Search By Program").Click
+	End If
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Close Filter").Click
+	Browser("DigiSales").Page("Menu Family Tree").WebEdit("Search Bar Customer Family Tree Flagging").Set dtDataSearch
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Isi Field Search", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Search Customer Family Tree Flagging").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Berikut Hasil Data Yang Dicari", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+
+End Sub
+
+Sub CheckDetailFamilyTreeFlagging
+	Set objkey = CreateObject("WScript.Shell")
+	
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Detail Customer Family Tree Flagging"), "Click Button Detail", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Detail Customer Family Tree Flagging").Click
+	wait 2
+	objkey.SendKeys "{PGDN}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Berikut Isi Detail Data yang dipilih", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+End Sub
+
 Sub AddFamilyTree
 	Dim Search_Key_Family_Tree,check_Enabled_Btn_add_to_family_Tree
 	Search_Key_Family_Tree = DataTable.Value("TEXT3",dtlocalsheet)
@@ -489,22 +530,32 @@ Sub AddFamilyTree
 		If Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Add To Family Tree Flagging").GetROProperty("disable") or Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Add To Family Tree Flagging").GetROProperty("disabled") Then
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Flagging Disabled", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		else
-			If DataTable.value("TC_ID",dtlocalsheet) <> "DGS-255" Then
+			If DataTable.value("TC_ID",dtlocalsheet) <> "DGS-267" Then
 				wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Flagging Enabled", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Click Button Add To Family Tree Flagging", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
 				wait 2
 				Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Add To Family Tree Flagging").Click
 				wait 2
 				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Klik Ya, Untuk Menambahkan Data Family Tree", " " , compatibilityMode.Desktop, ReportStatus.Done)	
 				wait 2
 				Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn YA, Konfirmasi Add Data").Click
-				wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Data Telah Ditambahkan, Lalu Tekan Ok", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
-				wait 2
-				Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok, Data Berhasil Ditambah").Click
+				If Browser("DigiSales").Page("Menu Family Tree").WebElement("Text Tidak bisa submit").Exist(3) Then
+					wait 2
+					Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Data Tidak Bisa di Submit, Lalu Tekan Ok", "Data Gagal Ditambah karena Sudah ada pengajuan dalam proses approval " , compatibilityMode.Desktop, ReportStatus.Passed)
+					wait 2
+					Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok").Click
+				else
+					wait 2
+					Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Data Telah Ditambahkan, Lalu Tekan Ok", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+					wait 2
+					Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok, Data Berhasil Ditambah").Click					
+					wait 2
+					Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Berikut Data yang Telah ditambah", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+					wait 2
+				End If
 			else
 				wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Flagging Enabled", " " , compatibilityMode.Desktop, ReportStatus.Failed)	
+				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Flagging Tersedia dan Enabled", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
 				wait 2
 			End If
 		end if
@@ -536,6 +587,7 @@ Sub AddToFlagging
 	End If
 	
 End Sub
+
 
 REM -------- Fungsi Generate Product Holding Mobile
 Sub GenerateProductHolding
