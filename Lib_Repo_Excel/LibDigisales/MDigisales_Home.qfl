@@ -510,6 +510,7 @@ Sub CheckDetailFamilyTreeFlagging
 	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Detail Customer Family Tree Flagging").Click
 	wait 2
 	objkey.SendKeys "{PGDN}"
+	Browser("DigiSales").Page("Menu Family Tree").WebElement("Detail Status").Click
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Berikut Isi Detail Data yang dipilih", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
@@ -561,6 +562,22 @@ Sub AddFamilyTree
 		end if
 		
 	End If
+End Sub
+
+Sub CheckDetailStatus
+	Browser("DigiSales").Page("Menu Family Tree").WebElement("Detail Status").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Berikut Detail Status", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+	wait 2
+End Sub
+
+Sub CheckDetailVerifikasiNasabahPerorangan
+	If Browser("DigiSales").Page("Menu Family Tree").WebElement("Detail Verifikasi Nasabah Perorangan Tidak Sesuai").Exist(2) Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Detail Verifikasi Nasabah Perorangan Berisi Tidak Sesuai", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+		wait 2
+	End If
+	
 End Sub
 
 REM------Add to Flagging Digisales Mobile -> Navbar Home -> Search Profiling -> Profiling Leads
