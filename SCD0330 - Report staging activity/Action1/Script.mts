@@ -8,8 +8,8 @@ Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin))
-REM ------- Digisales
 
+REM ------- Digisales
 Call DA_Login()
 Call FR_GoTo_SidebarMenu(dtSidebarMenu)
 Call ExportReportStagging()
