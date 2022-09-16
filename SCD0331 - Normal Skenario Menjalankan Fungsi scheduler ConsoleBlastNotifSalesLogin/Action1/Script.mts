@@ -12,7 +12,7 @@ Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedRes
 
 REM ------- Digisales
 Call DA_Login()
-call FR_GoTo_SidebarMenu(dtSidebarMenu)
+Call FR_GoTo_SidebarMenu(dtSidebarMenu)
 Call GenerateLogWA()
 Call ExportLogWA()
 Call CheckDownloadLogWA()
@@ -63,8 +63,8 @@ Sub spGetDatatable()
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
-'	
-'	REM ---------- Menu
+	
+	REM ---------- Menu
 	dtSidebarMenu				= DataTable.Value("SIDEBAR_MENU" ,dtLocalSheet)
 End Sub
 

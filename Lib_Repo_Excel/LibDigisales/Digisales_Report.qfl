@@ -250,16 +250,30 @@ Sub GenerateLogWA
 			objkey.SendKeys "{DOWN 3}"
 			wait 1
 			objkey.SendKeys "{ENTER}"
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-			objkey.SendKeys "{PGDN}"
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
+			
+			Do While Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Jumlah row").Exist(1)
+				jml = Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Jumlah row").GetTOProperty ("innertext")
+				count = CInt(jml)
+				count = count + 1
+				Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Jumlah row").SetTOProperty "innertext", count
+			Loop
+			count = count - 1
+			
+			If count <= 9 Then
+				wait 2
+					Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+				wait 2
+			Else 
+				wait 2
+					Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+				wait 2
+				objkey.SendKeys "{PGDN}"
+				wait 2
+					Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Log Pengiriman WA"), "Berikut List Data Log Pengiriman WA", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+				wait 2
+			End If
 		End If
 	End If
-	
 End Sub
 
 REM ----- Export CSV Log Pengiriman WA

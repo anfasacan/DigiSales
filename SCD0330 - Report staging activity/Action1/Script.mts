@@ -1,5 +1,5 @@
 ﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
-Dim dtSidebarMenu, dt_UserLogin, dt_npp, iteration
+Dim dtSidebarMenu, dt_UserLogin
 
 REM -------------- Call Function
 Call spLoadLibrary()
@@ -50,7 +50,6 @@ End Sub
 Sub spGetDatatable()
 	REM --------- Data
 	dt_UserLogin				= DataTable.Value("USER",dtLocalSheet)
-	dt_npp						= DataTable.Value("TEXT1",dtLocalSheet)
 
 	REM --------- Reporting
 	dt_TCID						= DataTable.Value("TC_ID", dtLocalSheet)
