@@ -174,3 +174,38 @@ Sub CheckAvailableSidebar
 	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("DigiSales"), "Terdapat Menu Staging History dan Staging Activity", " ", compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
 End Sub
+
+
+REM ----- Realisasi Sales
+
+'Generate Realisasi Sales
+Sub GenerateRealisasiSales
+	Set objkey = CreateObject("WScript.Shell")
+	Dim dt_NPP, dt_Tahun, dt_Bulan
+		dt_NPP		= DataTable.Value("TEXT1",dtlocalsheet)
+		dt_Tahun	= DataTable.Value("TEXT2",dtlocalsheet)
+		dt_Bulan	= DataTable.Value("TEXT3",dtlocalsheet)
+		
+	Browser("DigiSalesWebPortal").Page("Realisasi Sales").WebElement("Dropdown NPP").Click
+	wait 2
+	objkey.SendKeys(dt_NPP)
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Realisasi Sales").WebEdit("Field Tahun").Set dt_Tahun
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Realisasi Sales").WebElement("Dropdown Bulan").Click
+	wait 2
+	objkey.SendKeys(dt_Bulan)
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Realisasi Sales"), "Isi Semua Field Yang Dibutuhkan, Kemudian Klik Button Generate", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Realisasi Sales").WebButton("Btn Generate").Click
+	wait 2
+	objkey.SendKeys "{PGDN}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Realisasi Sales"), "Karna sales ini status nya Non Sales maka tampilan report nya seperti di bawah ini", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+End Sub
