@@ -474,6 +474,29 @@ Sub CheckFamilyTree
 	End If
 End Sub
 
+Sub SearchFamilyTreeFlaggingNoSS
+	Dim dtType,dtDataSearch
+	dtType = DataTable.Value("TEXT2",dtlocalsheet)
+	dtDataSearch = DataTable.Value("TEXT1",dtlocalsheet)
+	wait 3
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Filter Search Customer Family Tree Flagging").Click
+	wait 4
+	If ucase(dtType) = "CIF" Then
+		Browser("DigiSales").Page("Menu Family Tree").WebElement("Filter Search By CIF").Click
+	ElseIf ucase(dtType) = "NAMA" Then
+		Browser("DigiSales").Page("Menu Family Tree").WebElement("Filter Search By Nama").Click
+	ElseIf UCase(dtType) = "NAMA PROGRAM" Then
+		Browser("DigiSales").Page("Menu Family Tree").WebElement("Filter Search By Program").Click
+	End If
+	wait 4
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Close Filter").Click
+	wait 2
+	Browser("DigiSales").Page("Menu Family Tree").WebEdit("Search Bar Customer Family Tree Flagging").Set dtDataSearch
+	wait 2
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Search Customer Family Tree Flagging").Click
+
+End Sub
+
 Sub SearchFamilyTreeFlagging
 	Dim dtType,dtDataSearch
 	dtType = DataTable.Value("TEXT2",dtlocalsheet)
@@ -501,6 +524,25 @@ Sub SearchFamilyTreeFlagging
 
 End Sub
 
+Sub SendCustomerFamilyTreeFlaggingToPenyelia
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree").WebElement("Btn Plus"), "Klik Button +", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu Family Tree").WebElement("Btn Plus").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree").WebElement("Btn Arrow Send Data"), "Klik Button Panah Untuk Mengirim Data", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu Family Tree").WebElement("Btn Arrow Send Data").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Tekan Ya Pada Konfirmasi Pengiriman Data", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn YA").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Data Berhasil Dikirim", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok").Click
+End Sub
+
 Sub CheckDetailFamilyTreeFlagging
 	Set objkey = CreateObject("WScript.Shell")
 	
@@ -514,6 +556,7 @@ Sub CheckDetailFamilyTreeFlagging
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Berikut Isi Detail Data yang dipilih", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn X").Click
 End Sub
 
 Sub AddFamilyTree
@@ -560,7 +603,6 @@ Sub AddFamilyTree
 				wait 2
 			End If
 		end if
-		
 	End If
 End Sub
 
@@ -571,13 +613,34 @@ Sub CheckDetailStatus
 	wait 2
 End Sub
 
-Sub CheckDetailVerifikasiNasabahPerorangan
-	If Browser("DigiSales").Page("Menu Family Tree").WebElement("Detail Verifikasi Nasabah Perorangan Tidak Sesuai").Exist(2) Then
-		wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Detail Verifikasi Nasabah Perorangan Berisi Tidak Sesuai", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
-		wait 2
-	End If
-	
+Sub ChangeStatusVerifikasiCustomerFamilyTreeFlagging
+	Do 
+	wait 20
+	Call SearchFamilyTreeFlaggingNoSS()
+	Loop While Browser("DigiSales").Page("Menu Family Tree").WebElement("Status : Menunggu Verfikasi").Exist(1) or Browser("DigiSales").Page("Menu Family Tree").WebElement("Data Tidak Ada").Exist(1)
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Berikut Data yang telah Terverivikasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+	wait 2
+End Sub
+
+Sub CheckDetailVerifikasi
+	Dim DataCheck
+	DataCheck = DataTable.Value("TEXT4",dtlocalsheet)
+	wait 2
+	Select Case ucase(DataCheck)
+		Case ucase("Verif. Usia Nasabah Kelolaan")
+			Do 
+				Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn X").Click
+				wait 20
+				Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Detail Customer Family Tree Flagging").Click
+				Browser("DigiSales").Page("Menu Family Tree").WebElement("Detail Status").Click
+				wait 2
+			Loop Until Browser("DigiSales").Page("Menu Family Tree").WebElement("Verif. Usia Nasabah Kelolaan").Exist(1) 
+	End Select
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Berikut Detail Status", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+	wait 2
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn X").Click
 End Sub
 
 REM------Add to Flagging Digisales Mobile -> Navbar Home -> Search Profiling -> Profiling Leads

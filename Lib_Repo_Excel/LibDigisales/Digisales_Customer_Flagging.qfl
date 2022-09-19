@@ -1,0 +1,23 @@
+﻿REM -------- Approve Flagging
+Sub ApprovalFamilyTree
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal").WebElement("Check Box All").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal"), "Checklist Data yang akan di approve", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal").WebButton("Btn Accept"), "Click Button Accept", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal").WebButton("Btn Accept").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal"), "Click Ya, Lanjutkan Pada Dialog Konfirmasi", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal").WebButton("Btn Ya, Lanjutkan").Click
+	wait 3
+	If Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal").WebElement("Logo Success").Exist(3) Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal"), "Data Berhasil Di Approve", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	End If
+	Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal").WebButton("Btn OK").Click
+
+End Sub
