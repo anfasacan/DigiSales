@@ -206,6 +206,54 @@ Sub GenerateRealisasiSales
 	wait 2
 	objkey.SendKeys "{PGDN}"
 	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Realisasi Sales"), "Karna sales ini status nya Non Sales maka tampilan report nya seperti di bawah ini", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	
+	If Browser("DigiSalesWebPortal").Page("Realisasi Sales").WebElement("Alert Terdaftar posisi Non Sales").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Realisasi Sales"), "Karena sales ini status nya Non Sales maka tampilan report nya seperti di bawah ini", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	ElseIf Browser("DigiSalesWebPortal").Page("Realisasi Sales").WebElement("No matching records found").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Realisasi Sales"), "Data Realisasi Sales Pada Periode "& dt_Bulan &" "& dt_Tahun &" Kosong", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	Else
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Realisasi Sales"), "Berikut Data Realisasi Sales Pada Periode "& dt_Bulan &" "& dt_Tahun, " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	End If
+	
+	wait 2	
+End Sub
+
+'Generate Performance Sales
+Sub GeneratePerformanceSales
+	Set objkey = CreateObject("WScript.Shell")
+	Dim dt_NPP, dt_Tahun, dt_Bulan
+		dt_NPP		= DataTable.Value("TEXT1",dtlocalsheet)
+		dt_Tahun	= DataTable.Value("TEXT2",dtlocalsheet)
+		dt_Bulan	= DataTable.Value("TEXT3",dtlocalsheet)
+		
+	Browser("DigiSalesWebPortal").Page("Performance Sales").WebElement("Dropdown NPP").Click
+	wait 2
+	objkey.SendKeys(dt_NPP)
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Performance Sales").WebEdit("Field Tahun").Set dt_Tahun
+	wait 1
+	Browser("DigiSalesWebPortal").Page("Performance Sales").WebElement("Dropdown Bulan").Click
+	wait 2
+	objkey.SendKeys(dt_Bulan)
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Performance Sales"), "Isi Semua Field Yang Dibutuhkan, Kemudian Klik Button Generate", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSalesWebPortal").Page("Performance Sales").WebButton("Btn Generate").Click
+	wait 2
+	objkey.SendKeys "{PGDN}"
+	wait 2
+	
+	If Browser("DigiSalesWebPortal").Page("Performance Sales").WebElement("Alert Terdaftar posisi Non Sales").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Performance Sales"), "Karena sales ini status nya Non Sales maka tampilan report nya seperti di bawah ini", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	ElseIf Browser("DigiSalesWebPortal").Page("Performance Sales").WebElement("No matching records found").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Performance Sales"), "Data Performance Sales Pada Periode "& dt_Bulan &" "& dt_Tahun &" Kosong", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	Else
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Performance Sales"), "Berikut Data Performance Sales Pada Periode "& dt_Bulan &" "& dt_Tahun, " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	End If
+	
 	wait 2
 End Sub

@@ -176,9 +176,15 @@ Function GoToSubSubNavbar()
 				Case "PROGRESS CHART"
 					MsgBox "FiturBelumTersedia"
 				Case "REPORT REALISASI"
-					MsgBox "FiturBelumTersedia"
+					Browser("DigiSales").Page("Menu My Performance").WebElement("Report Realisasi").Click
+					wait 2
+						Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Masuk Ke Menu Report Realisasi", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+					wait 2
 				Case "PERFORMANCE REPORT BY SALES"
-					MsgBox "FiturBelumTersedia"
+					Browser("DigiSales").Page("Menu My Performance").WebElement("Performance Report By Sales").Click
+					wait 2
+						Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Masuk Ke Menu Performance Report By Sales", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+					wait 2
 				Case "REPORT NASABAH KELOLAAN"
 					MsgBox "FiturBelumTersedia"
 				Case "REPORT STAGING ACTIVITY"
@@ -850,8 +856,75 @@ Sub CalculatePerformanceCalculator
 			wait 1
 				objkey.SendKeys "{PGDN}"
 			wait 2
-			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berhasil Menampilkan Data Performance Calculator Final", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berhasil Menampilkan Data Performance Calculator Final", " ", compatibilityMode.Desktop, ReportStatus.Passed)
 			wait 2
-		End If
-			
+		End If	
+End Sub
+
+REM ----- Menu Report Realisasi
+
+'Generate Report Realisasi
+Sub GenerateReportRealisasi
+	Set objkey	= CreateObject("WScript.Shell")
+	Dim dt_Bulan, dt_Tahun
+		dt_Bulan	= DataTable.Value("TEXT1",dtlocalsheet)
+		dt_Tahun	= DataTable.Value("TEXT2",dtlocalsheet)
+		
+	Browser("DigiSales").Page("Menu My Performance").WebEdit("Field Bulan Report Realisasi").Set dt_Bulan
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 1
+	Browser("DigiSales").Page("Menu My Performance").WebEdit("Field Tahun Report Realisasi").Set dt_Tahun
+	wait 1
+	objkey.SendKeys "{DOWN}"
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Isi Semua Field Dibutuhkan, Kemudian Klik Button Generate", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu My Performance").WebButton("Btn Generate Report Realisasi").Click
+	wait 3
+	
+	If Browser("DigiSales").Page("Menu My Performance").WebElement("Alert Terdaftar posisi Non Sales").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Karena sales ini status nya Non Sales maka tampilan report nya seperti di bawah ini", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	ElseIf Browser("DigiSales").Page("Menu My Performance").WebElement("No data available").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Data Report Realisasi Pada Periode "& dt_Bulan & " " & dt_Tahun &" Kosong" , " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	Else
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berikut Data Report Realisasi Pada Periode "& dt_Bulan & " " & dt_Tahun, " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	End If
+	
+	wait 2
+End Sub
+
+'Generate Performance Report by Sales
+Sub GeneratePerformanceReportbySales
+	Set objkey	= CreateObject("WScript.Shell")
+	Dim dt_Bulan, dt_Tahun
+		dt_Bulan	= DataTable.Value("TEXT1",dtlocalsheet)
+		dt_Tahun	= DataTable.Value("TEXT2",dtlocalsheet)
+		
+	Browser("DigiSales").Page("Menu My Performance").WebEdit("Field Bulan Performance Report by Sales").Set dt_Bulan
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 1
+	Browser("DigiSales").Page("Menu My Performance").WebEdit("Field Tahun Performance Report by Sales").Set dt_Tahun
+	wait 1
+	objkey.SendKeys "{DOWN}"
+	wait 1
+	objkey.SendKeys "{ENTER}"
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Isi Semua Field Dibutuhkan, Kemudian Klik Button Generate", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu My Performance").WebButton("Btn Generate Performance Report by Sales").Click
+	wait 3
+	
+	If Browser("DigiSales").Page("Menu My Performance").WebElement("Alert Terdaftar posisi Non Sales").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Karena sales ini status nya Non Sales maka tampilan report nya seperti di bawah ini", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	ElseIf Browser("DigiSales").Page("Menu My Performance").WebElement("No data available").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Data Performance Report Pada Periode "& dt_Bulan & " " & dt_Tahun &" Kosong" , " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	Else
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berikut Data Performance Report Pada Periode "& dt_Bulan & " " & dt_Tahun, " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	End If
+	
+	wait 2
 End Sub
