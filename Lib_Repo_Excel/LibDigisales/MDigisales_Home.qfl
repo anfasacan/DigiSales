@@ -535,18 +535,26 @@ Sub SendCustomerFamilyTreeFlaggingToPenyelia
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree").WebElement("Btn Plus"), "Klik Button +", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
 	Browser("DigiSales").Page("Menu Family Tree").WebElement("Btn Plus").Click
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree").WebElement("Btn Arrow Send Data"), "Klik Button Panah Untuk Mengirim Data", " " , compatibilityMode.Desktop, ReportStatus.Done)
-	wait 2
-	Browser("DigiSales").Page("Menu Family Tree").WebElement("Btn Arrow Send Data").Click
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Tekan Ya Pada Konfirmasi Pengiriman Data", " " , compatibilityMode.Desktop, ReportStatus.Done)
-	wait 2
-	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn YA").Click
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Data Berhasil Dikirim", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
-	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok").Click
+	
+	'Jika tombol send Disabled
+	If Browser("DigiSales").Page("Menu Family Tree").WebElement("Btn Arrow Send Data").Exist(5) Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree").WebElement("Btn Arrow Send Data"), "Klik Button Panah Untuk Mengirim Data", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSales").Page("Menu Family Tree").WebElement("Btn Arrow Send Data").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Tekan Ya Pada Konfirmasi Pengiriman Data", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn YA").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Data Berhasil Dikirim", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok").Click
+	Else
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Panah Untuk Kirim Data Menjadi Disabled", "Karna sebelumnya sudah ada usulan yang sedang dalam proses approval maka pengajuan nasabah selanjutnya tidak bisa usulkan ke penyelia dengan tampilan add to penyelia disabled" , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	End If
 End Sub
 
 Sub CheckDetailFamilyTreeFlagging
