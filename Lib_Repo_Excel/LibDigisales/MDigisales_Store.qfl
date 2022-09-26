@@ -139,26 +139,30 @@ Sub FilterDataStore
 	Browser("DigiSales").Page("Dedicated").WebButton("Filter By").Click
 	wait 1
 	If dtFilterBy = "CIF" Then
-		Browser("DigiSales").Page("Dedicated").WebElement("RadioBtn CIF Filter").Click
+		Browser("DigiSales").Page("Dedicated").WebElement("Filter CIF").Click
 		wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Pilih Filter By CIF", " " , compatibilityMode.Desktop, ReportStatus.Done)
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Pilih Filter By CIF, Lalu Klik Submit", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
 	ElseIf dtFilterBy = "Nama" Then
-		Browser("DigiSales").Page("Dedicated").WebElement("RadioBtn Nama Filter").Click
+		Browser("DigiSales").Page("Dedicated").WebElement("Filter Nama").Click
 		wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Pilih Filter By Nama", " " , compatibilityMode.Desktop, ReportStatus.Done)
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Pilih Filter By Nama, Lalu Klik Submit", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
 	Else 
-		Browser("DigiSales").Page("Dedicated").WebElement("RadioBtn Nama Filter").Click
+		Browser("DigiSales").Page("Dedicated").WebElement("Filter NamaProgram").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Pilih Filter By Nama Program, Lalu Klik Submit", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
 	End If
 	
-	Browser("DigiSales").Page("Dedicated").WebButton("CloseFilter").Click
-	
+'	Browser("DigiSales").Page("Dedicated").WebButton("CloseFilter").Click
+	Browser("DigiSales").Page("Dedicated").WebButton("SubmitFilter").Click
+	wait 1
 	Browser("DigiSales").Page("Dedicated").WebEdit("Search Bar").Set dtFilter
 	wait 2
 	Browser("DigiSales").Page("Dedicated").WebButton("Btn Search").Click
 	wait 2
-	Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Berikut Data Sesuai Filter", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Berikut Data Sesuai Filter", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
 End Sub
 
