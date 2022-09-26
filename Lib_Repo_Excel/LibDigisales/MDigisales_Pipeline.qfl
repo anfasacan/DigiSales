@@ -78,33 +78,33 @@ Function GoToSubNavbar()
 End Function
 
 REM ========= Go to Sub Navbar / Navbar Menu Split Digisales Mobile
-Function GoToSubNavbarSplit(SubNavbar)
-	Dim SubNavbar
-	SubNavbar	= ucase(SubNavbar)
-	Select Case SubNavbar
-		Case "CART"
-			Browser("DigiSales").Page("NavPipeline").WebElement("Menu Cart").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Cart", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-		Case "FOLLOW UP"
-			Browser("DigiSales").Page("NavPipeline").WebElement("Menu Follow Up").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Follow Up", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-		Case "MONITORING"
-				Browser("DigiSales").Page("NavPipeline").WebElement("Menu Monitoring").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Monitoring", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-		Case "CLOSING"
-				Browser("DigiSales").Page("NavPipeline").WebElement("Menu Closing").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Closing", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-			wait 2
-	End Select
-End Function
-
+'Function GoToSubNavbarSplit(SubNavbar)
+'	Dim SubNavbar
+'	SubNavbar	= ucase(SubNavbar)
+'	Select Case SubNavbar
+'		Case "CART"
+'			Browser("DigiSales").Page("NavPipeline").WebElement("Menu Cart").Click
+'			wait 2
+'				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Cart", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+'			wait 2
+'		Case "FOLLOW UP"
+'			Browser("DigiSales").Page("NavPipeline").WebElement("Menu Follow Up").Click
+'			wait 2
+'				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Follow Up", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+'			wait 2
+'		Case "MONITORING"
+'				Browser("DigiSales").Page("NavPipeline").WebElement("Menu Monitoring").Click
+'			wait 2
+'				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Monitoring", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+'			wait 2
+'		Case "CLOSING"
+'				Browser("DigiSales").Page("NavPipeline").WebElement("Menu Closing").Click
+'			wait 2
+'				Call CaptureImageUFTV2(Browser("DigiSales").Page("NavPipeline"), "Masuk Ke Menu Closing", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+'			wait 2
+'	End Select
+'End Function
+'
 REM ----- Tampil Sub Navbar Split
 Sub Goto_BatchSubNavbar(IndexArr)
 	Dim dtSubNavbar, dtSubNavbarBatch
@@ -122,20 +122,20 @@ Sub FilterDataPipeline
 	Browser("DigiSales").Page("Menu Monitoring").WebButton("Filter By").Click
 	wait 1
 	If dtFilterBy = "CIF" Then
-		Browser("DigiSales").Page("Menu Monitoring").WebElement("RadioBtn CIF Filter").Click
+		Browser("DigiSales").Page("Menu Monitoring").WebElement("Filter CIF").Click
 		wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Pilih Filter By", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
 	ElseIf dtFilterBy = "Nama" Then
-		Browser("DigiSales").Page("Menu Monitoring").WebElement("RadioBtn Nama Filter").Click
+		Browser("DigiSales").Page("Menu Monitoring").WebElement("Filter Nama").Click
 		wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Pilih Filter By", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
 	else
-		Browser("DigiSales").Page("Menu Monitoring").WebElement("RadioBtn Nama Filter").Click
+		Browser("DigiSales").Page("Menu Monitoring").WebElement("Filter Nama").Click
 	End If
 	
-		Browser("DigiSales").Page("Menu Monitoring").WebButton("CloseFilter").Click
+		Browser("DigiSales").Page("Menu Monitoring").WebButton("SubmitFilter").Click
 	wait 1
 		Browser("DigiSales").Page("Menu Monitoring").WebEdit("Search Bar").Set dtFilter
 	wait 2
@@ -153,13 +153,13 @@ Sub FilterDataPipeline_NoSS
 	Browser("DigiSales").Page("Menu Monitoring").WebButton("Filter By").Click
 	wait 1
 	If dtFilterBy = "CIF" Then
-		Browser("DigiSales").Page("Menu Monitoring").WebElement("RadioBtn CIF Filter").Click
+		Browser("DigiSales").Page("Menu Monitoring").WebElement("Filter CIF").Click
 	ElseIf dtFilterBy = "Nama" Then
-		Browser("DigiSales").Page("Menu Monitoring").WebElement("RadioBtn Nama Filter").Click
+		Browser("DigiSales").Page("Menu Monitoring").WebElement("Filter Nama").Click
 	else
-		Browser("DigiSales").Page("Menu Monitoring").WebElement("RadioBtn Nama Filter").Click
+		Browser("DigiSales").Page("Menu Monitoring").WebElement("Filter Nama").Click
 	End If
-		Browser("DigiSales").Page("Menu Monitoring").WebButton("CloseFilter").Click
+		Browser("DigiSales").Page("Menu Monitoring").WebButton("SubmitFilter").Click
 	wait 1
 		Browser("DigiSales").Page("Menu Monitoring").WebEdit("Search Bar").Set dtFilter
 	wait 2

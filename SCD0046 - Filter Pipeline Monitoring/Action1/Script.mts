@@ -17,7 +17,8 @@ Call FilterDataPipeline()
 Call DA_LogoutMobile("0")
 
 Call spReportSave()
-	
+
+
 Sub spLoadLibrary()
 	Dim LibPathDigisales, LibReport, LibRepo, objSysInfo
 	Dim tempDigisalesPath, tempDigisalesPath2, PathDigisales
@@ -39,6 +40,7 @@ Sub spLoadLibrary()
 	rem ---- Digisales lib
 	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Menu.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Pipeline.qfl")
+	
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Pipeline.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Profile.tsr")

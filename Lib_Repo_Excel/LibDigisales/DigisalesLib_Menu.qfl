@@ -210,12 +210,24 @@ Function DA_LoginDetailMobile()
 
 	wait 1
 	Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), "Input Data Login", "UserID: " & dtLoginUsername , compatibilityMode.Desktop, ReportStatus.Done)
-
 	wait 1
 	
 	If Browser("DigiSales").Page("DigiSales Mobile | Login").WebButton("Btn Login Mobile").GetROProperty("disabled") <> 1 Then
 		Browser("DigiSales").Page("DigiSales Mobile | Login").WebButton("Btn Login Mobile").Click	
 	End If
+	
+	
+	
+	wait 2
+	If Browser("DigiSales").Page("DigiSales Mobile | Login").WebButton("Btn Setuju").Exist(1) Then
+		wait 1
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("DigiSales Mobile | Login"), "Tekan Setuju Pada Dialog Konfirmasi"," ", compatibilityMode.Desktop, ReportStatus.Done)
+		wait 1
+		Browser("DigiSales").Page("DigiSales Mobile | Login").WebButton("Btn Setuju").Click
+	End If
+	wait 2
+	
+
 	
 	If Browser("DigiSales").Page("DigiSales Mobile | Login").WebElement("Hanya sales yang memiliki role").Exist(1) Then
 		wait 1
@@ -605,6 +617,10 @@ Function DA_LogoutMobile(ByVal isError)
 	If isError = "1" Then
 		Call captureError()
 	End If
+	
+	Do while Browser("DigiSales").Page("HeadBar").WebElement("Back").Exist(1)
+		Browser("DigiSales").Page("HeadBar").WebElement("Back").Click
+	loop
 	
 	wait 1
 	If Browser("DigiSales").Page("Navbar").WebElement("Profile").Exist(5) Then
