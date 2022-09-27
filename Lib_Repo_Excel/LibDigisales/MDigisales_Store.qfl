@@ -84,7 +84,7 @@ For each NavbarArr in SubNavbar
 	counter = counter + 1
 	
 		Call FR_GoTo_NavbarMenu(dtNavbarMenu)
-		
+	
 		If NavbarArr = "" Then
 			Exit For
 		End If
@@ -128,6 +128,8 @@ For each NavbarArr in SubNavbar
 				end select 
 				
 		End Select
+	Browser("DigiSales").Page("HeadBar").WebElement("Back").Click
+	wait 2	
 Next
 
 End Function
@@ -254,7 +256,7 @@ Sub AddProspekToChart
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Prospek"), "Pilih Button Ya Pada Dialog Konfirmasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
 	Browser("DigiSales").Page("Prospek").WebButton("Btn Ya Add To Chart").Click
-	wait 20
+	wait 5
 '		Call CaptureImageUFTV2(Browser("DigiSales").Page("Prospek"), "Pilih Button Ok Pada Dialog Informasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 '	wait 2
 '	Browser("DigiSales").Page("Prospek").WebButton("Btn Ok Berhasil Tambah Ke Chart").Click
@@ -278,10 +280,10 @@ Sub AddDedicatedToChart
 	wait 2
 		Browser("DigiSales").Page("Dedicated").WebButton("Btn Ya Konfirmasi Add To Chart").Click
 	wait 20
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Pilih Button Ok Pada Dialog Informasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
-		Browser("DigiSales").Page("Dedicated").WebButton("Btn Ok Informasi Berhasil Add To Chart").Click
-	wait 2
+'		Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Pilih Button Ok Pada Dialog Informasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+'	wait 2
+'		Browser("DigiSales").Page("Dedicated").WebButton("Btn Ok Informasi Berhasil Add To Chart").Click
+'	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Pilih Button Tidak Pada Dialog Tambah Data, Langsung Dipindahkan Ke Halaman Chart ", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
 		Browser("DigiSales").Page("Dedicated").WebButton("Btn Tidak Add More Data To Chart").Click
@@ -307,13 +309,13 @@ Sub AddKelolaanToChart
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Kelolaan"), "Pilih Button Ya Pada Dialog Konfirmasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
 
-	wait 2
+'	wait 2
 		Browser("DigiSales").Page("Kelolaan").WebButton("Btn Ya Konfirmasi Add To Chart").Click
 	wait 20
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Kelolaan"), "Pilih Button Ok Pada Dialog Informasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
-		Browser("DigiSales").Page("Kelolaan").WebButton("Btn Ok Informasi Berhasil Add To Chart").Click
-	wait 2
+'		Call CaptureImageUFTV2(Browser("DigiSales").Page("Kelolaan"), "Pilih Button Ok Pada Dialog Informasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+'	wait 2
+'		Browser("DigiSales").Page("Kelolaan").WebButton("Btn Ok Informasi Berhasil Add To Chart").Click
+'	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Kelolaan"), "Pilih Button Tidak Pada Dialog Tambah Data, Langsung Dipindahkan Ke Halaman Chart ", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
 		Browser("DigiSales").Page("Kelolaan").WebButton("Btn Tidak Add More Data").Click
@@ -333,10 +335,10 @@ Sub AddFreeToChart
 	wait 2
 		Browser("DigiSales").Page("Free").WebButton("Btn Ya Konfirmasi Add To Chart").Click
 	wait 20
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Free"), "Pilih Button Ok Pada Dialog Informasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
-		Browser("DigiSales").Page("Free").WebButton("Btn Ok Berhasil Add To Chart").Click
-	wait 2
+'		Call CaptureImageUFTV2(Browser("DigiSales").Page("Free"), "Pilih Button Ok Pada Dialog Informasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+'	wait 2
+'		Browser("DigiSales").Page("Free").WebButton("Btn Ok Berhasil Add To Chart").Click
+'	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Free"), "Pilih Button Tidak Pada Dialog Tambah Data, Langsung Dipindahkan Ke Halaman Chart ", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
 		Browser("DigiSales").Page("Free").WebButton("Btn Tidak Add More To Chart").Click
