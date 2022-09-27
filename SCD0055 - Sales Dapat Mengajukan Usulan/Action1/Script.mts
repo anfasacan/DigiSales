@@ -13,6 +13,7 @@ REM ------- Digisales Mobile
 Call DA_LoginMobile()
 Call SearchProfilingLeads()
 Call AddToFlagging()
+Call BackMobile()
 Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 Call GoToSubNavbar()
 Call GoToSubSubNavbar()

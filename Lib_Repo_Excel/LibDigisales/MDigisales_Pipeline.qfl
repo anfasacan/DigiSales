@@ -218,11 +218,11 @@ Sub HasilCallTertarik
 	
 	Browser("DigiSales").Page("Menu Cart").WebButton("Simpan Tertarik").Click
 
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Cart"), "Klik Ok Pada Dialog Informasi", " " , compatibilityMode.Desktop, ReportStatus.Done)
-	wait 2
-	
-	Browser("DigiSales").Page("Menu Cart").WebButton("Btn Ok Berhasil Tertarik").Click
+'	wait 2
+'		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Cart"), "Klik Ok Pada Dialog Informasi", " " , compatibilityMode.Desktop, ReportStatus.Done)
+'	wait 2
+'	
+'	Browser("DigiSales").Page("Menu Cart").WebButton("Btn Ok Berhasil Tertarik").Click
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Cart"), "Klik Button Ya Dan Diarahkan Langsung Ke Follow Up", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2

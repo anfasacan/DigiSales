@@ -97,26 +97,28 @@ For each NavbarArr in SubNavbar
 		Case "STORE"
 			Select Case NavbarArr
 				Case "DEDICATED"
-						Browser("DigiSales").Page("NavStore").WebElement("Dedicated").Click
-					wait 2
-						Call CaptureImageUFTV2(Browser("DigiSales").Page("NavStore"), "Masuk Ke Sub Menu Dedicated", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-					wait 2
-				Case "FREE"
-						Browser("DigiSales").Page("NavStore").WebElement("Free").Click
-					wait 2
-						Call CaptureImageUFTV2(Browser("DigiSales").Page("NavStore"), "Masuk Ke Sub Menu Free", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-					wait 2
-				Case "KELOLAAN"
-						Browser("DigiSales").Page("NavStore").WebElement("Kelolaan").Click
-					wait 2
-						Call CaptureImageUFTV2(Browser("DigiSales").Page("NavStore"), "Masuk Ke Sub Menu Kelolaan", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-					wait 2
-					
-				Case "PROSPEK"
-						Browser("DigiSales").Page("NavStore").WebElement("Prospek").Click
-					wait 2
-						Call CaptureImageUFTV2(Browser("DigiSales").Page("NavStore"), "Masuk Ke Sub Menu Prospek", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-					wait 2
+			Browser("DigiSales").Page("NavStore").WebElement("Dedicated").Click
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Masuk Ke Menu Dedicated", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		Case "FREE"
+			Browser("DigiSales").Page("NavStore").WebElement("Free").Click
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Free"), "Masuk Ke Menu Free", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		Case "KELOLAAN"
+			Browser("DigiSales").Page("NavStore").WebElement("Kelolaan").Click
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Kelolaan"), "Masuk Ke Menu Kelolaan", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		Case "PROSPEK"
+			wait 2
+			Browser("DigiSales").Page("NavStore").WebElement("Prospek").Click
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Prospek"), "Masuk Ke Menu Prospek", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+		Case Else
+			msgbox SubNavbar & " Tidak Ditemukan" 
 			End Select
 			
 			Case "Pipeline"
@@ -149,7 +151,7 @@ Sub FilterDataStore
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Pilih Filter By Nama, Lalu Klik Submit", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
 	Else 
-		Browser("DigiSales").Page("Dedicated").WebElement("Filter NamaProgram").Click
+		Browser("DigiSales").Page("Dedicated").WebElement("Filter Nama").Click
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Dedicated"), "Pilih Filter By Nama Program, Lalu Klik Submit", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
@@ -207,17 +209,23 @@ Sub TambahLeadsProspek
 	wait 1
 		objKey.SendKeys (dtPropinsi)
 	wait 1
+		objKey.SendKeys "{DOWN}"
+	wait 1
 		objKey.SendKeys "{ENTER}"
 	wait 1
 	Browser("DigiSales").Page("Prospek").WebEdit("Field Kota").Click
 	wait 1
 		objKey.SendKeys (dtKota)
 	wait 1
+		objKey.SendKeys "{DOWN}"
+	wait 1
 		objKey.SendKeys "{ENTER}"
 	wait 1
 	Browser("DigiSales").Page("Prospek").WebEdit("Field Kode Pos").Click
 	wait 1
 		objKey.SendKeys (dtKodePos)
+	wait 1
+		objKey.SendKeys "{DOWN}"
 	wait 1
 		objKey.SendKeys "{ENTER}"
 	wait 1
@@ -247,10 +255,10 @@ Sub AddProspekToChart
 	wait 2
 	Browser("DigiSales").Page("Prospek").WebButton("Btn Ya Add To Chart").Click
 	wait 20
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Prospek"), "Pilih Button Ok Pada Dialog Informasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
-	Browser("DigiSales").Page("Prospek").WebButton("Btn Ok Berhasil Tambah Ke Chart").Click
-	wait 2
+'		Call CaptureImageUFTV2(Browser("DigiSales").Page("Prospek"), "Pilih Button Ok Pada Dialog Informasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+'	wait 2
+'	Browser("DigiSales").Page("Prospek").WebButton("Btn Ok Berhasil Tambah Ke Chart").Click
+'	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Prospek"), "Pilih Button Tidak Pada Dialog Tambah Data, Langsung Dipindahkan Ke Halaman Chart ", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
 	Browser("DigiSales").Page("Prospek").WebButton("Btn Tidak Lanjut Tambah Data To Chart").Click

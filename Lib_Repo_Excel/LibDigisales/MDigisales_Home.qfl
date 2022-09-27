@@ -35,7 +35,7 @@ Function GoToSubNavbar()
 				wait 2
 					Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Produk Digisales").WebElement("BNI Multi Finance"), "Pilih Menu BNI Multifinance", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 				wait 1
-				Browser("DigiSales").Page("Menu Produk Digisales").WebButton("Btn Bni Multi Finance").Click
+					Browser("DigiSales").Page("Menu Produk Digisales").WebButton("Btn Bni Multi Finance").Click
 				wait 2
 					Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Produk Digisales"), "Pilih Menu yang Terdapat pada BNI Multi Finance", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 				wait 2
@@ -238,7 +238,7 @@ Sub LihatSemuaMenuProdukDigisales
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Produk Digisales"), "Klik Menu Lihat Semua", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 2
-			Browser("DigiSales").Page("Menu Produk Digisales").WebElement("Menu Lihat Semua").Click
+		Browser("DigiSales").Page("Menu Produk Digisales").WebButton("Btn Menu Lihat Semua").Click
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Produk Digisales"), "Masuk Ke Menu Lihat Semua", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 2
@@ -344,18 +344,19 @@ Sub TambahUsulanAccountPlan
 	wait 1
 		Browser("DigiSales").Page("Menu Account Plan").WebButton("Btn Search").Click
 	wait 1
-		Browser("DigiSales").Page("Menu Account Plan").WebButton("Btn Pilih Customer").Click
+		Browser("DigiSales").Page("Menu Account Plan").WebButton("Btn Pilih").Click
 	wait 1
-		Browser("DigiSales").Page("Menu Account Plan").WebEdit("Field Produk").Click
-		Objkey.SendKeys(dt_Produk)
-		Objkey.SendKeys "{ENTER}"
+		Browser("DigiSales").Page("Menu Account Plan").WebElement("Field Produk").Click
+		Browser("DigiSales").Page("Menu Account Plan").WebElement("Data Produk").SetTOProperty "innertext", dt_Produk
+		Browser("DigiSales").Page("Menu Account Plan").WebElement("Data Produk").Click
 	wait 1		
-		Browser("DigiSales").Page("Menu Account Plan").WebEdit("Field Rencana").Set dt_Rencana
+		Browser("DigiSales").Page("Menu Account Plan").WebElement("Field ​Rencana").Click
 	wait 1
-		Browser("DigiSales").Page("Menu Account Plan").WebEdit("Field Sumber Dana").Click
+		Objkey.SendKeys(dt_Rencana)
 	wait 1
-		Objkey.SendKeys(dt_SumberDana)
-		Objkey.SendKeys "{ENTER}"
+		Browser("DigiSales").Page("Menu Account Plan").WebElement("Field Sumber Dana").Click
+		Browser("DigiSales").Page("Menu Account Plan").WebElement("Data Sumber Dana").SetTOProperty "inntertext",dt_SumberDana
+		Browser("DigiSales").Page("Menu Account Plan").WebElement("Data Sumber Dana").Click
 	wait 2
 		Browser("DigiSales").Page("Menu Account Plan").WebButton("Field Tgl Dana Masuk").SetTOProperty "name", fullDate
 	wait 1
@@ -384,10 +385,10 @@ Sub TambahUsulanAccountPlan
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Account Plan"), "Isi Semua Field Sesuai Kebutuhan", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
 		Browser("DigiSales").Page("Menu Account Plan").WebButton("Btn Submit Usulan").Click
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Account Plan"), "Konfirmasi Menambahkan Usulan Account Plan", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
-		Browser("DigiSales").Page("Menu Account Plan").WebButton("BtnYa Konfirmasi Data Usulan").Click
+'	wait 2
+'		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Account Plan"), "Konfirmasi Menambahkan Usulan Account Plan", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+'	wait 2
+'		Browser("DigiSales").Page("Menu Account Plan").WebButton("BtnYa Konfirmasi Data Usulan").Click
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Account Plan"), "Usulan Berhasil, Klik OK", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
@@ -414,32 +415,32 @@ Sub SearchProfilingLeads
 	dt_Search	=	DataTable.Value("TEXT1", dtLocalSheet)
 	Browser("DigiSales").Page("Profiling Leads").WebEdit("Search Profiling Leads").Click
 	
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Profiling Leads"), "Masuk Kedalam Menu Search Profiling ", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
-	
-	Browser("DigiSales").Page("Profiling Leads").WebButton("Filter By").Click
-	
-	Select Case dt_FilterBy
-		Case "CIF"
-				Browser("DigiSales").Page("Profiling Leads").WebElement("Filter By CIF").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("Profiling Leads"), "Pilih Search By CIF", " " , compatibilityMode.Desktop, ReportStatus.Done)
-			wait 2
-		Case "NO ACCOUNT"
-				Browser("DigiSales").Page("Profiling Leads").WebElement("Filter By No Account").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("Profiling Leads"), "Pilih Search By No Account", " " , compatibilityMode.Desktop, ReportStatus.Done)
-			wait 2
-		Case "NIK"
-				Browser("DigiSales").Page("Profiling Leads").WebElement("Filter By NIK").Click
-			wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("Profiling Leads"), "Pilih Search By NIK", " " , compatibilityMode.Desktop, ReportStatus.Done)
-			wait 2
-	End Select
-	
-	wait 2
-	Browser("DigiSales").Page("Profiling Leads").WebButton("Btn Save Filter By").Click
+'	wait 2
+'		Call CaptureImageUFTV2(Browser("DigiSales").Page("Profiling Leads"), "Masuk Kedalam Menu Search Profiling ", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+'	wait 2
+'	
+'	Browser("DigiSales").Page("Profiling Leads").WebButton("Filter By").Click
+'	
+'	Select Case dt_FilterBy
+'		Case "CIF"
+'				Browser("DigiSales").Page("Profiling Leads").WebElement("Filter By CIF").Click
+'			wait 2
+'				Call CaptureImageUFTV2(Browser("DigiSales").Page("Profiling Leads"), "Pilih Search By CIF", " " , compatibilityMode.Desktop, ReportStatus.Done)
+'			wait 2
+'		Case "NO ACCOUNT"
+'				Browser("DigiSales").Page("Profiling Leads").WebElement("Filter By No Account").Click
+'			wait 2
+'				Call CaptureImageUFTV2(Browser("DigiSales").Page("Profiling Leads"), "Pilih Search By No Account", " " , compatibilityMode.Desktop, ReportStatus.Done)
+'			wait 2
+'		Case "NIK"
+'				Browser("DigiSales").Page("Profiling Leads").WebElement("Filter By NIK").Click
+'			wait 2
+'				Call CaptureImageUFTV2(Browser("DigiSales").Page("Profiling Leads"), "Pilih Search By NIK", " " , compatibilityMode.Desktop, ReportStatus.Done)
+'			wait 2
+'	End Select
+'	
+'	wait 2
+'	Browser("DigiSales").Page("Profiling Leads").WebButton("Btn Save Filter By").Click
 	Browser("DigiSales").Page("Profiling Leads").WebEdit("Search Profiling Leads").Set dt_Search
 	
 	wait 2
@@ -673,7 +674,7 @@ Sub AddToFlagging
 		wait 1
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Klik Ya Pada Pop-Up Konfirmasi", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
-			Browser("DigiSales").Page("Menu Flagging").WebButton("Btn Ya Add to Flagging").Click
+			Browser("DigiSales").Page("Menu Flagging").WebButton("Btn Submit").Click
 	else
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Button Add to Flagging Tidak Tersedia", " " , compatibilityMode.Desktop, ReportStatus.Passed)

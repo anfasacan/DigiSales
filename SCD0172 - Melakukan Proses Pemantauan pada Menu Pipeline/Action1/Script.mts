@@ -17,22 +17,26 @@ If iteration = 1 Then
 	Call FR_GoTo_NavbarMenu(dtNavbarMenu)
 	Call GoToSubNavbar_Store()
 	Call TambahLeadsProspek()
+	Call RefreshPage()
 	Call FilterDataStore()
 	Call AddProspekToChart()
+	Call RefreshPage()
 	Call FilterDataPipeline()
 	Call HasilCallTertarik()
+	Call RefreshPage()
 	Call FilterDataPipeline()
 	Call CheckBNIMFDropdown()
 	Call MasukLanjutFollowUp()
 	Call LanjutFollowUp()
+	Call RefreshPage()
 	Call FilterDataStore()
 	Call PembandingMonitoringDanClosing()
 	call CheckDataTidakClosing()
 	Call DA_LogoutMobile("0")
 ElseIf iteration = 2 Then
 	REM -------- Filezilla
-	Call Login_Filezilla()
-	Call DownloadFile()
+'	Call Login_Filezilla()
+'	Call DownloadFile()
 End If
 
 Call spReportSave()

@@ -1285,3 +1285,15 @@ Sub FR_Goto_BatchSidebarMenu(IndexArr)
 	
 	call FR_GoTo_SidebarMenu(dtSidebarMenuBatch(IndexArr))
 End Sub
+
+Sub BackMobile()
+	Do while Browser("DigiSales").Page("HeadBar").WebElement("Back").Exist(1)
+		Browser("DigiSales").Page("HeadBar").WebElement("Back").Click
+	loop
+End Sub
+
+Sub RefreshPage
+	Set objkey = CreateObject("WScript.Shell")
+	objkey.SendKeys "{F5}"
+	wait 5
+End Sub
