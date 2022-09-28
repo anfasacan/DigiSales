@@ -894,6 +894,8 @@ Sub GenerateReportRealisasi
 		
 	Browser("DigiSales").Page("Menu My Performance").WebEdit("Field Bulan Report Realisasi").Set dt_Bulan
 	wait 1
+	objkey.SendKeys "{DOWN}"
+	wait 1
 	objkey.SendKeys "{ENTER}"
 	wait 1
 	Browser("DigiSales").Page("Menu My Performance").WebEdit("Field Tahun Report Realisasi").Set dt_Tahun
@@ -911,6 +913,10 @@ Sub GenerateReportRealisasi
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Karena sales ini status nya Non Sales maka tampilan report nya seperti di bawah ini", " ", compatibilityMode.Desktop, ReportStatus.Passed)
 	ElseIf Browser("DigiSales").Page("Menu My Performance").WebElement("No data available").Exist(5) Then
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Data Report Realisasi Pada Periode "& dt_Bulan & " " & dt_Tahun &" Kosong" , " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	ElseIf Browser("DigiSales").Page("Menu My Performance").WebElement("Alert Data kosong").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Data Report Realisasi Pada Periode "& dt_Bulan & " " & dt_Tahun &" Kosong" , " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSales").Page("Menu My Performance").WebButton("Btn Ok, Data Kosong").Click
 	Else
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berikut Data Report Realisasi Pada Periode "& dt_Bulan & " " & dt_Tahun, " ", compatibilityMode.Desktop, ReportStatus.Passed)
 	End If
@@ -926,6 +932,8 @@ Sub GeneratePerformanceReportbySales
 		dt_Tahun	= DataTable.Value("TEXT2",dtlocalsheet)
 		
 	Browser("DigiSales").Page("Menu My Performance").WebEdit("Field Bulan Performance Report by Sales").Set dt_Bulan
+	wait 1
+	objkey.SendKeys "{DOWN}"
 	wait 1
 	objkey.SendKeys "{ENTER}"
 	wait 1
@@ -944,6 +952,10 @@ Sub GeneratePerformanceReportbySales
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Karena sales ini status nya Non Sales maka tampilan report nya seperti di bawah ini", " ", compatibilityMode.Desktop, ReportStatus.Passed)
 	ElseIf Browser("DigiSales").Page("Menu My Performance").WebElement("No data available").Exist(5) Then
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Data Performance Report Pada Periode "& dt_Bulan & " " & dt_Tahun &" Kosong" , " ", compatibilityMode.Desktop, ReportStatus.Passed)
+	ElseIf Browser("DigiSales").Page("Menu My Performance").WebElement("Alert Data kosong").Exist(5) Then
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Data Performance Report Pada Periode "& dt_Bulan & " " & dt_Tahun &" Kosong" , " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSales").Page("Menu My Performance").WebButton("Btn Ok, Data Kosong").Click
 	Else
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berikut Data Performance Report Pada Periode "& dt_Bulan & " " & dt_Tahun, " ", compatibilityMode.Desktop, ReportStatus.Passed)
 	End If
