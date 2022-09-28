@@ -1,4 +1,5 @@
-﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
+﻿
+Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
 Dim dt_UserLogin, dt_Bulan, dt_Tahun
 
 REM -------------- Call Function
@@ -13,7 +14,7 @@ REM ------- Digisales Mobile
 Call DA_LoginMobile()
 Call SearchProfilingLeads()
 Call AddFamilyTree()
-Call SearchFamilyTreeFlagging()
+Call SearchFamilyTreeFlagging()o
 Call CheckDetailFamilyTreeFlagging()
 Call DA_LogoutMobile("0")
 

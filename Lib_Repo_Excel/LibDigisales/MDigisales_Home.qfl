@@ -496,7 +496,7 @@ Sub SearchFamilyTreeFlaggingNoSS
 		Browser("DigiSales").Page("Menu Family Tree").WebElement("Filter Search By Program").Click
 	End If
 	wait 4
-	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Close Filter").Click
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("SubmitFilter").Click
 	wait 2
 	Browser("DigiSales").Page("Menu Family Tree").WebEdit("Search Bar Customer Family Tree Flagging").Set dtDataSearch
 	wait 2
@@ -519,7 +519,7 @@ Sub SearchFamilyTreeFlagging
 	ElseIf UCase(dtType) = "NAMA PROGRAM" Then
 		Browser("DigiSales").Page("Menu Family Tree").WebElement("Filter Search By Program").Click
 	End If
-	Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Close Filter").Click
+	Browser("DigiSales").Page("Menu Family Tree").WebButton("SubmitFilter").Click
 	Browser("DigiSales").Page("Menu Family Tree").WebEdit("Search Bar Customer Family Tree Flagging").Set dtDataSearch
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Isi Field Search", " " , compatibilityMode.Desktop, ReportStatus.Done)
@@ -546,11 +546,11 @@ Sub SendCustomerFamilyTreeFlaggingToPenyelia
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Tekan Ya Pada Konfirmasi Pengiriman Data", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
-		Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn YA").Click
+		Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Submit").Click
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Data Berhasil Dikirim", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-		wait 2
-		Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok").Click
+'		wait 2
+'		Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok").Click
 	Else
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Panah Untuk Kirim Data Menjadi Disabled", "Karna sebelumnya sudah ada usulan yang sedang dalam proses approval maka pengajuan nasabah selanjutnya tidak bisa usulkan ke penyelia dengan tampilan add to penyelia disabled" , compatibilityMode.Desktop, ReportStatus.Done)
@@ -595,19 +595,18 @@ Sub AddFamilyTree
 				wait 2
 				Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Add To Family Tree Flagging").Click
 				wait 2
-				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Klik Ya, Untuk Menambahkan Data Family Tree", " " , compatibilityMode.Desktop, ReportStatus.Done)	
+				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Klik Submit, Untuk Menambahkan Data Family Tree", " " , compatibilityMode.Desktop, ReportStatus.Done)	
 				wait 2
-				Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn YA, Konfirmasi Add Data").Click
+				Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Submit").Click
 				If Browser("DigiSales").Page("Menu Family Tree").WebElement("Text Tidak bisa submit").Exist(3) Then
 					wait 2
 					Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Data Tidak Bisa di Submit, Lalu Tekan Ok", "Data Gagal Ditambah karena Sudah ada pengajuan dalam proses approval " , compatibilityMode.Desktop, ReportStatus.Passed)
 					wait 2
-					Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok").Click
 				else
-					wait 2
-					Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Data Telah Ditambahkan, Lalu Tekan Ok", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
-					wait 2
-					Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok, Data Berhasil Ditambah").Click					
+'					wait 2
+'					Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Data Telah Ditambahkan, Lalu Tekan Ok", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
+'					wait 2
+'					Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok, Data Berhasil Ditambah").Click					
 					wait 2
 					Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Berikut Data yang Telah ditambah", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
 					wait 2
@@ -694,21 +693,28 @@ Sub GenerateProductHolding
 	dt_JenisNasabah = DataTable.Value("TEXT4",dtlocalsheet)
 	dt_CIF 			= DataTable.Value("TEXT5",dtlocalsheet)
 
-	Browser("DigiSales").Page("Menu Dashboard").WebButton("​Field Bulan Data").Click
+	Browser("DigiSales").Page("Menu Dashboard").WebList("Field ​Bulan Data").Click
 	wait 1
 		objkey.SendKeys(dt_Bulan)
 	wait 1
+		objkey.SendKeys "{DOWN}"
+	wait 1
 		objkey.SendKeys "{ENTER}"
 	wait 1
-	Browser("DigiSales").Page("Menu Dashboard").WebButton("Field ​Tahun Data").Click
+	Browser("DigiSales").Page("Menu Dashboard").WebList("Field ​Tahun Data").Click
 	wait 1
 		objkey.SendKeys(dt_Tahun)
+	wait 1
+		objkey.SendKeys "{DOWN}"
 	wait 1
 		objkey.SendKeys "{ENTER}"
 	wait 1
 	
 	If dt_JenisNasabah <> "" Then
-		Browser("DigiSales").Page("Menu Dashboard").WebEdit("Field Jenis Nasabah").Set dt_JenisNasabah
+		Browser("DigiSales").Page("Menu Dashboard").WebList("Field ​Jenis Nasabah").Click
+		objkey.SendKeys (dt_JenisNasabah)
+		wait 1
+		objkey.SendKeys "{DOWN}"
 		wait 1
 		objkey.SendKeys "{ENTER}"
 		wait 1	
@@ -827,10 +833,16 @@ Sub CalculatePerformanceCalculator
 		dt_Tahun 			= DataTable.Value("TEXT2", dtlocalsheet)
 		dt_NilaiSimulasi	= DataTable.Value("TEXT3", dtlocalsheet)
 		
+		
 	Dim tmpJmlData, jmlData, hasilJmlData
 		tmpJmlData 	 = Browser("DigiSales").Page("Menu My Performance").WebElement("Jumlah Data").GetROProperty("innertext")
 		jmlData		 = Right(tmpJmlData, 2)
 		hasilJmlData = CInt(jmlData) - 1
+		
+		Browser("DigiSales").Page("Menu My Performance").WebElement("Row Per Page").Click
+		wait 2
+		Browser("DigiSales").Page("Menu My Performance").WebElement("All Row Per Page").Click
+		wait 1
 		
 		objkey.SendKeys "{PGUP 2}"
 		wait 1
@@ -867,6 +879,7 @@ Sub CalculatePerformanceCalculator
 			wait 2
 				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berhasil Menampilkan Data Performance Calculator Final", " ", compatibilityMode.Desktop, ReportStatus.Passed)
 			wait 2
+			Browser("DigiSales").Page("Menu My Performance").WebButton("Btn Close").Click
 		End If	
 End Sub
 
