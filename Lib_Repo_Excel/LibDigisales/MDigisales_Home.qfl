@@ -546,7 +546,7 @@ Sub SendCustomerFamilyTreeFlaggingToPenyelia
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Tekan Ya Pada Konfirmasi Pengiriman Data", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
-		Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Submit").Click
+			Browser("DigiSales").Page("Menu Family Tree").WebButton("Kirim").Click
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Data Berhasil Dikirim", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 '		wait 2
@@ -554,6 +554,22 @@ Sub SendCustomerFamilyTreeFlaggingToPenyelia
 	Else
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Panah Untuk Kirim Data Menjadi Disabled", "Karna sebelumnya sudah ada usulan yang sedang dalam proses approval maka pengajuan nasabah selanjutnya tidak bisa usulkan ke penyelia dengan tampilan add to penyelia disabled" , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	End If
+End Sub
+
+Sub FamilyTreeCheckStatus
+	If Browser("DigiSales").Page("Menu Family Tree").WebElement("Status : Menunggu Verfikasi").Exist(1) Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Status Menunggu Konfirmasi", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	ElseIf Browser("DigiSales").Page("Menu Family Tree").WebElement("Status : Sudah Terverifikasi").Exist(1) Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Status Sudah Terkonfirmasi", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	ElseIf Browser("DigiSales").Page("Menu Family Tree").WebElement("Status : Belum Terverifikasi").Exist(1) Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Status Belum Terkonfirmasi", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
 	End If
 End Sub
@@ -632,9 +648,12 @@ Sub ChangeStatusVerifikasiCustomerFamilyTreeFlagging
 	wait 20
 	Call SearchFamilyTreeFlaggingNoSS()
 	Loop While Browser("DigiSales").Page("Menu Family Tree").WebElement("Status : Menunggu Verfikasi").Exist(1) or Browser("DigiSales").Page("Menu Family Tree").WebElement("Data Tidak Ada").Exist(1)
-	wait 2
+	If DataTable.Value("TC_ID",dtlocalsheet) <> "DGS-290" Then
+		wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Berikut Data yang telah Terverivikasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
-	wait 2
+		wait 2	
+	End If
+	
 End Sub
 
 Sub CheckDetailVerifikasi

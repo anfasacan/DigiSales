@@ -1,22 +1,32 @@
-﻿
-Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
-Dim dt_UserLogin, dt_Bulan, dt_Tahun
+﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
+Dim dt_UserLogin, dt_Bulan, dt_Tahun, dtSidebarMenu
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0255 - Searching profiling nasabah & memiliki sales kelolaan.xlsx", "SCD0255")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0260 - Searching profiling nasabah & memiliki sales kelolaan.xlsx", "SCD0260")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Data CIF : " & DataTable.Value("TEXT1",dtlocalsheet)))
-
+iteration = Environment.Value("ActionIteration")
 REM ------- Digisales Mobile
-Call DA_LoginMobile()
-Call SearchProfilingLeads()
-Call AddFamilyTree()
-Call SearchFamilyTreeFlagging()
-Call CheckDetailFamilyTreeFlagging()
-Call DA_LogoutMobile("0")
+
+If iteration = 1 Then
+	Call DA_LoginMobile()
+	Call SearchProfilingLeads()
+	Call AddFamilyTree()
+	Call SearchFamilyTreeFlagging()
+	Call FamilyTreeCheckStatus()
+	call ChangeStatusVerifikasiCustomerFamilyTreeFlagging()
+	Call FamilyTreeCheckStatus()
+	Call RefreshPage()
+End If
+
+If iteration = 2 Then
+	Call SearchFamilyTreeFlagging()
+	Call FamilyTreeCheckStatus()
+	Call DA_LogoutMobile("0")
+End If
 
 Call spReportSave()
 	
@@ -40,11 +50,15 @@ Sub spLoadLibrary()
 	rem ---- Digisales lib
 	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Menu.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Home.qfl")
+	LoadFunctionLibrary (LibPathDigisales & "Digisales_Customer_Flagging.qfl")
 	
+	Call RepositoriesCollection.Add(LibRepo & "RP_Home_Digisales_Web.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Customer_Flagging.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Home.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Profile.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Navbar.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Sidebar.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
 
 End Sub
@@ -60,4 +74,8 @@ Sub spGetDatatable()
 	dt_TestScenarioDesc			= DataTable.Value("TEST_SCENARIO_DESC", dtLocalSheet)
 	dt_ScenarioDesc				= DataTable.Value("SCENARIO_DESC", dtLocalSheet)
 	dt_ExpectedResult			= DataTable.Value("EXPECTED_RESULT", dtLocalSheet)
+
+	REM --------- Menu
+	dtSidebarMenu				= DataTable.Value("SIDEBAR_MENU" ,dtLocalSheet)
+	dtNavbarMenu				= DataTable.Value("NAVBAR_MENU" ,dtLocalSheet)
 End Sub
