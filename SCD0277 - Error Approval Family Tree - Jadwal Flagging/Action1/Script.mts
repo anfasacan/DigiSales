@@ -3,7 +3,7 @@ Dim dt_UserLogin, dt_Bulan, dt_Tahun, dtSidebarMenu
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0277 - Query Family Tree - Jadwal Flagging.xlsx", "SCD0277")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0277 - Error Approval Family Tree - Jadwal Flagging.xlsx", "SCD0277")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
@@ -11,38 +11,40 @@ Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedRes
 iteration = Environment.Value("ActionIteration")
 REM ------- Digisales Mobile
 
-If iteration = 1 or iteration = 4 Then
-	Call DA_LoginMobile()
-	Call SearchProfilingLeads()
-	Call AddFamilyTree()
-	Call SearchFamilyTreeFlagging()
-	call ChangeStatusVerifikasiCustomerFamilyTreeFlagging()
-'	Call CheckDetailFamilyTreeFlagging()
-	
-	If iteration = 1 Then
-		Call SendCustomerFamilyTreeFlaggingToPenyelia()
-	End If
-	
-	Call DA_LogoutMobile("0")
-End If
-
-If iteration = 2 or iteration = 5 Then
-	Call CreateSessionHeidi_noSS()
-	Call ExecuteSQL()
-End If
-
-If iteration = 3 or iteration = 6 Then
+If iteration = 1 Then
 	Call DA_LoginMobile()
 	Call GoToSubNavbar()
 	Call GoToSubSubNavbar()
 	Call SearchFamilyTreeFlagging()
-	
-'	If iteration = 3 Then
-''		Call CheckDetailFamilyTreeFlagging()
-'	End If
-	
+'	Call CheckDetailFamilyTreeFlagging()
+	Call SendCustomerFamilyTreeFlaggingToPenyelia()
 	Call DA_LogoutMobile("0")
+	
+'	Call DA_LoginMobile()
+''	Call SearchProfilingLeads()
+''	Call AddFamilyTree()
+'	Call SearchFamilyTreeFlagging()
+'	call ChangeStatusVerifikasiCustomerFamilyTreeFlagging()
+'	Call CheckDetailFamilyTreeFlagging()
+'	Call SendCustomerFamilyTreeFlaggingToPenyelia()
+'	Call DA_LogoutMobile("0")	
 End If
+
+If iteration = 2 Then
+	Call DA_Login()
+	Call FR_GoTo_SidebarMenu(dtSidebarMenu)
+	Call ApprovalFamilyTree()
+	Call DA_Logout("0")
+End If
+
+'If iteration = 3 Then
+'	Call DA_LoginMobile()
+'	Call GoToSubNavbar()
+'	Call GoToSubSubNavbar()
+'	Call SearchFamilyTreeFlagging()
+'	Call CheckDetailFamilyTreeFlagging()
+'	Call DA_LogoutMobile("0")
+'End If
 
 Call spReportSave()
 	
@@ -65,7 +67,6 @@ Sub spLoadLibrary()
 	
 	rem ---- Digisales lib
 	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Menu.qfl")
-	LoadFunctionLibrary (LibPathDigisales & "Digisales_Heidi.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Home.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "Digisales_Customer_Flagging.qfl")
 	
@@ -75,7 +76,6 @@ Sub spLoadLibrary()
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Profile.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Navbar.tsr")
-	Call RepositoriesCollection.Add(LibRepo & "RP_Heidi.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Sidebar.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
 

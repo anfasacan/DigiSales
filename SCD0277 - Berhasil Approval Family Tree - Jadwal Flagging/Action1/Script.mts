@@ -17,7 +17,7 @@ If iteration = 1 Then
 	Call AddFamilyTree()
 	Call SearchFamilyTreeFlagging()
 	call ChangeStatusVerifikasiCustomerFamilyTreeFlagging()
-	Call CheckDetailFamilyTreeFlagging()
+'	Call CheckDetailFamilyTreeFlagging()
 	Call SendCustomerFamilyTreeFlaggingToPenyelia()
 	Call DA_LogoutMobile("0")	
 End If
@@ -34,7 +34,7 @@ If iteration = 3 Then
 	Call GoToSubNavbar()
 	Call GoToSubSubNavbar()
 	Call SearchFamilyTreeFlagging()
-	Call CheckDetailFamilyTreeFlagging()
+'	Call CheckDetailFamilyTreeFlagging()
 	Call DA_LogoutMobile("0")
 End If
 

@@ -14,7 +14,8 @@ REM ------- Digisales Mobile
 If iteration = 1 Then
 	Call DA_LoginMobile()
 	Call SearchProfilingLeads()
-	Call AddFamilyTree()
+'	Call AddFamilyTree()
+	Call AddToFlagging()
 	Call SearchFamilyTreeFlagging()
 	call ChangeStatusVerifikasiCustomerFamilyTreeFlagging()
 	Call CheckDetailFamilyTreeFlagging()

@@ -23,6 +23,10 @@ Sub ApprovalFamilyTree
 			wait 2
 				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal"), "Data Berhasil Di Approve", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 			wait 2
+		Else
+			wait 2
+				Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal"), "Error Approve karena diluar tanggal 15 hingga tanggal 2 pada bulan berikutnya", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
 		End If
 		Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal").WebButton("Btn OK").Click
 	End If
