@@ -701,6 +701,115 @@ Sub AddToFlagging
 	
 End Sub
 
+'Fungsi Search Flagging tanpa screenshot
+Sub SearchFlaggingNoSS
+	Dim dtType,dtDataSearch
+		dtType			= DataTable.Value("TEXT2",dtlocalsheet)
+		dtDataSearch	= DataTable.Value("TEXT1",dtlocalsheet)
+	wait 3
+	Browser("DigiSales").Page("Menu Flagging").WebButton("Btn Filter Search Customer Flagging").Click
+	wait 4
+	If ucase(dtType) = "CIF" Then
+		Browser("DigiSales").Page("Menu Flagging").WebElement("Filter Search By CIF").Click
+	ElseIf ucase(dtType) = "NAMA" Then
+		Browser("DigiSales").Page("Menu Flagging").WebElement("Filter Search By Nama").Click
+	ElseIf UCase(dtType) = "NAMA PROGRAM" Then
+		Browser("DigiSales").Page("Menu Flagging").WebElement("Filter Search By Program").Click
+	End If
+	wait 4
+	Browser("DigiSales").Page("Menu Flagging").WebButton("Btn Submit").Click
+	wait 2
+	Browser("DigiSales").Page("Menu Flagging").WebEdit("Search Bar Customer Flagging").Set dtDataSearch
+	wait 2
+	Browser("DigiSales").Page("Menu Flagging").WebButton("Btn Search Flagging").Click
+	wait 2
+End Sub
+
+'Fungsi Search Flagging
+Sub SearchFlagging
+	Dim dtType,dtDataSearch
+		dtType			= DataTable.Value("TEXT2",dtlocalsheet)
+		dtDataSearch	= DataTable.Value("TEXT1",dtlocalsheet)
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging").WebButton("Btn Filter Search Customer Flagging"), "Klik Button Filter By", "Pilih Data Filter yang akan digunakan untuk mencari data, Lalu Klik Submit" , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu Flagging").WebButton("Btn Filter Search Customer Flagging").Click
+	wait 4
+	If ucase(dtType) = "CIF" Then
+		Browser("DigiSales").Page("Menu Flagging").WebElement("Filter Search By CIF").Click
+	ElseIf ucase(dtType) = "NAMA" Then
+		Browser("DigiSales").Page("Menu Flagging").WebElement("Filter Search By Nama").Click
+	ElseIf UCase(dtType) = "NAMA PROGRAM" Then
+		Browser("DigiSales").Page("Menu Flagging").WebElement("Filter Search By Program").Click
+	End If
+	wait 4
+	Browser("DigiSales").Page("Menu Flagging").WebButton("Btn Submit").Click
+	wait 2
+	Browser("DigiSales").Page("Menu Flagging").WebEdit("Search Bar Customer Flagging").Set dtDataSearch
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Isi Field Search, Lalu klik button search", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu Flagging").WebButton("Btn Search Flagging").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Berikut Hasil Data Yang Dicari", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	wait 2
+End Sub
+
+'Fungsi Menunggu sampai status jadi sudah terverifikasi
+Sub ChangeStatusVerifikasiCustomerFlagging
+	If Browser("DigiSales").Page("Menu Flagging").WebElement("Status : Sudah Terverifikasi").Exist(3) Then
+		Do 
+		wait 20
+		Call SearchFlaggingNoSS()
+		Loop Until Browser("DigiSales").Page("Menu Flagging").WebElement("Menunggu Approval SPV/Penyelia").Exist(1)
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Berikut Data yang statusnya Menunggu Approval SPV/Penyelia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	ElseIf Browser("DigiSales").Page("Menu Flagging").WebElement("Menunggu Approval SPV/Penyelia").Exist(3) Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Berikut Data yang statusnya Menunggu Approval SPV/Penyelia", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	Else
+		Do 
+		wait 20
+		Call SearchFlaggingNoSS()
+		Loop While Browser("DigiSales").Page("Menu Flagging").WebElement("Status : Menunggu Verfikasi").Exist(1)
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Berikut Data yang telah Terverifikasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	End If	
+End Sub
+
+'Fungsi Send Flagging to Penyelia
+Sub SendCustomerFlaggingToPenyelia
+'	Dim TC_ID
+'	TC_ID = DataTable.Value("TC_ID",dtlocalsheet)
+	
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging").WebElement("Btn Plus"), "Klik Button +", " " , compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu Flagging").WebElement("Btn Plus").Click
+	
+	'Jika tombol send Disabled
+	If Browser("DigiSales").Page("Menu Flagging").WebElement("Btn Arrow Send Data").Exist(5) Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging").WebElement("Btn Arrow Send Data"), "Klik Button Panah Untuk Mengirim Data", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSales").Page("Menu Flagging").WebElement("Btn Arrow Send Data").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Tekan Kirim Pada Konfirmasi Pengiriman Data", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+			Browser("DigiSales").Page("Menu Flagging").WebButton("Kirim").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Data Berhasil Dikirim Ke Penyelia, Klik OK", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSales").Page("Menu Flagging").WebButton("Btn Ok, Berhasil Kirim Penyelia").Click
+
+'		Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Ok").Click
+	Else
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Flagging"), "Button Panah Untuk Kirim Data Menjadi Disabled", "Karna sebelumnya sudah ada usulan yang sedang dalam proses approval maka pengajuan nasabah selanjutnya tidak bisa usulkan ke penyelia dengan tampilan add to penyelia disabled" , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	End If
+End Sub
 
 REM -------- Fungsi Generate Product Holding Mobile
 Sub GenerateProductHolding
@@ -979,5 +1088,240 @@ Sub GeneratePerformanceReportbySales
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Berikut Data Performance Report Pada Periode "& dt_Bulan & " " & dt_Tahun, " ", compatibilityMode.Desktop, ReportStatus.Passed)
 	End If
 	
+	wait 2
+End Sub
+
+REM ----- Agenda
+
+'Lihat Semua Agenda
+Sub ShowAllAgenda
+	Dim dtHari
+	dtHari = Left(DataTable.Value("TEXT3",dtlocalsheet),2)
+	
+	If Browser("DigiSales").Page("Menu Daily Activity").Link("Btn Lihat Semua").Exist(5) Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity").Link("Btn Lihat Semua"), "Klik Lihat Semua Untuk Menampilkan Semua Agenda Sesuai Tanggal", " ", compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSales").Page("Menu Daily Activity").Link("Btn Lihat Semua").Click
+	End If
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Btn Day").SetTOProperty "innertext", dtHari
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Btn Day").Click
+	wait 1
+	
+	If Browser("DigiSales").Page("Menu Daily Activity").WebElement("Tidak Ada Kegiatan Hari Ini").Exist(5) Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Marker/Penanda Tidak Muncul pada Tanggal yang Tidak Memiliki Agenda", " ", compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	Else
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Marker/Penanda Muncul pada Tanggal yang Memiliki Agenda", " ", compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	End If
+
+End Sub
+
+'Tambah Daily Activity
+Sub AddAgenda
+	Dim dtJudul, dtCatatan, dtJadwalKunjungan, dtWaktuAwal, dtWaktuSelesai, dtKategoriKunjungan
+	Dim dtJamAwal, dtMenitAwal, dtJamSelesai, dtMenitSelesai, dtFormatWaktuAwal, dtFormatWaktuSelesai
+		dtJudul				= DataTable.Value("TEXT1", dtlocalsheet)
+		dtCatatan			= DataTable.Value("TEXT2", dtlocalsheet)
+		dtJadwalKunjungan	= DataTable.Value("TEXT3", dtlocalsheet)
+		dtWaktuAwal			= DataTable.Value("TEXT4", dtlocalsheet)
+		dtWaktuSelesai		= DataTable.Value("TEXT5", dtlocalsheet)
+		dtKategoriKunjungan	= DataTable.Value("TEXT6", dtlocalsheet)
+		dtJamAwal			= Left(dtWaktuAwal, 2)
+		dtMenitAwal			= Mid(dtWaktuAwal, 4,2)
+		dtJamSelesai		= Left(dtWaktuSelesai, 2)
+		dtMenitSelesai		= Mid(dtWaktuSelesai, 4,2)
+		dtFormatWaktuAwal	= Right(dtWaktuAwal, 2)
+		dtFormatWaktuSelesai= Right(dtWaktuSelesai, 2)
+	
+	Dim dtTanggal, dtBulan, dtTahun, dtTanggal_if
+		dtTanggal		= Left(DataTable.Value("TEXT3" ,dtLocalSheet), 2)
+		dtTanggal_if	= Left(dtTanggal, 1)
+		dtBulan			= Mid(DataTable.Value("TEXT3" ,dtLocalSheet), 4,3)
+		dtTahun			= Right(DataTable.Value("TEXT3" ,dtLocalSheet), 4)		
+
+	'Setting pick Tanggal untuk isi field date
+	If dtTanggal_if = "0" Then
+		dtTanggal		= Right(dtTanggal, 1)
+	Else
+		dtTanggal		= dtTanggal
+	End If
+	
+	Dim dtJamAwal_if, dtJamSelesai_if
+		dtJamAwal_if	= Left(dtJamAwal, 1)
+		dtJamSelesai_if	= Left(dtJamSelesai, 1)
+	
+	'Setting pick Jam Awal untuk isi field Time
+	If dtJamAwal_if = "0" Then
+		dtJamAwal = Right(dtJamAwal, 1)
+	Else
+		dtJamAwal = dtJamAwal
+	End If
+	
+	'Setting pick Jam Selesai untuk isi field Time
+	If dtJamSelesai_if = "0" Then
+		dtJamSelesai = Right(dtJamSelesai, 1)
+	Else
+		dtJamSelesai = dtJamSelesai
+	End If
+	
+	Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity").WebButton("Btn Plus"), "Klik Button Plus Untuk Masuk Halaman Tambah Agenda", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu Daily Activity").WebButton("Btn Plus").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Tampilan Form Tambah Agenda", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	Browser("DigiSales").Page("Menu Daily Activity").WebEdit("Field Judul").Set dtJudul
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebEdit("Field Catatan").Set dtCatatan
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebEdit("Field Jadwal Kunjungan").Click
+	wait 1
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Tahun 1").Click
+	wait 1
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Tahun").SetTOProperty "innertext", dtTahun
+	wait 1
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Tahun").Click
+	wait 1
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Bulan").SetTOProperty "innertext", dtBulan
+	wait 1
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Bulan").Click
+	wait 1
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Tanggal").SetTOProperty "innertext", dtTanggal
+	wait 1
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Tanggal").Click
+	wait 1
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("OK Date").Click
+	wait 2
+	Browser("DigiSales").Page("Menu Daily Activity").WebEdit("Field Waktu Awal").Click
+	wait 1
+	If dtFormatWaktuAwal = "PM" Then
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Format Waktu").Click
+	End If
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Jam").SetTOProperty "innertext", dtJamAwal
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Jam").Click
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Menit").SetTOProperty "innertext", dtMenitAwal
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Menit").Click
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("OK Date").Click
+	wait 2
+	Browser("DigiSales").Page("Menu Daily Activity").WebEdit("Field Waktu Selesai").Click
+	wait 1
+	If dtFormatWaktuSelesai = "PM" Then
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Format Waktu").Click
+	End If
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Jam").SetTOProperty "innertext", dtJamSelesai
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Jam").Click
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Menit").SetTOProperty "innertext", dtMenitSelesai
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Pilih Menit").Click
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("OK Date").Click
+	wait 2
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Dropdown ​Kategori Kunjungan").Click
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Option Kategori Kunjungan").SetTOProperty "innertext", dtKategoriKunjungan
+	wait 1
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Option Kategori Kunjungan").Click
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Isi Semua Field yang Dibutuhkan, Lalu Klik Submit", " ", compatibilityMode.Desktop, ReportStatus.Done)
+	wait 2
+	
+	If Browser("DigiSales").Page("Menu Daily Activity").WebButton("Btn Submit").GetROProperty("disable") or Browser("DigiSales").Page("Menu Daily Activity").WebButton("Btn Submit").GetROProperty("disabled") Then
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Isi Semua Field Dahulu", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Call DA_LogoutMobile(1)
+	Else
+		Browser("DigiSales").Page("Menu Daily Activity").WebButton("Btn Submit").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Berhasil Menambahkan Agenda, Muncul Pop Up Success Lalu Klik OK", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 4
+		Browser("DigiSales").Page("Menu Daily Activity").WebButton("Btn Ok").Click
+	End If
+
+End Sub
+
+'Check Detail Agenda
+Sub CheckDetailAgenda
+	Dim dtJudul, dtCatatan, dtWaktuAwal, dtWaktuSelesai, dtKategoriKunjungan, dtNamaAgenda
+	Dim dtJamAwal, dtJamSelesai, dtFormatWaktuAwal, dtFormatWaktuSelesai
+		dtJudul				= DataTable.Value("TEXT1", dtlocalsheet)
+		dtCatatan			= DataTable.Value("TEXT2", dtlocalsheet)
+		dtWaktuAwal			= Left(DataTable.Value("TEXT4", dtlocalsheet), 5)
+		dtWaktuSelesai		= Left(DataTable.Value("TEXT5", dtlocalsheet), 5)
+		dtKategoriKunjungan	= DataTable.Value("TEXT6", dtlocalsheet)
+		
+		dtFormatWaktuAwal	= Right(DataTable.Value("TEXT4", dtlocalsheet), 2)
+		dtFormatWaktuSelesai= Right(DataTable.Value("TEXT5", dtlocalsheet), 2)
+		dtJamAwal			= Left(dtWaktuAwal, 1)
+		dtJamSelesai		= Left(dtWaktuSelesai, 1)
+	
+	If dtFormatWaktuAwal = "PM" and dtJamAwal = "0" Then
+		angkaJam = CInt(Mid(dtWaktuAwal, 2,1))
+		angkaJam = angkaJam + 12
+	ElseIf dtFormatWaktuAwal = "PM" Then
+		angkaJam = CInt(Left(dtWaktuAwal, 2))
+		angkaJam = angkaJam + 12
+	Else
+		angkaJam = Left(dtWaktuAwal, 2)
+	End If
+	
+	If dtFormatWaktuSelesai = "PM" and dtJamSelesai = "0" Then
+		angkaJamSelesai = CInt(Mid(dtWaktuSelesai, 2,1))
+		angkaJamSelesai = angkaJamSelesai + 12
+	ElseIf dtFormatWaktuSelesai = "PM" Then
+		angkaJamSelesai = CInt(Left(dtWaktuSelesai, 2))
+		angkaJamSelesai = angkaJamSelesai + 12
+	Else
+		angkaJamSelesai = Left(dtWaktuSelesai,2)
+	End If
+	
+	dtWaktuAwal 	= angkaJam & Mid(dtWaktuAwal,3,3)
+	dtWaktuSelesai	= angkaJamSelesai & Mid(dtWaktuSelesai, 3,3)
+	dtNamaAgenda		= dtKategoriKunjungan &" "& dtJudul &" "& dtCatatan &" "& dtWaktuAwal &" - "& dtWaktuSelesai
+	
+	Call ShowAllAgenda()
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("List Daily Activity Blue").SetTOProperty "innertext", dtNamaAgenda
+	Browser("DigiSales").Page("Menu Daily Activity").WebElement("List Daily Activity Orange").SetTOProperty "innertext", dtNamaAgenda
+	
+	If Browser("DigiSales").Page("Menu Daily Activity").WebElement("List Daily Activity Blue").Exist(5) Then
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("List Daily Activity Blue").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Tampilan Detail dari Agenda yang Telah Dibuat", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Btn Icon Komentar").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Tampilan Komentar dari Agenda yang Telah Dibuat", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	ElseIf Browser("DigiSales").Page("Menu Daily Activity").WebElement("List Daily Activity Orange").Exist(5) Then
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("List Daily Activity Orange").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Tampilan Detail dari Agenda yang Telah Dibuat", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Btn Icon Komentar").Click
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Tampilan Komentar dari Agenda yang Telah Dibuat", " ", compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	End If
+
+End Sub
+
+'Check Notifikasi Agenda
+Sub CheckNotifikasiAgenda
+	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Berikut Notifikasi Agenda Di Halaman Utama", " ", compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
 End Sub

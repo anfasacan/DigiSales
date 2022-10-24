@@ -22,14 +22,14 @@ If iteration = 1 Then
 	Call DA_LogoutMobile("0")	
 End If
 
-If iteration = 2 or iteration = 4 Then
+If iteration = 2 Then
 	Call DA_Login()
 	Call FR_GoTo_SidebarMenu(dtSidebarMenu)
 	Call ApprovalFamilyTree()
 	Call DA_Logout("0")
 End If
 
-If iteration = 3 or iteration = 5 Then
+If iteration = 3 Then
 	Call DA_LoginMobile()
 	Call GoToSubNavbar()
 	Call GoToSubSubNavbar()

@@ -1292,6 +1292,13 @@ Sub BackMobile()
 	loop
 End Sub
 
+Sub BackMobile2()
+	Do while Browser("DigiSales").Page("HeadBar").WebElement("Back 2").Exist(1)
+		Browser("DigiSales").Page("HeadBar").WebElement("Back 2").Click
+	loop
+
+End Sub
+
 Sub RefreshPage
 	Set objkey = CreateObject("WScript.Shell")
 	objkey.SendKeys "{F5}"

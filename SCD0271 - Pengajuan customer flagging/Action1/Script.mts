@@ -9,33 +9,31 @@ Call fnRunningIterator()
 Call spReportInitiate()
 Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult, Array("Login Sebagai : " & dt_UserLogin, "Data CIF : " & DataTable.Value("TEXT1",dtlocalsheet)))
 iteration = Environment.Value("ActionIteration")
-REM ------- Digisales Mobile
 
+REM ------- Digisales Mobile
 If iteration = 1 Then
 	Call DA_LoginMobile()
 	Call SearchProfilingLeads()
-'	Call AddFamilyTree()
 	Call AddToFlagging()
-	Call SearchFamilyTreeFlagging()
-	call ChangeStatusVerifikasiCustomerFamilyTreeFlagging()
-	Call CheckDetailFamilyTreeFlagging()
-	Call SendCustomerFamilyTreeFlaggingToPenyelia()
+	Call SearchFlagging()
+	Call ChangeStatusVerifikasiCustomerFlagging()
+'	Call GoToSubNavbar()
+'	Call GoToSubSubNavbar()
+'	Call ChangeStatusVerifikasiCustomerFlagging()
+	Call SendCustomerFlaggingToPenyelia()
 	Call DA_LogoutMobile("0")	
 End If
 
 If iteration = 2 Then
-	Call DA_Login()
-	Call FR_GoTo_SidebarMenu(dtSidebarMenu)
-	Call TolakApprovalFamilyTree	
-	Call DA_Logout("0")
+	Call CreateSessionHeidi_noSS()
+	Call ExecuteSQL()
 End If
 
 If iteration = 3 Then
 	Call DA_LoginMobile()
 	Call GoToSubNavbar()
 	Call GoToSubSubNavbar()
-	Call SearchFamilyTreeFlagging()
-	Call CheckDetailFamilyTreeFlagging()
+	Call ChangeStatusVerifikasiCustomerFlagging()
 	Call DA_LogoutMobile("0")
 End If
 
@@ -61,13 +59,15 @@ Sub spLoadLibrary()
 	rem ---- Digisales lib
 	LoadFunctionLibrary (LibPathDigisales & "DigisalesLib_Menu.qfl")
 	LoadFunctionLibrary (LibPathDigisales & "MDigisales_Home.qfl")
-	LoadFunctionLibrary (LibPathDigisales & "Digisales_Customer_Flagging.qfl")
+	LoadFunctionLibrary (LibPathDigisales & "Digisales_Heidi.qfl")
+'	LoadFunctionLibrary (LibPathDigisales & "Digisales_Customer_Flagging.qfl")
 	
 	Call RepositoriesCollection.Add(LibRepo & "RP_Home_Digisales_Web.tsr")
-	Call RepositoriesCollection.Add(LibRepo & "RP_Customer_Flagging.tsr")
+'	Call RepositoriesCollection.Add(LibRepo & "RP_Customer_Flagging.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Home.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Login.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_MDigisales_Profile.tsr")
+	Call RepositoriesCollection.Add(LibRepo & "RP_Heidi.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Navbar.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Sidebar.tsr")
 	Call RepositoriesCollection.Add(LibRepo & "RP_Login.tsr")
