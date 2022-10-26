@@ -108,7 +108,7 @@ End Sub
 REM ----- Agenda Portal
 'Fungsi Show Agenda Portal
 Sub ShowAgenda
-	Dim dtDay1, dtDay2, dtJudul, dtCatatan, dtKategoriKunjungan, dtFilterBulan, dtNPP
+	Dim dtDay1, dtDay2, dtDay1_if, dtDay2_if, dtJudul, dtCatatan, dtKategoriKunjungan, dtFilterBulan, dtNPP
 		dtDay1				= Right(DataTable.Value("TEXT4", dtlocalsheet), 2)
 		dtDay2				= Right(DataTable.Value("TEXT5", dtlocalsheet), 2)
 		dtJudul				= DataTable.Value("TEXT1", dtlocalsheet)
@@ -116,12 +116,26 @@ Sub ShowAgenda
 		dtKategoriKunjungan	= DataTable.Value("TEXT3", dtlocalsheet)
 		dtFilterBulan		= DataTable.Value("TEXT6", dtlocalsheet)
 		dtNPP				= DataTable.Value("TEXT7", dtlocalsheet)
+		dtDay1_if			= Left(dtDay1, 1)
+		dtDay2_if			= Left(dtDay2, 1)
+		
+		If dtDay1_if = "0" Then
+			dtDay1 = Right(dtDay1, 1)
+		Else
+			dtDay1 = dtDay1
+		End If
+		
+		If dtDay2_if = "0" Then
+			dtDay2 = Right(dtDay2, 1)
+		Else
+			dtDay2 = dtDay2
+		End If
 	
 	If Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Btn Search").Exist(5) Then
 		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebElement("Dropdown NPP").Click
-		wait 2
+		wait 3
 		objkey.SendKeys (dtNPP)
-		wait 1
+		wait 2
 		objkey.SendKeys "{ENTER}"
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Pilih NPP Sales yang Aktifitasnya Akan Ditampilkan, Lalu Klik Button Search", " " , compatibilityMode.Desktop, ReportStatus.Done)	
@@ -171,19 +185,25 @@ End Sub
 
 'Fungsi Check Detail Agenda
 Sub ShowDetailAgenda
-	Dim dtJudul, dtCatatan, dtKategoriKunjungan, dtDetailAgenda
-		dtJudul				= DataTable.Value("TEXT1", dtlocalsheet)
-		dtCatatan			= DataTable.Value("TEXT2", dtlocalsheet)
-		dtKategoriKunjungan	= DataTable.Value("TEXT3", dtlocalsheet)
-		dtDetailAgenda		= dtJudul & dtKategoriKunjungan & dtCatatan
+	Dim dtJudul, dtCatatan, dtKategoriKunjungan, dtDetailAgenda, dtDetailAgendaCommented
+		dtJudul					= DataTable.Value("TEXT1", dtlocalsheet)
+		dtCatatan				= DataTable.Value("TEXT2", dtlocalsheet)
+		dtKategoriKunjungan		= DataTable.Value("TEXT3", dtlocalsheet)
+		dtDetailAgenda			= dtJudul & dtKategoriKunjungan & dtCatatan
+		dtDetailAgendaCommented	= dtJudul & "chat" &  dtKategoriKunjungan & dtCatatan
 	
 	Call ShowAgenda()
-		
+	
 	Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Pilih Agenda").SetTOProperty "name", dtDetailAgenda
+	Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Pilih Agenda Commented").SetTOProperty "name", dtDetailAgendaCommented
 	wait 1
-	Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Pilih Agenda").Click
-	wait 1
-	objkey.SendKeys "{PGDN}"
+	
+	If Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Pilih Agenda").Exist(5) Then
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Pilih Agenda").Click
+	ElseIf Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Pilih Agenda Commented").Exist(5) Then
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Pilih Agenda Commented").Click
+	End If
+	
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Berikut Detail Agenda yang Dipilih", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
@@ -198,26 +218,149 @@ End Sub
 Sub CheckNPPAgenda
 	Browser("DigiSalesWebPortal").Page("Menu Agenda").WebElement("Dropdown NPP").Click
 	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Pemimpin outlet melihat aktifitas sales kelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
-	wait 2
+	
 	If DataTable.Value("USER", dtlocalsheet) = "Pemimpin Outlet" Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Pemimpin outlet melihat aktifitas sales kelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
 		objkey.SendKeys "{DOWN 7}"
 		wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), " ", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Pemimpin outlet melihat aktifitas sales kelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	ElseIf DataTable.Value("USER", dtlocalsheet) = "Pemimpin Cabang" Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Pemimpin cabang melihat aktifitas salesnya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		objkey.SendKeys "{DOWN 7}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Pemimpin cabang melihat aktifitas salesnya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		objkey.SendKeys "{DOWN 4}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Pemimpin cabang melihat aktifitas salesnya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		objkey.SendKeys "{DOWN 2}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Pemimpin cabang melihat aktifitas salesnya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	ElseIf DataTable.Value("USER", dtlocalsheet) = "Pemimpin Wilayah" Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Pemimpin wilayah melihat sales dibawah kelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	ElseIf DataTable.Value("USER", dtlocalsheet) = "Supervisor" Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Penyelia/Supervisor dapat melihat sales dikelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		objkey.SendKeys "{DOWN 7}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Penyelia/Supervisor dapat melihat sales dikelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		objkey.SendKeys "{DOWN 2}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Penyelia/Supervisor dapat melihat sales dikelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	ElseIf DataTable.Value("USER", dtlocalsheet) = "Admin SLN" Then
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Admin SLN dapat melihat semua sales", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+	ElseIf DataTable.Value("USER", dtlocalsheet) = "Admin WEM" Then
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Admin WEM melihat SRM dibawah kelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		objkey.SendKeys "{DOWN 7}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Admin WEM melihat SRM dibawah kelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		objkey.SendKeys "{DOWN 4}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Admin WEM melihat SRM dibawah kelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		objkey.SendKeys "{DOWN 4}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Admin WEM melihat SRM dibawah kelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		objkey.SendKeys "{DOWN 2}"
+		wait 2
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Admin WEM melihat SRM dibawah kelolaannya", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
 	End If
 End Sub
 
 'Fungsi Add Komentar
 Sub AddKomentarAgenda
-	Dim dtKomentar
+	Dim dtKomentar, dtRoleUser
 	dtKomentar = DataTable.Value("TEXT8",dtlocalsheet)
+	dtRoleUser = DataTable.Value("USER",dtlocalsheet)
+	
+	If Browser("DigiSalesWebPortal").Page("Menu Agenda").WebEdit("Field Komentar Agenda").Exist(5) Then
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebEdit("Field Komentar Agenda").Set dtKomentar
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Isi Komentar, Lalu Klik Button Send", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Btn Send").Click
+	'	Do 
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Berhasil Mengirim Komentar Agenda", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	'	Loop While Browser("DigiSalesWebPortal").Page("Menu Agenda").WebElement("Logo Success").Exist
+	Else
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), dtRoleUser &" tidak dapat memberikan komentar", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	End If
+		
+	wait 2
+End Sub
 
-	Browser("DigiSalesWebPortal").Page("Menu Agenda").WebEdit("Field Komentar Agenda").Set dtKomentar
-	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Isi Komentar, Lalu Klik Button Send", " " , compatibilityMode.Desktop, ReportStatus.Done)
-	wait 2
-	Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Btn Send").Click
-	Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Berhasil Mengirim Komentar Agenda", " " , compatibilityMode.Desktop, ReportStatus.Passed)
-	wait 2
+'Fungsi Add Agenda
+Sub AddAgenda
+	Dim dtJudul, dtCatatan, dtKategoriKunjungan, dtTanggal, dtJamMulai, dtJamAkhir
+		dtJudul				= DataTable.Value("TEXT1", dtlocalsheet)
+		dtCatatan			= DataTable.Value("TEXT2", dtlocalsheet)
+		dtKategoriKunjungan	= DataTable.Value("TEXT3", dtlocalsheet)
+		dtTanggal			= DataTable.Value("TEXT5", dtlocalsheet)
+		dtJamMulai			= DataTable.Value("TEXT9", dtlocalsheet)
+		dtJamAkhir			= DataTable.Value("TEXT10", dtlocalsheet)
+	Dim dtRoleUser
+		dtRoleUser			= DataTable.Value("USER", dtlocalsheet)
+	
+	wait 2	
+	If Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Tambah Data").Exist(5) Then
+	
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Tambah Data"), "Klik Button Tambah Data", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Tambah Data").Click
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebEdit("Field Judul Agenda").Set dtJudul
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebEdit("Field Catatan Agenda").Set dtCatatan
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebList("Dropdown Kategori Kunjungan").Click
+		wait 2
+		
+		If dtKategoriKunjungan = "Follow Up" Then
+			objkey.SendKeys "{DOWN}"
+		ElseIf dtKategoriKunjungan = "Visit Agent" Then
+			objkey.SendKeys "{DOWN 2}"
+		End If
+		
+		wait 1
+		objkey.SendKeys "{ENTER}"
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebEdit("Field Tanggal Agenda").Set dtTanggal
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebEdit("Field Jam Mulai Agenda").Set dtJamMulai
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebEdit("Field Jam Akhir Agenda").Set dtJamAkhir
+		wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Isi Semua Field Sesuai yang Dibutuhkan, Lalu Klik Button Save Changes", " " , compatibilityMode.Desktop, ReportStatus.Done)
+		wait 2
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Btn Save Changes Agenda").Click
+		
+		If Browser("DigiSalesWebPortal").Page("Menu Agenda").WebElement("Logo Success").Exist(5) Then
+			wait 2
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Berhasil Menambahkan Agenda, Klik Button OK", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+			wait 2
+			Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Btn OK, Success").Click
+			wait 2
+		End If
+	Else
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Tidak ada tombol untuk tambah agenda untuk role "& dtRoleUser , " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	End If	
+
 End Sub
