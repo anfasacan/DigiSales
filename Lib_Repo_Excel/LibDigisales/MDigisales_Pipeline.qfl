@@ -4,15 +4,15 @@ Sub Get_ReferalCode()
 		Browser("DigiSales").Page("Menu Monitoring").WebButton("Btn Referral").Click
 	wait 2
 	
-	ref1 = Left (Browser("DigiSales").Page("Menu Monitoring").WebElement("Referal 1").GetROProperty("innertext"), 7)
-	ref2 = Left (Browser("DigiSales").Page("Menu Monitoring").WebElement("Referal 2").GetROProperty("innertext"), 7)
+	ref1 = Left (Browser("DigiSales").Page("Menu Monitoring").WebElement("Referal 1").GetROProperty("innertext"), 10)
+'	ref2 = Left (Browser("DigiSales").Page("Menu Monitoring").WebElement("Referal 2").GetROProperty("innertext"), 10)
 	
 '	Cek Refereal Mengandung huruf o atau angka 0
-	If inStr(ref1 , "o") or inStr(ref2 , "o") Then
+	If inStr(ref1 , "o") Then
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Kode Referal Mengandung o", " " , compatibilityMode.Desktop, ReportStatus.Failed)
 		wait 2
-	ElseIf inStr(ref1, "0") or inStr(ref2, "0") Then
+	ElseIf inStr(ref1, "0") Then
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Kode Referal Mengandung 0", " " , compatibilityMode.Desktop, ReportStatus.Failed)
 		wait 2
@@ -20,7 +20,8 @@ Sub Get_ReferalCode()
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Kode Referal Tidak Mengandung o / 0", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 2
-	End If	
+	End If
+	Browser("DigiSales").Page("Menu Monitoring").WebButton("Btn Close Referral").Click
 End Sub
 
 REM ========= Get Produk Detail
@@ -30,19 +31,28 @@ Sub Get_ProdukDetail()
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Masuk Ke Halaman Detail", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2
-		objkey.SendKeys "{PGDN 2}"
+'		objkey.SendKeys "{PGDN 2}"
+'	wait 2
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring").WebElement("DGSILBGCZ4 - Taplus Muda"), "Klik Produk Hasil", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
-		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Klik Produk Hasil", " " , compatibilityMode.Desktop, ReportStatus.Done)
-	wait 2
-		Browser("DigiSales").Page("Menu Monitoring").WebButton("Btn Produk Hasil").Click
-	wait 1
-		Browser("DigiSales").Page("Menu Monitoring").WebElement("Taplus - DigitalDGSCB83UNI").Click
+'		Browser("DigiSales").Page("Menu Monitoring").WebButton("Btn Produk Hasil").Click
+'	wait 1
+'		Browser("DigiSales").Page("Menu Monitoring").WebElement("Taplus - DigitalDGSCB83UNI").Click
+		Browser("DigiSales").Page("Menu Monitoring").WebElement("DGSILBGCZ4 - Taplus Muda").Click
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Berhasil Menekan Icon Link, Klik Resend Link", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
 		Browser("DigiSales").Page("Menu Monitoring").WebElement("Btn Resend Link").Click
-		
-	If Browser("DigiSales").Page("Menu Monitoring").WebElement("Alert Berhasil Mengirim Link").Exist(2) Then
+	wait 20
+'	If Browser("DigiSales").Page("Menu Monitoring").WebElement("Alert Berhasil Mengirim Link").Exist(2) Then
+'		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Berhasil Melakukan Resend Link", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+'		wait 2
+'	End If
+	
+	If Browser("DigiSales").Page("Menu Monitoring").WebElement("Alert Gagal Mengirim Link").Exist(2) Then
+		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Gagal Melakukan Resend Link", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	Else
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Monitoring"), "Berhasil Melakukan Resend Link", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 2
 	End If
@@ -164,6 +174,11 @@ Sub FilterDataPipeline_NoSS
 		Browser("DigiSales").Page("Menu Monitoring").WebEdit("Search Bar").Set dtFilter
 	wait 2
 		Browser("DigiSales").Page("Menu Monitoring").WebButton("Btn Search").Click
+	wait 2
+	If Browser("DigiSales").Page("Menu Monitoring").WebButton("Btn Refresh").Exist(5) Then
+		Browser("DigiSales").Page("Menu Monitoring").WebButton("Btn Refresh").Click
+		wait 1
+	End If
 End Sub
 
 Sub HasilCallTertarik

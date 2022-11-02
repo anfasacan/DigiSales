@@ -1095,8 +1095,23 @@ REM ----- Agenda
 
 'Lihat Semua Agenda
 Sub ShowAllAgenda
-	Dim dtHari
-	dtHari = Left(DataTable.Value("TEXT3",dtlocalsheet),2)
+	Dim dtHari, dtHari_if, dtTanggal, dtTanggalNow, dtHariNow
+	dtHariNow		= Len(day(now))
+	If dtHariNow = 1 Then
+		dtHariNow = "0"&day(now)
+	Else
+		dtHariNow = dtHariNow
+	End If
+	dtTanggal		= DataTable.Value("TEXT3",dtlocalsheet)
+	dtTanggalNow	= dtHariNow&"-"&MonthName(Month(now), True)&"-"&Year(now)
+	dtHari 			= Left(DataTable.Value("TEXT3",dtlocalsheet),2)
+	dtHari_if		= Left(dtHari, 1)
+	
+	If dtHari_if = "0" Then
+			dtHari = Right(dtHari, 1)
+	Else
+		dtHari = dtHari
+	End If
 	
 	If Browser("DigiSales").Page("Menu Daily Activity").Link("Btn Lihat Semua").Exist(5) Then
 		wait 2
@@ -1105,10 +1120,14 @@ Sub ShowAllAgenda
 		Browser("DigiSales").Page("Menu Daily Activity").Link("Btn Lihat Semua").Click
 	End If
 	wait 1
-	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Btn Day").SetTOProperty "innertext", dtHari
-	wait 1
-	Browser("DigiSales").Page("Menu Daily Activity").WebElement("Btn Day").Click
-	wait 1
+	If dtTanggal = dtTanggalNow Then
+		wait 1
+	Else
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Btn Day").SetTOProperty "innertext", dtHari
+		wait 1
+		Browser("DigiSales").Page("Menu Daily Activity").WebElement("Btn Day").Click
+		wait 1
+	End If
 	
 	If Browser("DigiSales").Page("Menu Daily Activity").WebElement("Tidak Ada Kegiatan Hari Ini").Exist(5) Then
 		wait 2

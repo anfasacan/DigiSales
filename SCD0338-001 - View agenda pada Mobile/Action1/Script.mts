@@ -12,7 +12,7 @@ Call spAddScenario(dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedRes
 REM ------- Digisales Mobile
 Call DA_LoginMobile()
 Call ShowAllAgenda()
-Call AddAgenda()
+'Call AddAgenda()
 Call CheckDetailAgenda()
 Call BackMobile()
 Call BackMobile2()
