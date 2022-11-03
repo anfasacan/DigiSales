@@ -1096,6 +1096,7 @@ REM ----- Agenda
 'Lihat Semua Agenda
 Sub ShowAllAgenda
 	Dim dtHari, dtHari_if, dtTanggal, dtTanggalNow, dtHariNow
+	Set objkey = CreateObject("WScript.Shell")
 	dtHariNow		= Len(day(now))
 	If dtHariNow = 1 Then
 		dtHariNow = "0"&day(now)
@@ -1134,6 +1135,7 @@ Sub ShowAllAgenda
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Marker/Penanda Tidak Muncul pada Tanggal yang Tidak Memiliki Agenda", " ", compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
 	Else
+		objkey.SendKeys "{PGDN}"
 		wait 2
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Daily Activity"), "Marker/Penanda Muncul pada Tanggal yang Memiliki Agenda", " ", compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2

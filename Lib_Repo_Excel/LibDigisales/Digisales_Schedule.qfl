@@ -208,9 +208,9 @@ Sub ShowDetailAgenda
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Berikut Detail Agenda yang Dipilih", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
 	
-	If DataTable.Value("TEXT8",dtlocalsheet) = "" Then
-		objkey.SendKeys "{ESC}"	
-	End If
+'	If DataTable.Value("TEXT8",dtlocalsheet) = "" Then
+'		objkey.SendKeys "{ESC}"	
+'	End If
 	
 End Sub
 
@@ -294,8 +294,11 @@ Sub AddKomentarAgenda
 			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Isi Komentar, Lalu Klik Button Send", " " , compatibilityMode.Desktop, ReportStatus.Done)
 		wait 2
 		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Btn Send").Click
-	'	Do 
-		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Berhasil Mengirim Komentar Agenda", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+	'	Do
+		If Browser("DigiSalesWebPortal").Page("Menu Agenda").WebElement("Logo Success").Exist Then
+			Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Berhasil Mengirim Komentar Agenda", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		End If	
+		
 	'	Loop While Browser("DigiSalesWebPortal").Page("Menu Agenda").WebElement("Logo Success").Exist
 	Else
 		wait 2
