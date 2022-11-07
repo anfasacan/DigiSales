@@ -260,7 +260,7 @@ Sub CheckBNIMFDropdown
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Follow Up"), "Berikut Menu Dropdown yang ada", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
-	If DataTable.Value("TC_ID",dtLocalSheet) = "DGS-191" or DataTable.Value("TC_ID",dtLocalSheet) = "DGS-187" Then
+	If DataTable.Value("TC_ID",dtLocalSheet) = "SCD0011-007" or DataTable.Value("TC_ID",dtLocalSheet) = "SCD0011-003" Then
 	objKey.SendKeys "{DOWN 8}"
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Follow Up"), "Berikut Menu Dropdown yang ada", " " , compatibilityMode.Desktop, ReportStatus.Done)

@@ -318,8 +318,8 @@ Sub OpenLastDownloadFile(FileName, AppName)
 			Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 			wait 2
 			
-			For dgs = 221 To 224 Step 1
-				If TC_ID = "DGS-" & dgs Then
+			For dgs = 37 To 40 Step 1
+				If TC_ID = "SCD0011-0" & dgs Then
 					If Window("SS_Excel").Exist Then
 						Window("SS_Excel").Click
 					End If
@@ -346,17 +346,31 @@ Sub OpenLastDownloadFile(FileName, AppName)
 				End If	
 			Next
 			
-				For dgs = 193 To 218 Step 1
-					If TC_ID = "DGS-" & dgs Then
-						If Window("SS_Excel").Exist Then
-							Window("SS_Excel").Click
-						End If
-						wait 2
-							objkey.SendKeys "^{RIGHT}"
-							wait 1
-							Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+				For dgs = 9 To 34 Step 1
+					If Len(dgs) = 1 Then
+						If TC_ID = "SCD0011-00" & dgs Then
+							If Window("SS_Excel").Exist Then
+								Window("SS_Excel").Click
+							End If
 							wait 2
-						Exit for 
+								objkey.SendKeys "^{RIGHT}"
+								wait 1
+								Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+								wait 2
+							Exit for 
+						End If
+					ElseIf Len(dgs) = 2 Then
+						If TC_ID = "SCD0011-0" & dgs Then
+							If Window("SS_Excel").Exist Then
+								Window("SS_Excel").Click
+							End If
+							wait 2
+								objkey.SendKeys "^{RIGHT}"
+								wait 1
+								Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+								wait 2
+							Exit for 
+						End If
 					End If
 				Next
 			
@@ -420,8 +434,8 @@ Sub OpenLastDownloadFileNoClose(FileName, AppName)
 			Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 			wait 2
 			
-			For dgs = 221 To 224 Step 1
-				If TC_ID = "DGS-" & dgs Then
+			For dgs = 37 To 40 Step 1
+				If TC_ID = "SCD0011-0" & dgs Then
 					If Window("SS_Excel").Exist Then
 						Window("SS_Excel").Click
 					End If
@@ -448,17 +462,31 @@ Sub OpenLastDownloadFileNoClose(FileName, AppName)
 				End If	
 			Next
 			
-				For dgs = 193 To 218 Step 1
-					If TC_ID = "DGS-" & dgs Then
-						If Window("SS_Excel").Exist Then
-							Window("SS_Excel").Click
-						End If
-						wait 2
-							objkey.SendKeys "^{RIGHT}"
-							wait 1
-							Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+				For dgs = 9 To 34 Step 1
+					If Len(dgs) = 1 Then
+						If TC_ID = "SCD0011-00" & dgs Then
+							If Window("SS_Excel").Exist Then
+								Window("SS_Excel").Click
+							End If
 							wait 2
-						Exit for 
+								objkey.SendKeys "^{RIGHT}"
+								wait 1
+								Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+								wait 2
+							Exit for 
+						End If
+					ElseIf Len(dgs) = 2 Then
+						If TC_ID = "SCD0011-0" & dgs Then
+							If Window("SS_Excel").Exist Then
+								Window("SS_Excel").Click
+							End If
+							wait 2
+								objkey.SendKeys "^{RIGHT}"
+								wait 1
+								Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+								wait 2
+							Exit for 
+						End If
 					End If
 				Next
 			
@@ -503,8 +531,8 @@ Function OpenFile(Path , FileName, AppName)
 			Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
 			wait 2
 			
-			For dgs = 221 To 224 Step 1
-				If TC_ID = "DGS-" & dgs Then
+			For dgs = 37 To 40 Step 1
+				If TC_ID = "SCD0011-0" & dgs Then
 					If Window("SS_Excel").Exist Then
 						Window("SS_Excel").Click
 					End If
@@ -530,17 +558,31 @@ Function OpenFile(Path , FileName, AppName)
 				End If	
 			Next
 			
-				For dgs = 193 To 218 Step 1
-					If TC_ID = "DGS-" & dgs Then
-						If Window("SS_Excel").Exist Then
-							Window("SS_Excel").Click
+				For dgs = 9 To 34 Step 1
+					If Len(dgs) = 1 Then
+						If TC_ID = "SCD0011-00" & dgs Then
+							If Window("SS_Excel").Exist Then
+								Window("SS_Excel").Click
+							End If
+								objkey.SendKeys "^{END}"
+								wait 1
+								Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+								wait 2
+							Exit for 
 						End If
-							objkey.SendKeys "^{END}"
-							wait 1
-							Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
-							wait 2
-						Exit for 
+					ElseIf Len(dgs) = 2 Then
+						If TC_ID = "SCD0011-0" & dgs Then
+							If Window("SS_Excel").Exist Then
+								Window("SS_Excel").Click
+							End If
+								objkey.SendKeys "^{END}"
+								wait 1
+								Call CaptureImageUFTV2(Window("SS_Full_Screen"),"Berikut File Yang Digunakan", " ",  compatibilityMode.Desktop, ReportStatus.Done)
+								wait 2
+							Exit for 
+						End If
 					End If
+					
 				Next
 			
 		Case "WINRAR"

@@ -162,10 +162,7 @@ Sub Add_Data_Mapping()
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Mapping"), "Berikut Data Yang Baru Dibuat", " ", compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 2
 	End If
-	
-	
-
-End  Sub
+End Sub
 
 Sub search_Mapping
 	Set objkey = CreateObject("WScript.Shell")

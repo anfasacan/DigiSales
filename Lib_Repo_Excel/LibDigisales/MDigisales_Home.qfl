@@ -27,7 +27,7 @@ Function GoToSubNavbar()
 			
 		Case "BNI MULTI FINANCE"
 			call LihatSemuaMenuProdukDigisales()
-			If DataTable.Value("TC_ID",dtlocalsheet) = "DGS-185" Then
+			If DataTable.Value("TC_ID",dtlocalsheet) = "SCD0011-001" Then
 				wait 2
 					Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Produk Digisales").WebElement("BNI Multi Finance"), "Terdapat Menu BNI Multifinance", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 				wait 1
@@ -605,7 +605,7 @@ Sub AddFamilyTree
 		If Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Add To Family Tree Flagging").GetROProperty("disable") or Browser("DigiSales").Page("Menu Family Tree").WebButton("Btn Add To Family Tree Flagging").GetROProperty("disabled") Then
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Button Add To Family Tree Flagging Disabled", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		else
-			If DataTable.value("TC_ID",dtlocalsheet) <> "DGS-267" Then
+			If DataTable.value("TC_ID",dtlocalsheet) <> "SCD0016-026" Then
 				wait 2
 				Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Click Button Add To Family Tree Flagging", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
 				wait 2
@@ -648,7 +648,7 @@ Sub ChangeStatusVerifikasiCustomerFamilyTreeFlagging
 	wait 20
 	Call SearchFamilyTreeFlaggingNoSS()
 	Loop While Browser("DigiSales").Page("Menu Family Tree").WebElement("Status : Menunggu Verfikasi").Exist(1) or Browser("DigiSales").Page("Menu Family Tree").WebElement("Data Tidak Ada").Exist(1)
-	If DataTable.Value("TC_ID",dtlocalsheet) <> "DGS-290" Then
+	If DataTable.Value("TC_ID",dtlocalsheet) <> "SCD0017-005" Then
 		wait 2
 		Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu Family Tree"), "Berikut Data yang telah Terverivikasi", " " , compatibilityMode.Desktop, ReportStatus.Passed)	
 		wait 2	
@@ -954,7 +954,7 @@ REM----------Fungsi Calculate pada Performance Calculator
 Sub CalculatePerformanceCalculator
 	Set objkey = CreateObject("WScript.Shell")
 	Dim explain
-		explain = "Data Performance Calculator Final Terdapat Pada Test Case Selanjutnya Yaitu DGS-241"
+		explain = "Data Performance Calculator Final Terdapat Pada Test Case Selanjutnya Yaitu SCD0015-004"
 	Dim dt_TCID, dt_Bulan, dt_Tahun, dt_NilaiSimulasi
 		dt_TCID				= DataTable.Value("TC_ID", dtLocalSheet)
 		dt_Bulan			= DataTable.Value("TEXT1", dtlocalsheet)
@@ -995,7 +995,7 @@ Sub CalculatePerformanceCalculator
 			objkey.SendKeys "{PGDN}"
 		wait 2
 		
-		If dt_TCID = "DGS-240" Then
+		If dt_TCID = "SCD0015-003" Then
 			Call CaptureImageUFTV2(Browser("DigiSales").Page("Menu My Performance"), "Mengisi Semua Field Nilai Simulasi Menjadi Angka 10", explain, compatibilityMode.Desktop, ReportStatus.Done)
 			wait 2
 		Else

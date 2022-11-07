@@ -139,7 +139,7 @@ Sub GenerateLogWA
 	dt_periode		= DataTable.Value("TEXT1",dtlocalsheet)
 	dt_tipeLogWA	= DataTable.Value("TEXT2",dtlocalsheet)
 	
-	If TC_ID = "DGS-351" Then
+	If TC_ID = "SCD0025-006" Then
 		Call DateSplit(0)
 		Call DateSplit(1)
 		Call DateSplit(2)
@@ -236,7 +236,7 @@ Sub GenerateLogWA
 		objkey.SendKeys "{PGDN}"
 		wait 2
 		
-		If TC_ID = "DGS-347" Then
+		If TC_ID = "SCD0025-002" Then
 			Do Until Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Data List Gagal").Exist(5)
 				Browser("DigiSalesWebPortal").Page("Log Pengiriman WA").WebElement("Btn Next Data List").Click
 				wait 1

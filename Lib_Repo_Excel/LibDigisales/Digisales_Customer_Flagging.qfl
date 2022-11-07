@@ -8,7 +8,7 @@ Sub ApprovalFamilyTree
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal").WebButton("Btn Accept"), "Click Button Accept", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
 	Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal").WebButton("Btn Accept").Click
-	If DataTable.Value("TC_ID",dtlocalsheet) = "DGS-291" Then
+	If DataTable.Value("TC_ID",dtlocalsheet) = "SCD0017-006" Then
 		wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal"), "Berikut Dialog Untuk Melanjutkan Proses Approving Data", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 2
@@ -45,7 +45,7 @@ Sub TolakApprovalFamilyTree
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal").WebButton("Btn Accept"), "Click Button Accept", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
 	Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal").WebButton("Btn Accept").Click
-	If DataTable.Value("TC_ID",dtlocalsheet) = "DGS-291" Then
+	If DataTable.Value("TC_ID",dtlocalsheet) = "SCD0017-006" Then
 		wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Family Tree - DigiSalesWebPortal"), "Berikut Dialog Untuk Melanjutkan Proses Approving Data", " " , compatibilityMode.Desktop, ReportStatus.Passed)
 		wait 2

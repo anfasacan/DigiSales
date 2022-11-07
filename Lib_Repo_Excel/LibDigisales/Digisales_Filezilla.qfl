@@ -166,12 +166,16 @@ Sub UploadStorage
 		objKey.SendKeys "{ENTER}"
 	wait 1
 	
+	If Dialog("Target file already exists").Exist(2) Then
+		Dialog("Target file already exists").WinButton("Btn OK").Click
+	End If
+	wait 1
 	'Cek notif jika berhasil upload ke server
 	If Window("Window").WinObject("Notif").Exist(1) Then
 		Window("Window").WinObject("Notif").Click
 	End If
 	
-	wait 1
+	wait 2
 		Call CaptureImageUFTV2(Window("Filezilla"), "File Berhasil Di Upload ke Server", " ", compatibilityMode.Desktop, ReportStatus.Passed)
 	wait 2	
 End Sub

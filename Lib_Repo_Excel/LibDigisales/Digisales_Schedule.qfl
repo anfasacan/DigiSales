@@ -185,7 +185,7 @@ End Sub
 
 'Fungsi Check Detail Agenda
 Sub ShowDetailAgenda
-	Dim dtJudul, dtCatatan, dtKategoriKunjungan, dtDetailAgenda, dtDetailAgendaCommented
+	Dim dtJudul, dtCatatan, dtKategoriKunjungan, dtDetailAgenda, dtDetailAgendaCommented, dtKomentar
 		dtJudul					= DataTable.Value("TEXT1", dtlocalsheet)
 		dtCatatan				= DataTable.Value("TEXT2", dtlocalsheet)
 		dtKategoriKunjungan		= DataTable.Value("TEXT3", dtlocalsheet)
@@ -207,11 +207,7 @@ Sub ShowDetailAgenda
 	wait 2
 		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Berikut Detail Agenda yang Dipilih", " " , compatibilityMode.Desktop, ReportStatus.Done)
 	wait 2
-	
-'	If DataTable.Value("TEXT8",dtlocalsheet) = "" Then
-'		objkey.SendKeys "{ESC}"	
-'	End If
-	
+
 End Sub
 
 'Fungsi Check NPP
@@ -307,6 +303,19 @@ Sub AddKomentarAgenda
 	End If
 		
 	wait 2
+End Sub
+
+'Check Detail Komentar
+Sub CheckDetailKomentar
+	Dim dtKomentar
+	dtKomentar = DataTable.Value("TEXT8", dtlocalsheet)
+	If dtKomentar <> "" Then
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebElement("Detail Komentar").SetTOProperty "innertext", dtKomentar
+		wait 1
+		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebElement("Detail Komentar").Click
+		Call CaptureImageUFTV2(Browser("DigiSalesWebPortal").Page("Menu Agenda"), "Berikut Komentar Yang Berhasil Diberikan", " " , compatibilityMode.Desktop, ReportStatus.Passed)
+		wait 2
+	End If
 End Sub
 
 'Fungsi Add Agenda
