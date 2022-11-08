@@ -3,7 +3,7 @@ Dim dtSidebarMenu, dt_UserLogin
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0338-008 - View agenda pada Portal.xlsx", "SCD0338")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0026-008 - View agenda pada Portal.xlsx", "SCD0026")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

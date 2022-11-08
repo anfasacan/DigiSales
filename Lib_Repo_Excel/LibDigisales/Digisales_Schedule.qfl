@@ -158,7 +158,7 @@ Sub ShowAgenda
 	Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Btn Toggler").Click
 	wait 1
 	
-	If DataTable.Value("TC_ID",dtlocalsheet) = "SCD0338-008" Then
+	If DataTable.Value("TC_ID",dtlocalsheet) = "SCD0026-008" Then
 		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Btn Day").SetTOProperty "name", dtDay1
 		wait 1
 		Browser("DigiSalesWebPortal").Page("Menu Agenda").WebButton("Btn Day").Click

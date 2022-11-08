@@ -3,7 +3,7 @@ Dim dt_UserLogin
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0338-003 until SCD0338-007 - Abnormal View agenda pada Mobile.xlsx", "SCD0338")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0026-003 until SCD0026-007 - Abnormal View agenda pada Mobile.xlsx", "SCD0026")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
