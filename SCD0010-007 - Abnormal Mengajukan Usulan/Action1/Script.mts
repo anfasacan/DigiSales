@@ -3,7 +3,7 @@ Dim dtNavbarMenu, dt_UserLogin, dt_CIF
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0059_Abnormal Mengajukan Usulan.xlsx", "SCD0059")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0010-007 - Abnormal Mengajukan Usulan.xlsx", "SCD0010")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

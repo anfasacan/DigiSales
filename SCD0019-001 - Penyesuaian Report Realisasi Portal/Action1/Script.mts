@@ -4,7 +4,7 @@ Dim dt_Tahun, dt_Bulan
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0303 - Penyesuaian Report Realisasi Portal.xlsx", "SCD0303")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0019-001 - Penyesuaian Report Realisasi Portal.xlsx", "SCD0019")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

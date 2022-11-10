@@ -1,10 +1,9 @@
-﻿
-Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
+﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
 Dim dtSidebarMenu, dt_UserLogin
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0313 - Migrasi data Non Sales yang ada pada SAPM ke Digi Sales.xlsx", "SCD0313")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0021 - Migrasi data Non Sales yang ada pada SAPM ke Digi Sales.xlsx", "SCD0021")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

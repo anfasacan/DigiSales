@@ -4,7 +4,7 @@ Dim DownloadPath
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0213 - Admin SLN melakukan meng-aktifkan atau me-nonaktifkan parameter KPI.xlsx", "SCD0213")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0012-003 - Admin SLN melakukan meng-aktifkan atau me-nonaktifkan parameter KPI.xlsx", "SCD0012")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

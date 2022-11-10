@@ -4,7 +4,7 @@ Dim dt_Periode
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0333 - Normal Skenario Menjalankan Fungsi scheduler ConsoleBlastNotifSalesLogin.xlsx", "SCD0333")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0025-003 - Normal Skenario Menjalankan Fungsi scheduler ConsoleBlastNotifSalesLogin.xlsx", "SCD0025")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

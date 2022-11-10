@@ -1,1 +1,1 @@
-﻿RunAction "SCD0034 - Report Booster", allIterations
+﻿RunAction "SCD0007 - Report Booster", allIterations

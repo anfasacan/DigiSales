@@ -4,7 +4,7 @@ Dim dt_Hostname, dt_Database1, dt_Database2
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0033_Validasi Database Table Booster.xlsx", "SCD0033")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0006 - Validasi Database Table Booster.xlsx", "SCD0006")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

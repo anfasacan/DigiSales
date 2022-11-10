@@ -3,7 +3,7 @@ Dim dtNavbarMenu, dt_UserLogin,dt_PeriodeDanaMasuk
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0164_Penyesuaian Kriteria Account Plan Asisten Penjualan.xlsx", "SCD0164")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0010-112 - Penyesuaian Kriteria Account Plan Asisten Penjualan.xlsx", "SCD0010")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

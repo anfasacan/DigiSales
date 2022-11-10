@@ -3,7 +3,7 @@ Dim dt_Hostname, dt_Username_DB
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0051_Penambahan Tiering Area.xlsx", "SCD0051")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0009-001 - Penambahan Tiering Area.xlsx", "SCD0009")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

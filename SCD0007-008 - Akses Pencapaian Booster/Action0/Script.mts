@@ -1,1 +1,1 @@
-﻿RunAction "SCD0036 - Search Booster", allIterations
+﻿RunAction "SCD0007-008 - Search Booster", allIterations

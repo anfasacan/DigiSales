@@ -1,1 +1,1 @@
-﻿RunAction "SCD0171-Menu BNI Multifinance", allIterations
+﻿RunAction "SCD0011-002-BNI Multifinance", allIterations

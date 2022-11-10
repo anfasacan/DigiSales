@@ -1,1 +1,1 @@
-﻿RunAction "SCD0333-Generate Log WA 20 Chat", allIterations
+﻿RunAction "SCD0025-003-GenerateLogWA20Chat", allIterations

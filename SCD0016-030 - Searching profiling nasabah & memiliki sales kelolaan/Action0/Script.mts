@@ -1,1 +1,1 @@
-﻿RunAction "SCD0256-Profiling Nasabah", allIterations
+﻿RunAction "SCD0016-030-Profiling Nasabah", allIterations

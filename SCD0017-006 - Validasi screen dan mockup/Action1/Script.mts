@@ -3,7 +3,7 @@ Dim dt_UserLogin, dt_Bulan, dt_Tahun, dtSidebarMenu
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0276 - Validasi screen dan mockup.xlsx", "SCD0276")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0017-006 - Validasi screen dan mockup.xlsx", "SCD0017")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

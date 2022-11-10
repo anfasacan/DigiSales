@@ -3,7 +3,7 @@ Dim dtSidebarMenu, dt_UserLogin, dt_npp, iteration
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0318 - Admin SLN melakukan approval pengajuan cancel ditolak.xlsx", "SCD0318")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0022-005 - Admin SLN melakukan approval pengajuan cancel ditolak.xlsx", "SCD0022")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

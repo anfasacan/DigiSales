@@ -3,7 +3,7 @@ Dim dtNavbarMenu, dt_UserLogin, dt_CIF
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0324 - Fitur Pada Customer Service.xlsx", "SCD0324")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0024-003 - Fitur Pada Customer Service.xlsx", "SCD0024")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

@@ -1,10 +1,9 @@
-﻿
-Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
+﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
 Dim dtNavbarMenu, dt_UserLogin
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0274 - validasi Penambahan Status Flagging Nasabah.xlsx", "SCD0274")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0017-004 - validasi Penambahan Status Flagging Nasabah.xlsx", "SCD0017")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

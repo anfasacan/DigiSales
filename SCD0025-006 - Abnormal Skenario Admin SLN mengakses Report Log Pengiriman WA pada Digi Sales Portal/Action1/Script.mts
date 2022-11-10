@@ -4,7 +4,7 @@ Dim dt_Periode
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0336 - Abnormal Skenario Admin SLN mengakses Report Log Pengiriman WA pada Digi Sales Portal.xlsx", "SCD0336")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0025-006 - Abnormal Skenario Admin SLN mengakses Report Log Pengiriman WA pada Digi Sales Portal.xlsx", "SCD0025")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

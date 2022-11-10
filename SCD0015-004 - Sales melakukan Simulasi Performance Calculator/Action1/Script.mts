@@ -3,7 +3,7 @@ Dim dt_UserLogin, dt_Bulan, dt_Tahun
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0226 - Sales melakukan Simulasi Performance Calculator.xlsx", "SCD0226")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0015-004 - Sales melakukan Simulasi Performance Calculator.xlsx", "SCD0015")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

@@ -4,7 +4,7 @@ Dim DownloadPath
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0221 - Admin SLN melakukan Modul Setting Bobot.xlsx", "SCD0221")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0014-003 - Admin SLN melakukan Modul Setting Bobot.xlsx", "SCD0014")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

@@ -4,7 +4,7 @@ Dim dtNavbarMenu, dt_UserLogin
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0177_Validasi BNIMF.xlsx", "SCD0177")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0011-008 - Validasi BNIMF.xlsx", "SCD0011")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()

@@ -1,1 +1,1 @@
-﻿RunAction "SCD0033 - DB Pencapaian Booster", allIterations
+﻿RunAction "SCD0006 - DB Pencapaian Booster", allIterations

@@ -1,1 +1,1 @@
-﻿RunAction "SCD0332-Abnor Generate Log WA", allIterations
+﻿RunAction "SCD0025-002-Abnor GenerateLogWA", allIterations

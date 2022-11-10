@@ -1,10 +1,9 @@
-﻿
-Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
+﻿Dim dt_TCID, dt_TestScenarioDesc, dt_ScenarioDesc, dt_ExpectedResult @@ script infofile_;_ZIP::ssf7.xml_;_
 Dim dtNavbarMenu, dt_UserLogin
 
 REM -------------- Call Function
 Call spLoadLibrary()
-Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0321 - Data Front Liner.xlsx", "SCD0321")
+Call spInitiateData("DigisalesLib_Report.xlsx", "SCD0023 - Data Front Liner.xlsx", "SCD0023")
 Call spGetDatatable()
 Call fnRunningIterator()
 Call spReportInitiate()
